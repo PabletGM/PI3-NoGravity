@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "ProyectoIntermedio3Character.h"
+
+#include "AttackComponent.h"
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -86,6 +88,9 @@ void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* P
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Look);
+
+		// Attacking
+		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Attack);
 	}
 	else
 	{
@@ -137,4 +142,19 @@ void AProyectoIntermedio3Character::Look(const FInputActionValue& Value)
 	//	AddControllerYawInput(LookAxisVector.X);
 	//	AddControllerPitchInput(LookAxisVector.Y);
 	//}
+}
+
+void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
+{
+	// Get the UInteractionComponent component
+	UAttackComponent* AttackComponent = GetComponentByClass<UAttackComponent>();
+	if (AttackComponent)
+	{
+		//attacks
+		AttackComponent->PerformRaycast();
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
+	}
 }
