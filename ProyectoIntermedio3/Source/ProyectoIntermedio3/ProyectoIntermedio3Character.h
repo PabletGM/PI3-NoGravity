@@ -5,13 +5,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+
 #include "ProyectoIntermedio3Character.generated.h"
 
+class AProyectoIntermedio3GameMode;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class AProyectoIntermedio3GameMode;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -47,6 +50,8 @@ class AProyectoIntermedio3Character : public ACharacter
 	/** Attack Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* AttackAction;
+
+	AProyectoIntermedio3GameMode* CurrentGameMode = nullptr;
 
 public:
 	AProyectoIntermedio3Character();
