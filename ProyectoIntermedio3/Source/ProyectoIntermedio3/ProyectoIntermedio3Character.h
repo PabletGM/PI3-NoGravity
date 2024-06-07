@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
+
 #include "ProyectoIntermedio3Character.generated.h"
 
+class AProyectoIntermedio3GameMode;
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
@@ -43,6 +45,8 @@ class AProyectoIntermedio3Character : public ACharacter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
+
+	AProyectoIntermedio3GameMode* CurrentGameMode = nullptr;
 
 public:
 	AProyectoIntermedio3Character();
