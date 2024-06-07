@@ -95,7 +95,7 @@ void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* P
 
 void AProyectoIntermedio3Character::Move(const FInputActionValue& Value)
 {
-	// input is a Vector2D
+	// input is a Vector2D, direction where the player desires to move the character
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
@@ -110,8 +110,18 @@ void AProyectoIntermedio3Character::Move(const FInputActionValue& Value)
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-		// add movement 
+		// Add movement input in the forward direction
 		AddMovementInput(ForwardDirection, MovementVector.Y);
+
+		
+
+		// Handle side movement (A/D)
+		if (MovementVector.X != 0.0f)
+		{
+			FVector Scale = GetActorScale3D();
+			Scale.Y = FMath::Sign(MovementVector.X) * FMath::Abs(Scale.Y); // Instant flip based on the direction
+			SetActorScale3D(Scale);
+		}
 		AddMovementInput(RightDirection, MovementVector.X);
 	}
 }
