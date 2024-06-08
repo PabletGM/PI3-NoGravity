@@ -12,4 +12,7 @@ class PROYECTOINTERMEDIO3_API UMainWidget : public UUserWidget
 public:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget)) 
 	UUserWidget* PearlsWidget = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UUserWidget* OxygenWidget = nullptr;
 };
