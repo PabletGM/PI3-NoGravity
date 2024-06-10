@@ -14,6 +14,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class UOxygenComponent;
 class AProyectoIntermedio3GameMode;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -56,6 +57,8 @@ class AProyectoIntermedio3Character : public ACharacter
 public:
 	AProyectoIntermedio3Character();
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UOxygenComponent* OxygenComponent;
 
 protected:
 
