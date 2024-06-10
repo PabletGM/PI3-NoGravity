@@ -12,18 +12,20 @@ class PROYECTOINTERMEDIO3_API ACollectable : public AActor
 {
 	GENERATED_BODY()
 	
+	UPROPERTY(EditDefaultsOnly)
+	UStaticMeshComponent* Mesh = nullptr;
+
+	UPROPERTY(EditDefaultsOnly)
+	UBoxComponent* Collider = nullptr;
+
 public:	
 	ACollectable();
 
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly) 
-	UStaticMeshComponent* Mesh = nullptr;
-
-	UPROPERTY(EditDefaultsOnly)
-	UBoxComponent* Collider = nullptr;
-
 	UFUNCTION()
-	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor);
+
+	virtual void Collected(class AActor* Collector);
 };

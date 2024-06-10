@@ -31,11 +31,6 @@ void UOxygenWidget::NativeConstruct()
 	player->OxygenComponent->OnOxygenChanged.AddDynamic(this, &UOxygenWidget::OnOxygenChanged);
 }
 
-void UOxygenWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
-{
-	Super::NativeTick(MyGeometry, InDeltaTime);
-
-}
 
 void UOxygenWidget::OnOxygenChanged(int cur, int max)
 {

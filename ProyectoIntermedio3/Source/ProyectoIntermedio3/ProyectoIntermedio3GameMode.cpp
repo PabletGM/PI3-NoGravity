@@ -1,8 +1,7 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #include "ProyectoIntermedio3GameMode.h"
 #include "ProyectoIntermedio3Character.h"
 #include "UObject/ConstructorHelpers.h"
+#include "PlayerStateProyectoIntermedio3.h"
 
 AProyectoIntermedio3GameMode::AProyectoIntermedio3GameMode()
 {
@@ -18,4 +17,6 @@ AProyectoIntermedio3GameMode::AProyectoIntermedio3GameMode()
 	{
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
+
+	PlayerStateClass = APlayerStateProyectoIntermedio3::StaticClass();
 }

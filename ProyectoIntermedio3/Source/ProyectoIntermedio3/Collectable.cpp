@@ -5,31 +5,39 @@
 
 ACollectable::ACollectable()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
 	SetRootComponent(Mesh);
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	Collider->SetupAttachment(Mesh);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	Collider->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
 	Collider->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
-	Collider->OnComponentBeginOverlap.AddDynamic(this, &ACollectable::OnOverlapBegin);
-}
-
-void ACollectable::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	SetActorHiddenInGame(true);
-	SetActorEnableCollision(false);
-	SetActorTickEnabled(false);
-
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Collectable picked up!"));
+	Collider->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 }
 
 void ACollectable::BeginPlay()
 {
 	Super::BeginPlay();
+
+	OnActorBeginOverlap.AddDynamic(this, &ACollectable::OnOverlapBegin);
 }
 
+
+void ACollectable::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
+{
+	if (OtherActor && OtherActor != this)
+	{
+		Collected(OtherActor);
+		Destroy();
+	}
+}
+
+void ACollectable::Collected(AActor* Collector)
+{
+
+}
 

@@ -13,10 +13,11 @@ class PROYECTOINTERMEDIO3_API APearl : public ACollectable
 public:	
 	APearl();
 
+	virtual void Collected(class AActor* Collector) override;
+
 protected:
 	virtual void BeginPlay() override;
 
-public:	
-	virtual void Tick(float DeltaTime) override;
-
+private:
+	int32 pearlValue = 1;
 };
