@@ -156,6 +156,13 @@ void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 	{
 		//attacks
 		AttackComponent->PerformRaycast();
+
+		//anim montage
+		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+		if(AnimInstance && AttackMontage)
+		{
+			AnimInstance->Montage_Play(AttackMontage);
+		}
 	}
 	else
 	{

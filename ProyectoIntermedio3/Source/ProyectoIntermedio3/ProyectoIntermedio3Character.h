@@ -54,6 +54,10 @@ class AProyectoIntermedio3Character : public ACharacter
 
 	AProyectoIntermedio3GameMode* CurrentGameMode = nullptr;
 
+	// Animation montage for attack
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* AttackMontage;
+
 public:
 	AProyectoIntermedio3Character();
 	
