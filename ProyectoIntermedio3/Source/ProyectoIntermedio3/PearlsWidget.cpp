@@ -3,6 +3,7 @@
 #include "Components/TextBlock.h"
 #include "Components/HorizontalBox.h"
 #include "Components/HorizontalBoxSlot.h"
+#include "PlayerStateProyectoIntermedio3.h"
 
 void UPearlsWidget::NativeConstruct()
 {
@@ -11,6 +12,13 @@ void UPearlsWidget::NativeConstruct()
 	ConfigureMargins();
 
 	UpdatePearlCount(0);
+
+    APlayerStateProyectoIntermedio3* PlayerState = Cast<APlayerStateProyectoIntermedio3>(GetOwningPlayerState());
+
+    if (PlayerState)
+    {
+        PlayerState->OnPearlCountChanged.AddDynamic(this, &UPearlsWidget::UpdatePearlCount);
+    }
 }
 
 void UPearlsWidget::UpdatePearlCount(int32 PearlCount)
