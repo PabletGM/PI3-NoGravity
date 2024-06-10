@@ -1,5 +1,3 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -52,6 +50,9 @@ class AProyectoIntermedio3Character : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* AttackAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InteractAction;
+
 	AProyectoIntermedio3GameMode* CurrentGameMode = nullptr;
 
 	// Animation montage for attack
@@ -74,7 +75,8 @@ protected:
 
 	/** Called for looking input */
 	void Attack(const FInputActionValue& Value);
-			
+
+	void Interact();
 
 protected:
 	// APawn interface

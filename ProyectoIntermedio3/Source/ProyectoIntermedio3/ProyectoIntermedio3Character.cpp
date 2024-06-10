@@ -11,7 +11,9 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "OxygenComponent.h"
+#include "Interactable.h"
 #include "ProyectoIntermedio3GameMode.h"
+#include <Kismet/KismetSystemLibrary.h>
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -95,6 +97,8 @@ void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* P
 
 		// Attacking
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Attack);
+
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Interact);
 	}
 	else
 	{
@@ -167,5 +171,40 @@ void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
+	}
+}
+
+void AProyectoIntermedio3Character::Interact()
+{
+	const auto start = GetActorLocation();
+	const auto ForwardDirection = GetActorForwardVector();
+	const auto end = start + GetActorForwardVector() * 150.f;
+	auto hit = FHitResult();
+
+	bool bHit = UKismetSystemLibrary::SphereTraceSingle(
+		this,
+		start,
+		end,
+		20.f,
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		{},
+		EDrawDebugTrace::ForDuration,
+		hit,
+		true,
+		FLinearColor::Red,
+		FLinearColor::Green,
+		5.0f
+	);
+
+	if (bHit)
+	{
+		if (AActor* HitActor = hit.GetActor())
+		{
+			if (UKismetSystemLibrary::DoesImplementInterface(HitActor, UInteractable::StaticClass()))
+			{
+				IInteractable::Execute_Interact(HitActor);
+			}
+		}
 	}
 }
