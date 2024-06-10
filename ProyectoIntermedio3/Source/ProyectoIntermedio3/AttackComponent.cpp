@@ -56,7 +56,7 @@ void UAttackComponent::PerformRaycast()
 	FVector ForwardDirection = player->GetActorForwardVector();
 
 	// calculate the end of the raycast depending of the forwardDirection
-	FVector RaycastEnd = PlayerLocation + ForwardDirection * 100.f;
+	FVector RaycastEnd = PlayerLocation + ForwardDirection * 200.f;
 
 	//create hitResult
 	FHitResult HitResult;
