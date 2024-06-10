@@ -11,8 +11,11 @@ ARoomSpawner::ARoomSpawner()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	RootCmp = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	SetRootComponent(RootCmp);
+
 	CollisionMesh = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
-	CollisionMesh->SetupAttachment(RootComponent);
+	CollisionMesh->SetupAttachment(RootCmp);
 	CollisionMesh->SetGenerateOverlapEvents(true);
 	CollisionMesh->OnComponentBeginOverlap.AddDynamic(this, &ARoomSpawner::OnBeginBoxOverlap);
 }

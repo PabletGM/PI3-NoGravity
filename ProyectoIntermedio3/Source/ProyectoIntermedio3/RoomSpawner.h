@@ -20,6 +20,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* CollisionMesh = nullptr;
 
+	UPROPERTY(EditDefaultsOnly)
+	USceneComponent* RootCmp = nullptr;
+
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AActor> BP_Spawnable;
 
