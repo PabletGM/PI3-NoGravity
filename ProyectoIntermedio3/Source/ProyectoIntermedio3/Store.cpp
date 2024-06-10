@@ -9,6 +9,11 @@ AStore::AStore()
 	SetRootComponent(Mesh);
 }
 
+FString AStore::GetInteractionText_Implementation()
+{
+	return "Press [E] to trade with the Captain";
+}
+
 void AStore::Interact_Implementation()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "DETECT");

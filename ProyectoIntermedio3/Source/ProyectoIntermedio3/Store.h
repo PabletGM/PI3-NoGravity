@@ -18,6 +18,8 @@ class PROYECTOINTERMEDIO3_API AStore : public AActor, public IInteractable
 public:	
 	AStore();
 
+	virtual FString GetInteractionText_Implementation() override;
+
 protected:
 	virtual void BeginPlay() override;
 

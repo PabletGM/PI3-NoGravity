@@ -203,8 +203,13 @@ void AProyectoIntermedio3Character::Interact()
 		{
 			if (UKismetSystemLibrary::DoesImplementInterface(HitActor, UInteractable::StaticClass()))
 			{
-				IInteractable::Execute_Interact(HitActor);
+				FString InteractionText = IInteractable::Execute_GetInteractionText(HitActor);
+				OnInteract.ExecuteIfBound(InteractionText);
 			}
 		}
+	}
+	else
+	{
+		OnInteract.ExecuteIfBound("");
 	}
 }

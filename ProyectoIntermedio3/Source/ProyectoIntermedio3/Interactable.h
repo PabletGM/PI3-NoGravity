@@ -18,4 +18,7 @@ class PROYECTOINTERMEDIO3_API IInteractable
 public:
 	UFUNCTION(BlueprintNativeEvent, Category = Interact)
 	void Interact();
+
+	UFUNCTION(BlueprintNativeEvent, Category = Interact)
+	FString GetInteractionText();
 };

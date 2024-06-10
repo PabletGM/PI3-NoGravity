@@ -15,4 +15,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UUserWidget* OxygenWidget = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UUserWidget* InteractWidget = nullptr;
 };

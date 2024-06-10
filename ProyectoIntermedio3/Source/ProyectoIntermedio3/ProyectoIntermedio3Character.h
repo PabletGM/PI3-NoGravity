@@ -16,6 +16,7 @@ class UOxygenComponent;
 class AProyectoIntermedio3GameMode;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
+DECLARE_DYNAMIC_DELEGATE_OneParam(FInteractDelegate, FString, text);
 
 UCLASS(config=Game)
 class AProyectoIntermedio3Character : public ACharacter
@@ -64,6 +65,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UOxygenComponent* OxygenComponent;
+
+	UPROPERTY()
+	FInteractDelegate OnInteract;
 
 protected:
 
