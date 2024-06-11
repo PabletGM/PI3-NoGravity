@@ -68,6 +68,11 @@ private:
 	UPROPERTY()
 	UAttackComponent* AttackComponent = nullptr;
 
+	//Interact variables
+	bool bDetectItem = false;
+	AActor* DetectedActor = nullptr;
+	void DetectInteractable();
+
 public:
 	AProyectoIntermedio3Character();
 	
@@ -89,6 +94,8 @@ protected:
 	void Attack(const FInputActionValue& Value);
 
 	void Interact();
+
+	void Tick(float DeltaTime);
 
 protected:
 	// APawn interface

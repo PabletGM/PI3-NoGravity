@@ -183,21 +183,31 @@ void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 
 void AProyectoIntermedio3Character::Interact()
 {
-	const auto start = GetActorLocation();
-	const auto ForwardDirection = GetActorForwardVector();
-	const auto end = start + GetActorForwardVector() * 150.f;
-	auto hit = FHitResult();
+	if (!bDetectItem || !DetectedActor)
+	{
+		return;
+	}
+
+	IInteractable::Execute_Interact(DetectedActor);
+}
+
+void AProyectoIntermedio3Character::DetectInteractable()
+{
+	const FVector Start = GetActorLocation();
+	const FVector ForwardDirection = GetActorForwardVector();
+	const FVector End = Start + ForwardDirection * 150.f;
+	FHitResult Hit;
 
 	bool bHit = UKismetSystemLibrary::SphereTraceSingle(
 		this,
-		start,
-		end,
+		Start,
+		End,
 		20.f,
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
-		{},
-		EDrawDebugTrace::ForDuration,
-		hit,
+		TArray<AActor*>(),
+		EDrawDebugTrace::None,
+		Hit,
 		true,
 		FLinearColor::Red,
 		FLinearColor::Green,
@@ -206,17 +216,27 @@ void AProyectoIntermedio3Character::Interact()
 
 	if (bHit)
 	{
-		if (AActor* HitActor = hit.GetActor())
+		if (AActor* HitActor = Hit.GetActor())
 		{
 			if (UKismetSystemLibrary::DoesImplementInterface(HitActor, UInteractable::StaticClass()))
 			{
+				bDetectItem = true;
+				DetectedActor = HitActor;
 				FString InteractionText = IInteractable::Execute_GetInteractionText(HitActor);
 				OnInteract.ExecuteIfBound(InteractionText);
+				return;
 			}
 		}
 	}
-	else
-	{
-		OnInteract.ExecuteIfBound("");
-	}
+
+	bDetectItem = false;
+	DetectedActor = nullptr;
+	OnInteract.ExecuteIfBound("");
+}
+
+void AProyectoIntermedio3Character::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	DetectInteractable();
 }
