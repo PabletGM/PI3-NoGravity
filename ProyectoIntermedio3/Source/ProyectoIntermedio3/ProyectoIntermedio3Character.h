@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AttackComponent.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 
@@ -59,6 +60,13 @@ class AProyectoIntermedio3Character : public ACharacter
 	// Animation montage for attack
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackMontage;
+public:
+	UFUNCTION()
+	void PerformAttackNotifyAnim();
+
+private:
+	UPROPERTY()
+	UAttackComponent* AttackComponent = nullptr;
 
 public:
 	AProyectoIntermedio3Character();

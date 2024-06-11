@@ -20,6 +20,8 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 //////////////////////////////////////////////////////////////////////////
 // AProyectoIntermedio3Character
 
+
+
 AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 {
 	// Set size for collision capsule
@@ -155,11 +157,10 @@ void AProyectoIntermedio3Character::Look(const FInputActionValue& Value)
 void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 {
 	// Get the UInteractionComponent component
-	UAttackComponent* AttackComponent = GetComponentByClass<UAttackComponent>();
+	AttackComponent = GetComponentByClass<UAttackComponent>();
 	if (AttackComponent)
 	{
-		//attacks
-		AttackComponent->PerformRaycast();
+		// PerformAttack(AttackComponent);
 
 		//anim montage
 		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
@@ -172,6 +173,12 @@ void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
 	}
+}
+
+void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
+{
+	//attacks
+	AttackComponent->PerformRaycast();
 }
 
 void AProyectoIntermedio3Character::Interact()
