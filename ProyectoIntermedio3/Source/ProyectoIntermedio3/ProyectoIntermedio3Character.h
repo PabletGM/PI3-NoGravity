@@ -1,8 +1,7 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AttackComponent.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 
@@ -18,6 +17,7 @@ class UOxygenComponent;
 class AProyectoIntermedio3GameMode;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
+DECLARE_DYNAMIC_DELEGATE_OneParam(FInteractDelegate, FString, text);
 
 UCLASS(config=Game)
 class AProyectoIntermedio3Character : public ACharacter
@@ -52,17 +52,35 @@ class AProyectoIntermedio3Character : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* AttackAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InteractAction;
+
 	AProyectoIntermedio3GameMode* CurrentGameMode = nullptr;
 
 	// Animation montage for attack
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackMontage;
+public:
+	UFUNCTION()
+	void PerformAttackNotifyAnim();
+
+private:
+	UPROPERTY()
+	UAttackComponent* AttackComponent = nullptr;
+
+	//Interact variables
+	bool bDetectItem = false;
+	AActor* DetectedActor = nullptr;
+	void DetectInteractable();
 
 public:
 	AProyectoIntermedio3Character();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UOxygenComponent* OxygenComponent;
+
+	UPROPERTY()
+	FInteractDelegate OnInteract;
 
 protected:
 
@@ -74,7 +92,10 @@ protected:
 
 	/** Called for looking input */
 	void Attack(const FInputActionValue& Value);
-			
+
+	void Interact();
+
+	void Tick(float DeltaTime);
 
 protected:
 	// APawn interface

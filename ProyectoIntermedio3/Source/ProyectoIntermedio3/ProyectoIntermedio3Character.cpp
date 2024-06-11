@@ -11,12 +11,16 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "OxygenComponent.h"
+#include "Interactable.h"
 #include "ProyectoIntermedio3GameMode.h"
+#include <Kismet/KismetSystemLibrary.h>
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
 // AProyectoIntermedio3Character
+
+
 
 AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 {
@@ -95,6 +99,8 @@ void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* P
 
 		// Attacking
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Attack);
+
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Interact);
 	}
 	else
 	{
@@ -151,11 +157,10 @@ void AProyectoIntermedio3Character::Look(const FInputActionValue& Value)
 void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 {
 	// Get the UInteractionComponent component
-	UAttackComponent* AttackComponent = GetComponentByClass<UAttackComponent>();
+	AttackComponent = GetComponentByClass<UAttackComponent>();
 	if (AttackComponent)
 	{
-		//attacks
-		AttackComponent->PerformRaycast();
+		// PerformAttack(AttackComponent);
 
 		//anim montage
 		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
@@ -168,4 +173,70 @@ void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
 	}
+}
+
+void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
+{
+	//attacks
+	AttackComponent->PerformRaycast();
+}
+
+void AProyectoIntermedio3Character::Interact()
+{
+	if (!bDetectItem || !DetectedActor)
+	{
+		return;
+	}
+
+	IInteractable::Execute_Interact(DetectedActor);
+}
+
+void AProyectoIntermedio3Character::DetectInteractable()
+{
+	const FVector Start = GetActorLocation();
+	const FVector ForwardDirection = GetActorForwardVector();
+	const FVector End = Start + ForwardDirection * 150.f;
+	FHitResult Hit;
+
+	bool bHit = UKismetSystemLibrary::SphereTraceSingle(
+		this,
+		Start,
+		End,
+		20.f,
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		TArray<AActor*>(),
+		EDrawDebugTrace::None,
+		Hit,
+		true,
+		FLinearColor::Red,
+		FLinearColor::Green,
+		5.0f
+	);
+
+	if (bHit)
+	{
+		if (AActor* HitActor = Hit.GetActor())
+		{
+			if (UKismetSystemLibrary::DoesImplementInterface(HitActor, UInteractable::StaticClass()))
+			{
+				bDetectItem = true;
+				DetectedActor = HitActor;
+				FString InteractionText = IInteractable::Execute_GetInteractionText(HitActor);
+				OnInteract.ExecuteIfBound(InteractionText);
+				return;
+			}
+		}
+	}
+
+	bDetectItem = false;
+	DetectedActor = nullptr;
+	OnInteract.ExecuteIfBound("");
+}
+
+void AProyectoIntermedio3Character::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	DetectInteractable();
 }
