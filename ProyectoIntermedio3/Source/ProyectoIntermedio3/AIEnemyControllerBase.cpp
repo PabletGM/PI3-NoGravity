@@ -10,6 +10,8 @@
 
 void AAIEnemyControllerBase::CheckTargetDistance()
 {
+
+	// Checks AI Type and add to the
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
 	auto* target = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
