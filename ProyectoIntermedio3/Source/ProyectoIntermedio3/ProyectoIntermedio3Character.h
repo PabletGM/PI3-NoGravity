@@ -73,6 +73,18 @@ private:
 	AActor* DetectedActor = nullptr;
 	void DetectInteractable();
 
+	UPROPERTY()
+	bool canAttack = true;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AttackParams", meta = (AllowPrivateAccess = "true"))
+	float attackCooldown;
+
+private:
+	UPROPERTY()
+	float actualTimeAttackColdown;
+	
+
 public:
 	AProyectoIntermedio3Character();
 	

@@ -156,29 +156,40 @@ void AProyectoIntermedio3Character::Look(const FInputActionValue& Value)
 
 void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 {
-	// Get the UInteractionComponent component
-	AttackComponent = GetComponentByClass<UAttackComponent>();
-	if (AttackComponent)
+	if(canAttack)
 	{
-		// PerformAttack(AttackComponent);
-
-		//anim montage
-		UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-		if(AnimInstance && AttackMontage)
+		// Get the UInteractionComponent component
+		AttackComponent = GetComponentByClass<UAttackComponent>();
+		if (AttackComponent)
 		{
-			AnimInstance->Montage_Play(AttackMontage);
+			// PerformAttack(AttackComponent);
+     
+			//anim montage
+			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+			if(AnimInstance && AttackMontage)
+			{
+w				AnimInstance->Montage_Play(AttackMontage);
+			}
+
+			//quit access to attack
+			canAttack = false;
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
 		}
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
-	}
+	
 }
 
 void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 {
 	//attacks
-	AttackComponent->PerformRaycast();
+	if(canAttack)
+	{
+		AttackComponent->PerformRaycast();
+	}
+	
 }
 
 void AProyectoIntermedio3Character::Interact()
@@ -239,4 +250,18 @@ void AProyectoIntermedio3Character::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	DetectInteractable();
+
+	//counter to canAttack a true
+	if(actualTimeAttackColdown >= attackCooldown)
+	{
+		//can attack when cooldown pass
+		canAttack = true;
+		//restart timer
+		actualTimeAttackColdown = 0;
+	}
+	else
+	{
+		//add time
+		actualTimeAttackColdown+= DeltaTime;
+	}
 }
