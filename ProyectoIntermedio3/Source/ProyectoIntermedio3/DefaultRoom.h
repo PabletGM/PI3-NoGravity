@@ -26,6 +26,9 @@ public:
 	UPROPERTY()
 	bool IsSpawnable = true;
 
+	UPROPERTY()
+	float TimeToMoveCollision = 0.f;
+
 	UFUNCTION()
 	void OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,

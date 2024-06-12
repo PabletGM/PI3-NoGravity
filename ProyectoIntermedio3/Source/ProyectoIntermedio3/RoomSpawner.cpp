@@ -48,29 +48,6 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 	}
 }
 
-void ARoomSpawner::SpawnRoom()
-{
-	if(BP_Spawnable)
-	{
-		UWorld* World = GetWorld();
-		if(World)
-		{
-			FActorSpawnParameters SpawnParams;
-			SpawnParams.Owner = this;
-			SpawnParams.Instigator = GetInstigator();
-
-			// Temporary Spawn Params
-
-			FVector ForwardVector = GetActorForwardVector();
-			
-			FVector Location = GetActorLocation() + ForwardVector * ForwardSpawnOffset;
-			FRotator Rotation = GetActorRotation();
-
-			World->SpawnActor<ADefaultRoom>(ADefaultRoom::StaticClass(), Location, Rotation, SpawnParams);
-		}
-	}
-}
-
 void ARoomSpawner::AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn)
 {
 	UWorld* World = GetWorld();
