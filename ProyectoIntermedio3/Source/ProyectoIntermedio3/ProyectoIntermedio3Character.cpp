@@ -168,7 +168,7 @@ void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if(AnimInstance && AttackMontage)
 			{
-w				AnimInstance->Montage_Play(AttackMontage);
+				AnimInstance->Montage_Play(AttackMontage);
 			}
 
 			//quit access to attack
