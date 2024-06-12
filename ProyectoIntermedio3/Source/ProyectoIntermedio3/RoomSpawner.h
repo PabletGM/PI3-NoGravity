@@ -28,15 +28,12 @@ public:
 	TSubclassOf<ADefaultRoom> BP_Spawnable = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	float ForwardSpawnOffset = 0;
+	float ForwardSpawnOffset = 0;	
 
 	UFUNCTION()
 	void OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-	void SpawnRoom();
 
 	UFUNCTION()
 	void AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn);
