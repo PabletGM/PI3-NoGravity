@@ -3,6 +3,7 @@
 
 #include "RoomSpawner.h"
 
+#include "DefaultRoom.h"
 #include "ProyectoIntermedio3Character.h"
 
 // Sets default values
@@ -42,7 +43,7 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 		AProyectoIntermedio3Character* character = Cast<AProyectoIntermedio3Character>(OtherActor);
 		if (character)
 		{
-			SpawnRoom();
+			AttemptSpawn(BP_Spawnable);
 		}
 	}
 }
@@ -65,7 +66,27 @@ void ARoomSpawner::SpawnRoom()
 			FVector Location = GetActorLocation() + ForwardVector * ForwardSpawnOffset;
 			FRotator Rotation = GetActorRotation();
 
-			World->SpawnActor<AActor>(BP_Spawnable, Location, Rotation, SpawnParams);
+			World->SpawnActor<ADefaultRoom>(ADefaultRoom::StaticClass(), Location, Rotation, SpawnParams);
 		}
+	}
+}
+
+void ARoomSpawner::AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn)
+{
+	UWorld* World = GetWorld();
+	if (World)
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = GetInstigator();
+
+		// Temporary Spawn Params
+
+		FVector ForwardVector = GetActorForwardVector();
+
+		FVector Location = GetActorLocation() + ForwardVector * ForwardSpawnOffset;
+		FRotator Rotation = GetActorRotation();
+
+		World->SpawnActor<ADefaultRoom>(RoomToSpawn, Location, Rotation, SpawnParams);
 	}
 }

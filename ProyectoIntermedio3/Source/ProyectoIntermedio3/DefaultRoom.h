@@ -12,16 +12,24 @@ UCLASS()
 class PROYECTOINTERMEDIO3_API ADefaultRoom : public AActor
 {
 	GENERATED_BODY()
+	
+public:	
+	// Sets default values for this actor's properties
+	ADefaultRoom();
 
 	UPROPERTY(EditDefaultsOnly)
 	USceneComponent* RootCmp = nullptr;
 
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* NextRoomCollision = nullptr;
-	
-public:	
-	// Sets default values for this actor's properties
-	ADefaultRoom();
+
+	UPROPERTY()
+	bool IsSpawnable = true;
+
+	UFUNCTION()
+	void OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+		UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
+		bool bFromSweep, const FHitResult& SweepResult);
 
 protected:
 	// Called when the game starts or when spawned

@@ -20,7 +20,8 @@ ADefaultRoom::ADefaultRoom()
 void ADefaultRoom::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	NextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginBoxOverlap);
 }
 
 // Called every frame
@@ -30,3 +31,15 @@ void ADefaultRoom::Tick(float DeltaTime)
 
 }
 
+void ADefaultRoom::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor && (OtherActor != this) && OtherComp)
+	{
+		ADefaultRoom* room = Cast<ADefaultRoom>(OtherActor);
+		if (room)
+		{
+			IsSpawnable = false;
+		}
+	}
+}
