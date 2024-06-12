@@ -76,6 +76,7 @@ void ARoomSpawner::AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn)
 	UWorld* World = GetWorld();
 	if (World)
 	{
+		ADefaultRoom* MyRoom = RoomToSpawn->GetDefaultObject<ADefaultRoom>();
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.Owner = this;
 		SpawnParams.Instigator = GetInstigator();
@@ -87,7 +88,7 @@ void ARoomSpawner::AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn)
 		FVector Location = GetActorLocation() + ForwardVector * ForwardSpawnOffset;
 		FRotator Rotation = GetActorRotation();
 
-		ADefaultRoom* MyRoom = World->SpawnActor<ADefaultRoom>(RoomToSpawn, Location, Rotation, SpawnParams);
+		MyRoom = World->SpawnActor<ADefaultRoom>(RoomToSpawn, Location, Rotation, SpawnParams);
 		if(!MyRoom->IsSpawnable)
 		{
 			World->DestroyActor(MyRoom);
