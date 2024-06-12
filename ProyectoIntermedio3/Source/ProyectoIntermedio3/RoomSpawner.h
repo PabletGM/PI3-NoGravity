@@ -8,6 +8,7 @@
 
 #include "RoomSpawner.generated.h"
 
+class ADefaultRoom;
 UCLASS()
 class PROYECTOINTERMEDIO3_API ARoomSpawner : public AActor
 {
