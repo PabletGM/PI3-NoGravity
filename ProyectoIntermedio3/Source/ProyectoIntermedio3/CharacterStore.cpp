@@ -5,6 +5,7 @@
 #include "Store_GameMode.h"
 #include "CharacterStore.h"
 
+#include "AB_StoreDiver.h"
 #include "Store_PlayerController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -95,5 +96,19 @@ void ACharacterStore::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	}
 	
 
+}
+
+void ACharacterStore::UpdateAnimFloatVariable(float NewValue)
+{
+	//access to mesh
+	if (USkeletalMeshComponent* MeshComp = GetMesh())
+	{
+		//see if its animInstance
+		if (UAB_StoreDiver* AnimInstance = Cast<UAB_StoreDiver>(MeshComp->GetAnimInstance()))
+		{
+			//update speed
+			AnimInstance->UpdateSpeedVariable(NewValue);
+		}
+	}
 }
 
