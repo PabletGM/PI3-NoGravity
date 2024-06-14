@@ -15,6 +15,7 @@
 #include "ProyectoIntermedio3GameMode.h"
 #include <Kismet/KismetSystemLibrary.h>
 
+#include "Proyecto3PlayerController.h"
 #include "Store_PlayerController.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -69,7 +70,7 @@ void AProyectoIntermedio3Character::BeginPlay()
 	Super::BeginPlay();
 
 	//Add Input Mapping Context
-	if (APlayerController* PlayerController = Cast<AStore_PlayerController>(Controller))
+	if (APlayerController* PlayerController = Cast<AProyecto3PlayerController>(Controller))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
