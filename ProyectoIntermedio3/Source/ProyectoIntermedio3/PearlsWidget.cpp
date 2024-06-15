@@ -41,7 +41,7 @@ void UPearlsWidget::ConfigureMargins()
             ImageSlot->SetPadding(FMargin(0, 0, 10, 0));
             ImageSlot->SetSize(FSlateChildSize(ESlateSizeRule::Automatic));
 
-            PearlImage->SetBrushSize(FVector2D(60.0f, 60.0f)); 
+            PearlImage->SetBrushSize(FVector2D(62.0f, 62.f)); 
         }
 
         UHorizontalBoxSlot* TextSlot = HorizontalBox->AddChildToHorizontalBox(CountText);
