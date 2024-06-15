@@ -6,10 +6,11 @@
 #include "AB_StoreDiver.h"
 #include "Store_PlayerController.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include <Kismet/GameplayStatics.h>
 
 ACharacterStore::ACharacterStore()
 {
-	GetCapsuleComponent()->InitCapsuleSize(42.f, 90.f);
+	GetCapsuleComponent()->InitCapsuleSize(42.f, 80.f);
 	
 	GetCharacterMovement()->bOrientRotationToMovement = true; 	
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 180.0f, 0.0f);
@@ -38,7 +39,7 @@ void ACharacterStore::BeginPlay()
 
 void ACharacterStore::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	//Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
@@ -55,7 +56,6 @@ void ACharacterStore::Move(const FInputActionValue& Value)
 	{
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 		if (MovementVector.X != 0.0f)
@@ -69,9 +69,29 @@ void ACharacterStore::Move(const FInputActionValue& Value)
 	}
 }
 
+void ACharacterStore::CheckMovementLimitToCamera()
+{
+	FVector CharacterPosition = GetActorLocation();
+
+	APlayerCameraManager* CameraManager = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0);
+	if (CameraManager)
+	{
+		FVector CameraPosition = CameraManager->GetCameraLocation();
+
+		float MinX = CameraPosition.X - 350;
+		float MaxX = CameraPosition.X + 350;
+
+		CharacterPosition.X = FMath::Clamp(CharacterPosition.X, MinX, MaxX);
+
+		SetActorLocation(CharacterPosition);
+	}
+}
+
 void ACharacterStore::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	CheckMovementLimitToCamera();
 }
 
 void ACharacterStore::UpdateAnimFloatVariable(float NewValue)

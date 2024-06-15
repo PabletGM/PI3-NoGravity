@@ -33,6 +33,9 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 
+private:
+	void CheckMovementLimitToCamera();
+
 public:	
 	virtual void Tick(float DeltaTime) override;
 
