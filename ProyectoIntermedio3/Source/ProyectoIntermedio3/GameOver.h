@@ -14,7 +14,37 @@ class PROYECTOINTERMEDIO3_API UGameOver : public UUserWidget
 {
 	GENERATED_BODY()
 
+protected:
+	virtual void NativeConstruct() override;
+
+	void InitializeButtons();
+
+	void ConfigureMargins();
+
+	
+
+private:
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* GameTitleText = nullptr;
+
+	UPROPERTY(meta = (BindWidget))
+	class UVerticalBox* ButtonContainer = nullptr;
+
+	//Buttons
+	UPROPERTY(meta = (BindWidget))
+	class UButton* PlayButton = nullptr;
+	UPROPERTY(meta = (BindWidget))
+	class UButton* QuitButton = nullptr;
+
+	//Text Buttons
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* PlayButtonText = nullptr;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* QuitButtonText = nullptr;
+
 public:
+
+	//functions clicked buttons
 	UFUNCTION(BlueprintCallable, Category="GameOver")
 	void RestartGame();
 
@@ -27,7 +57,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 	FName MainMenuLevelName;
 
-protected:
-	virtual void NativeConstruct() override;
+
 };
 
