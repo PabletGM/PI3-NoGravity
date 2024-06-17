@@ -10,6 +10,12 @@ class PROYECTOINTERMEDIO3_API UMainWidget : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	UFUNCTION(Category = "UI")
+	void ShowConcreteWidget(UUserWidget* WidgetToShow);
+
+	UFUNCTION(Category = "UI")
+	void ShowAllWidgets();
+
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget)) 
 	UUserWidget* PearlsWidget = nullptr;
 

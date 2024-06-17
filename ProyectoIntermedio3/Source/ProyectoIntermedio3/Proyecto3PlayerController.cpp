@@ -19,6 +19,7 @@ void AProyecto3PlayerController::BeginPlay()
 
 		if (MainWidget)
 		{
+			MainWidget->ShowAllWidgets();
 			MainWidget->AddToViewport();
 			bShowMouseCursor = false;
 		}
