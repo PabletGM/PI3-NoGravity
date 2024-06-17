@@ -46,6 +46,9 @@ void ADefaultRoom::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
 		ADefaultRoom* room = Cast<ADefaultRoom>(OtherActor);
+		if (room == this)
+			return;
+
 		if (room)
 		{
 			IsSpawnable = false;
