@@ -12,8 +12,14 @@ ADefaultRoom::ADefaultRoom()
 	RootCmp = CreateDefaultSubobject<USceneComponent>(TEXT("RootCmp"));
 	SetRootComponent(RootCmp);
 
-	NextRoomCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("NextRoomCollision"));
-	NextRoomCollision->SetupAttachment(RootComponent);
+	FirstNextRoomCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("NextRoomCollision1"));
+	FirstNextRoomCollision->SetupAttachment(RootComponent);
+
+	SecondNextRoomCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("NextRoomCollision2"));
+	SecondNextRoomCollision->SetupAttachment(RootComponent);
+
+	ThirdNextRoomCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("NextRoomCollision3"));
+	ThirdNextRoomCollision->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -21,7 +27,9 @@ void ADefaultRoom::BeginPlay()
 {
 	Super::BeginPlay();
 
-	NextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginBoxOverlap);
+	FirstNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginBoxOverlap);
+	SecondNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginBoxOverlap);
+	ThirdNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginBoxOverlap);
 }
 
 // Called every frame

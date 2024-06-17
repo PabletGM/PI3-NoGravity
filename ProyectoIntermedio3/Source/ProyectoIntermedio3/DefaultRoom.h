@@ -21,7 +21,13 @@ public:
 	USceneComponent* RootCmp = nullptr;
 
 	UPROPERTY(EditDefaultsOnly)
-	UBoxComponent* NextRoomCollision = nullptr;
+	UBoxComponent* FirstNextRoomCollision = nullptr;
+
+	UPROPERTY(EditDefaultsOnly)
+	UBoxComponent* SecondNextRoomCollision = nullptr;
+
+	UPROPERTY(EditDefaultsOnly)
+	UBoxComponent* ThirdNextRoomCollision = nullptr;
 
 	UPROPERTY()
 	bool IsSpawnable = true;
