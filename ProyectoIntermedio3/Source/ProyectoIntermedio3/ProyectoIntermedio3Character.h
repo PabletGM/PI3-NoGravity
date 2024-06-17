@@ -17,7 +17,6 @@ class UOxygenComponent;
 class AProyectoIntermedio3GameMode;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
-DECLARE_DYNAMIC_DELEGATE_OneParam(FInteractDelegate, FString, text);
 
 UCLASS(config=Game)
 class AProyectoIntermedio3Character : public ACharacter
@@ -52,14 +51,12 @@ class AProyectoIntermedio3Character : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* AttackAction;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* InteractAction;
-
 	AProyectoIntermedio3GameMode* CurrentGameMode = nullptr;
 
 	// Animation montage for attack
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackMontage;
+
 public:
 	UFUNCTION()
 	void PerformAttackNotifyAnim();
@@ -67,11 +64,6 @@ public:
 private:
 	UPROPERTY()
 	UAttackComponent* AttackComponent = nullptr;
-
-	//Interact variables
-	bool bDetectItem = false;
-	AActor* DetectedActor = nullptr;
-	void DetectInteractable();
 
 	UPROPERTY()
 	bool canAttack = true;
@@ -83,16 +75,12 @@ public:
 private:
 	UPROPERTY()
 	float actualTimeAttackColdown;
-	
 
 public:
 	AProyectoIntermedio3Character();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	UOxygenComponent* OxygenComponent;
-
-	UPROPERTY()
-	FInteractDelegate OnInteract;
 
 protected:
 
@@ -104,8 +92,6 @@ protected:
 
 	/** Called for looking input */
 	void Attack(const FInputActionValue& Value);
-
-	void Interact();
 
 	void Tick(float DeltaTime);
 

@@ -1,6 +1,6 @@
 #include "InteractWidget.h"
 #include "Components/TextBlock.h"
-#include "ProyectoIntermedio3Character.h"
+#include "CharacterStore.h"
 
 void UInteractWidget::NativeConstruct()
 {
@@ -8,7 +8,7 @@ void UInteractWidget::NativeConstruct()
 
     TextInteract->SetVisibility(ESlateVisibility::Collapsed);
 
-    if (AProyectoIntermedio3Character* PlayerCharacter = Cast<AProyectoIntermedio3Character>(GetOwningPlayerPawn()))
+    if (ACharacterStore* PlayerCharacter = Cast<ACharacterStore>(GetOwningPlayerPawn()))
     {
         PlayerCharacter->OnInteract.BindDynamic(this, &UInteractWidget::SetInteractText);
 

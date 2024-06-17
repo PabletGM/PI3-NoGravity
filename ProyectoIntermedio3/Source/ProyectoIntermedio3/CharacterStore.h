@@ -10,6 +10,8 @@ class UInputAction;
 struct FInputActionValue;
 class AStore_GameMode;
 
+DECLARE_DYNAMIC_DELEGATE_OneParam(FInteractDelegate, FString, text);
+
 UCLASS()
 class PROYECTOINTERMEDIO3_API ACharacterStore : public ACharacter
 {
@@ -21,10 +23,16 @@ class PROYECTOINTERMEDIO3_API ACharacterStore : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InteractAction;
+
 	AStore_GameMode* CurrentGameMode = nullptr;
 
 public:
 	ACharacterStore();
+
+	UPROPERTY()
+	FInteractDelegate OnInteract;
 
 protected:
 	virtual void BeginPlay() override;
@@ -33,11 +41,18 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 
+	void Interact();
+
+	void Tick(float DeltaTime);
+
 private:
 	void CheckMovementLimitToCamera();
 
-public:	
-	virtual void Tick(float DeltaTime) override;
+	//Interact variables
+	bool bDetectItem = false;
+	AActor* DetectedActor = nullptr;
+	void DetectInteractable();
 
+public:	
 	void UpdateAnimFloatVariable(float NewValue);
 };

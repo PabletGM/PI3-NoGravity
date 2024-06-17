@@ -11,9 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "OxygenComponent.h"
-#include "Interactable.h"
 #include "ProyectoIntermedio3GameMode.h"
-#include <Kismet/KismetSystemLibrary.h>
 
 #include "Proyecto3PlayerController.h"
 #include "Store_PlayerController.h"
@@ -102,8 +100,6 @@ void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* P
 
 		// Attacking
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Attack);
-
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Interact);
 	}
 	else
 	{
@@ -195,64 +191,9 @@ void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 	
 }
 
-void AProyectoIntermedio3Character::Interact()
-{
-	if (!bDetectItem || !DetectedActor)
-	{
-		return;
-	}
-
-	IInteractable::Execute_Interact(DetectedActor);
-}
-
-void AProyectoIntermedio3Character::DetectInteractable()
-{
-	const FVector Start = GetActorLocation();
-	const FVector ForwardDirection = GetActorForwardVector();
-	const FVector End = Start + ForwardDirection * 150.f;
-	FHitResult Hit;
-
-	bool bHit = UKismetSystemLibrary::SphereTraceSingle(
-		this,
-		Start,
-		End,
-		20.f,
-		ETraceTypeQuery::TraceTypeQuery1,
-		false,
-		TArray<AActor*>(),
-		EDrawDebugTrace::None,
-		Hit,
-		true,
-		FLinearColor::Red,
-		FLinearColor::Green,
-		5.0f
-	);
-
-	if (bHit)
-	{
-		if (AActor* HitActor = Hit.GetActor())
-		{
-			if (UKismetSystemLibrary::DoesImplementInterface(HitActor, UInteractable::StaticClass()))
-			{
-				bDetectItem = true;
-				DetectedActor = HitActor;
-				FString InteractionText = IInteractable::Execute_GetInteractionText(HitActor);
-				OnInteract.ExecuteIfBound(InteractionText);
-				return;
-			}
-		}
-	}
-
-	bDetectItem = false;
-	DetectedActor = nullptr;
-	OnInteract.ExecuteIfBound("");
-}
-
 void AProyectoIntermedio3Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	DetectInteractable();
 
 	//counter to canAttack a true
 	if(actualTimeAttackColdown >= attackCooldown)

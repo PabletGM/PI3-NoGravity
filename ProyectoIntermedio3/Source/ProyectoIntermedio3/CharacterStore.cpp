@@ -7,6 +7,8 @@
 #include "Store_PlayerController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include <Kismet/GameplayStatics.h>
+#include "Interactable.h"
+#include <Kismet/KismetSystemLibrary.h>
 
 ACharacterStore::ACharacterStore()
 {
@@ -45,6 +47,9 @@ void ACharacterStore::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 	{
 		//Movement
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACharacterStore::Move);
+
+		//Interact
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &ACharacterStore::Interact);
 	}
 }
 
@@ -87,11 +92,66 @@ void ACharacterStore::CheckMovementLimitToCamera()
 	}
 }
 
+void ACharacterStore::Interact()
+{
+	if (!bDetectItem || !DetectedActor)
+	{
+		return;
+	}
+
+	IInteractable::Execute_Interact(DetectedActor);
+}
+
+void ACharacterStore::DetectInteractable()
+{
+	const FVector Start = GetActorLocation() + FVector(0.f, 0.f, 30.f);
+	const FVector ForwardDirection = GetActorForwardVector();
+	const FVector End = Start + ForwardDirection * 200.f;
+	FHitResult Hit;
+
+	bool bHit = UKismetSystemLibrary::SphereTraceSingle(
+		this,
+		Start,
+		End,
+		20.f,
+		ETraceTypeQuery::TraceTypeQuery1,
+		false,
+		TArray<AActor*>(),
+		EDrawDebugTrace::ForOneFrame,
+		Hit,
+		true,
+		FLinearColor::Red,
+		FLinearColor::Green,
+		5.0f
+	);
+
+	if (bHit)
+	{
+		if (AActor* HitActor = Hit.GetActor())
+		{
+			if (UKismetSystemLibrary::DoesImplementInterface(HitActor, UInteractable::StaticClass()))
+			{
+				bDetectItem = true;
+				DetectedActor = HitActor;
+				FString InteractionText = IInteractable::Execute_GetInteractionText(HitActor);
+				OnInteract.ExecuteIfBound(InteractionText);
+				return;
+			}
+		}
+	}
+
+	bDetectItem = false;
+	DetectedActor = nullptr;
+	OnInteract.ExecuteIfBound("");
+}
+
 void ACharacterStore::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 	CheckMovementLimitToCamera();
+
+	DetectInteractable();
 }
 
 void ACharacterStore::UpdateAnimFloatVariable(float NewValue)
