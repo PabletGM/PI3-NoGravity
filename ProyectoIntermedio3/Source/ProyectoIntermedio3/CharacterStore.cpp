@@ -90,7 +90,6 @@ void ACharacterStore::Move(const FInputActionValue& Value)
 				}
 			}
 		}
-		
 
 		AddMovementInput(RightDirection, MovementVector.X);
 	}
@@ -132,7 +131,9 @@ void ACharacterStore::Interact()
 		return;
 	}
 
-	IInteractable::Execute_Interact(DetectedActor);
+	// Check if implements interface
+	if(UKismetSystemLibrary::DoesImplementInterface(DetectedActor, UInteractable::StaticClass()))
+		IInteractable::Execute_Interact(DetectedActor);
 }
 
 void ACharacterStore::DetectInteractable()

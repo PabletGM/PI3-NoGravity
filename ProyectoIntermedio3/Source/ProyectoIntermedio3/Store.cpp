@@ -38,4 +38,3 @@ void AStore::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
-
