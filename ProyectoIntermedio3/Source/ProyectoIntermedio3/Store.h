@@ -5,6 +5,8 @@
 
 #include "Store.generated.h"
 
+class AItemStore;
+
 UCLASS()
 class PROYECTOINTERMEDIO3_API AStore : public AActor
 {
@@ -14,6 +16,8 @@ class PROYECTOINTERMEDIO3_API AStore : public AActor
 public:	
 	AStore();
 
+	UFUNCTION(BlueprintCallable)
+	void BuyItem(AItemStore* Item);
 
 protected:
 	virtual void BeginPlay() override;

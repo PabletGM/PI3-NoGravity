@@ -1,4 +1,5 @@
 #include "ItemStore.h"
+#include "Store.h"
 
 AItemStore::AItemStore()
 {
@@ -15,9 +16,15 @@ FString AItemStore::GetInteractionText_Implementation()
 
 void AItemStore::Interact_Implementation()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "BUY");
+    if (Store)
+    {
+        Store->BuyItem(this);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("AItemStore::Interact_Implementation - Store reference is not set!"));
+    }
 }
-
 
 void AItemStore::BeginPlay()
 {
@@ -28,5 +35,4 @@ void AItemStore::BeginPlay()
 void AItemStore::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }

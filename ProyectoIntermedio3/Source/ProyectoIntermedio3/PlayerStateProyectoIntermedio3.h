@@ -18,6 +18,11 @@ public:
 	UFUNCTION()
 	void AddPearl(int32 value);
 
+	UFUNCTION()
+	int32 GetPearlCount() const { return totalPealrs; }
+
 private:
 	int32 totalPealrs = 0;
+
+	class UGameInstanceNoGravity* GameInstance = nullptr;
 };
