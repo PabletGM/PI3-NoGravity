@@ -12,6 +12,7 @@ class AStore_GameMode;
 
 DECLARE_DYNAMIC_DELEGATE_OneParam(FInteractDelegate, FString, text);
 
+
 UCLASS()
 class PROYECTOINTERMEDIO3_API ACharacterStore : public ACharacter
 {
@@ -40,6 +41,8 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void Move(const FInputActionValue& Value);
+
+	void FinishMove(const FInputActionValue& Value);
 
 	void Interact();
 

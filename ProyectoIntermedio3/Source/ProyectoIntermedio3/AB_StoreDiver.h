@@ -20,9 +20,13 @@ public:
 	// Function to update the float variable
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	void UpdateSpeedVariable(float NewValue);
+
+	
 	
 	// This will be a variable exposed to Blueprints
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	float speedPlayer;
+
+	
 	
 };

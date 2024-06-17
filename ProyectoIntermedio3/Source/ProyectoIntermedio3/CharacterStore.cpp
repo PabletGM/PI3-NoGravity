@@ -4,11 +4,16 @@
 #include "EnhancedInputSubsystems.h"
 #include "Store_GameMode.h"
 #include "AB_StoreDiver.h"
+
 #include "Store_PlayerController.h"
+
 #include "GameFramework/CharacterMovementComponent.h"
 #include <Kismet/GameplayStatics.h>
 #include "Interactable.h"
 #include <Kismet/KismetSystemLibrary.h>
+
+
+
 
 ACharacterStore::ACharacterStore()
 {
@@ -39,24 +44,30 @@ void ACharacterStore::BeginPlay()
 	CurrentGameMode = Cast<AStore_GameMode>(GetWorld()->GetAuthGameMode());
 }
 
-void ACharacterStore::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	void ACharacterStore::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	{
-		//Movement
-		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACharacterStore::Move);
+		Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-		//Interact
-		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &ACharacterStore::Interact);
+		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+		{
+			//Movement started-> configuration pressed
+			EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACharacterStore::Move);
+
+			//Movement completed-> configuration released
+			EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ACharacterStore::FinishMove);
+
+			
+			//Interact
+			EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &ACharacterStore::Interact);
+		}
 	}
-}
 
 void ACharacterStore::Move(const FInputActionValue& Value)
 {
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
+	
+	UE_LOG(LogTemp, Warning, TEXT("MovementVector: %f"), MovementVector.X);
 	if (Controller != nullptr)
 	{
 		const FRotator Rotation = Controller->GetControlRotation();
@@ -68,9 +79,31 @@ void ACharacterStore::Move(const FInputActionValue& Value)
 			FVector Scale = GetActorScale3D();
 			Scale.Y = FMath::Sign(MovementVector.X) * FMath::Abs(Scale.Y);
 			SetActorScale3D(Scale);
+
+			//animation of walking ans speed at 1
+			// Access and update the animation instance
+			if (USkeletalMeshComponent* MeshComp = GetMesh())
+			{
+				if (UAB_StoreDiver* AnimInstance = Cast<UAB_StoreDiver>(MeshComp->GetAnimInstance()))
+				{
+					AnimInstance->UpdateSpeedVariable(MovementVector.X); // Example of updating the variable
+				}
+			}
 		}
+		
 
 		AddMovementInput(RightDirection, MovementVector.X);
+	}
+}
+
+void ACharacterStore::FinishMove(const FInputActionValue& Value)
+{
+	if (USkeletalMeshComponent* MeshComp = GetMesh())
+	{
+		if (UAB_StoreDiver* AnimInstance = Cast<UAB_StoreDiver>(MeshComp->GetAnimInstance()))
+		{
+			AnimInstance->UpdateSpeedVariable(0); // Example of updating the variable
+		}
 	}
 }
 

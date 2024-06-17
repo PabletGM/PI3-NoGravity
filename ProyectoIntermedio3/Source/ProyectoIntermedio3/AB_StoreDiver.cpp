@@ -14,3 +14,4 @@ void UAB_StoreDiver::UpdateSpeedVariable(float NewValue)
 {
 	speedPlayer = NewValue;
 }
+
