@@ -4,10 +4,12 @@
 #include "AIEnemyControllerBase.h"
 
 #include "BrainComponent.h"
+#include "Proyecto3PlayerController.h"
 #include "ProyectoIntermedio3Character.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
+#include "Logging/StructuredLog.h"
 
 void AAIEnemyControllerBase::CheckTargetDistance()
 {
@@ -38,7 +40,21 @@ void AAIEnemyControllerBase::AttackTarget()
 {
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
-	AActor* PlayerCharacter = Cast<AActor>(BlackboardComponent->GetValueAsObject("Target"));
+	auto* controller= Cast<AProyecto3PlayerController>(BlackboardComponent->GetValueAsObject("Target"));
 
-	Cast<AProyectoIntermedio3Character>(PlayerCharacter)->TakeDamageFromAI(AIDamage);
+	if(!controller)
+	{
+		UE_LOGFMT(LogTemp, Log, "Failed controller");
+		return;
+	}
+
+	auto *player = Cast<AProyectoIntermedio3Character>(controller->GetCharacter());
+
+	if(!player)
+	{
+		UE_LOGFMT(LogTemp, Log, "Failed player");
+		return;
+	}
+	
+	player->TakeDamageFromAI(AIDamage);
 }

@@ -82,7 +82,7 @@ private:
 public:
 	AProyectoIntermedio3Character();
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY()
 	UOxygenComponent* OxygenComponent = nullptr;
 
 protected:

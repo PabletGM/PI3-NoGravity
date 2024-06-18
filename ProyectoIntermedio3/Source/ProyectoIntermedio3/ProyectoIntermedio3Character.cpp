@@ -194,11 +194,11 @@ void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 {
 	// TODO This fails, OxygenComponent is null for some reason
-	//OxygenComponent = GetComponentByClass<UOxygenComponent>();
-	//OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - 20);
-	//OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
+	
+	OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - 20);
+	OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
 
-	//UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
+	UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
 
 	// TODO Damage feedback
 	//
