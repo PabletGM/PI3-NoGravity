@@ -1,5 +1,6 @@
 #include "ItemStore.h"
 #include "Store.h"
+#include "Store_GameMode.h"
 
 AItemStore::AItemStore()
 {
@@ -16,13 +17,11 @@ FString AItemStore::GetInteractionText_Implementation()
 
 void AItemStore::Interact_Implementation()
 {
-    if (Store)
+    AStore_GameMode* GameMode = Cast<AStore_GameMode>(GetWorld()->GetAuthGameMode());
+
+    if (GameMode)
     {
-        Store->BuyItem(this);
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("AItemStore::Interact_Implementation - Store reference is not set!"));
+        GameMode->BuyItem(this);
     }
 }
 

@@ -16,9 +16,6 @@ class PROYECTOINTERMEDIO3_API AStore : public AActor
 public:	
 	AStore();
 
-	UFUNCTION(BlueprintCallable)
-	void BuyItem(AItemStore* Item);
-
 protected:
 	virtual void BeginPlay() override;
 
