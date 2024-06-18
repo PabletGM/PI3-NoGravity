@@ -16,7 +16,7 @@ void UMainMenuWidget::NativeConstruct()
     {
         GameTitleText->SetText(FText::FromString(TEXT("Zero - G")));
         FSlateFontInfo FontInfo = GameTitleText->Font;
-        FontInfo.Size = 200;
+        FontInfo.Size = 120;
         GameTitleText->SetFont(FontInfo);
     }
 

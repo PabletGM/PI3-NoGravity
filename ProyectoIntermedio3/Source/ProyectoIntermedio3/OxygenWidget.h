@@ -20,9 +20,6 @@ protected:
 
 private:
 	UPROPERTY(meta = (BindWidget))
-	UOverlay* Overlay;
-
-	UPROPERTY(meta = (BindWidget))
 	UImage* BackgroundBar = nullptr;
 
 	UPROPERTY(meta = (BindWidget))
