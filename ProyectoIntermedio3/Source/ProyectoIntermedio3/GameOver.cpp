@@ -13,6 +13,7 @@ void UGameOver::NativeConstruct()
 	Super::NativeConstruct();
 
 	// Bind your buttons here (optional)
+	InitializeButtons();
 }
 
 void UGameOver::InitializeButtons()
@@ -60,10 +61,12 @@ void UGameOver::ConfigureMargins()
 
 void UGameOver::RestartGame()
 {
+	UE_LOG(LogTemp, Warning, TEXT("RestartGame"));
 	UGameplayStatics::OpenLevel(this, StoreLevelName);
 }
 
 void UGameOver::QuitToMainMenu()
 {
+	UE_LOG(LogTemp, Warning, TEXT("QuitToMainMenu"));
 	UGameplayStatics::OpenLevel(this, MainMenuLevelName);
 }

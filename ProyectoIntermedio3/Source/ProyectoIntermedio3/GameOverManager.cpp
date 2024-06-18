@@ -37,9 +37,9 @@ void AGameOverManager::ShowGameOverMenu()
 			if (PlayerController)
 			{
 				// Set input mode to UI only and show the cursor
-				FInputModeUIOnly InputMode;
-				InputMode.SetWidgetToFocus(GameOverWidget->TakeWidget());
-				PlayerController->SetInputMode(InputMode);
+				// FInputModeUIOnly InputMode;
+				// InputMode.SetWidgetToFocus(GameOverWidget->TakeWidget());
+				// PlayerController->SetInputMode(InputMode);
 				PlayerController->bShowMouseCursor = true;
 			}
 		}
