@@ -20,16 +20,16 @@ ADefaultRoom::ADefaultRoom()
 
 	ThirdNextRoomCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("NextRoomCollision3"));
 	ThirdNextRoomCollision->SetupAttachment(RootComponent);
+
+	FirstNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginFirstBoxOverlap);
+	SecondNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginSecondBoxOverlap);
+	ThirdNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginThirdBoxOverlap);
 }
 
 // Called when the game starts or when spawned
 void ADefaultRoom::BeginPlay()
 {
 	Super::BeginPlay();
-
-	FirstNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginBoxOverlap);
-	SecondNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginBoxOverlap);
-	ThirdNextRoomCollision->OnComponentBeginOverlap.AddDynamic(this, &ADefaultRoom::OnBeginBoxOverlap);
 }
 
 // Called every frame
@@ -40,8 +40,7 @@ void ADefaultRoom::Tick(float DeltaTime)
 	
 }
 
-void ADefaultRoom::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void ADefaultRoom::CheckOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
@@ -54,4 +53,26 @@ void ADefaultRoom::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 			IsSpawnable = false;
 		}
 	}
+}
+
+
+void ADefaultRoom::OnBeginFirstBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if(NumberOfDoors >= 1)
+		CheckOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+}
+
+void ADefaultRoom::OnBeginSecondBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (NumberOfDoors >= 2)
+	CheckOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
+}
+
+void ADefaultRoom::OnBeginThirdBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (NumberOfDoors >= 3)
+	CheckOverlap(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 }

@@ -28,7 +28,10 @@ public:
 	TSubclassOf<ADefaultRoom> BP_Spawnable = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	float ForwardSpawnOffset = 0;	
+	float ForwardSpawnOffset = 0;
+
+	UPROPERTY()
+	bool IsActive = true;
 
 	UFUNCTION()
 	void OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,

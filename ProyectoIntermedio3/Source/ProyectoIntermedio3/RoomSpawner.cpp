@@ -43,7 +43,8 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 		AProyectoIntermedio3Character* character = Cast<AProyectoIntermedio3Character>(OtherActor);
 		if (character)
 		{
-			AttemptSpawn(BP_Spawnable);
+			if(IsActive)
+				AttemptSpawn(BP_Spawnable);
 		}
 	}
 }
@@ -68,6 +69,10 @@ void ARoomSpawner::AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn)
 		if(!MyRoom->IsSpawnable)
 		{
 			World->DestroyActor(MyRoom);
+		}
+		else
+		{
+			IsActive = false;
 		}
 	}
 }
