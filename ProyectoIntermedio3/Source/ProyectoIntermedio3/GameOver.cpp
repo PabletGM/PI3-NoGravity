@@ -14,6 +14,7 @@ void UGameOver::NativeConstruct()
 
 	// Bind your buttons here (optional)
 	InitializeButtons();
+	this->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void UGameOver::InitializeButtons()
@@ -47,14 +48,14 @@ void UGameOver::ConfigureMargins()
 
 		if (PlayButtonSlot)
 		{
-			PlayButtonSlot->SetPadding(FMargin(0, 0, 0, 20));
+			PlayButtonSlot->SetPadding(FMargin(0, 0, 0, 100));
 		}
 
 		UVerticalBoxSlot* QuitButtonSlot = Cast<UVerticalBoxSlot>(QuitButton->Slot);
 
 		if (QuitButtonSlot)
 		{
-			QuitButtonSlot->SetPadding(FMargin(0, 20, 0, 0));
+			QuitButtonSlot->SetPadding(FMargin(0, 20, 0, 200));
 		}
 	}
 }

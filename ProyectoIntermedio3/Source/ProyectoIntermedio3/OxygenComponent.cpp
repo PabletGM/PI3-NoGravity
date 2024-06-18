@@ -1,5 +1,9 @@
 #include "OxygenComponent.h"
 
+#include "MainWidget.h"
+#include "Proyecto3PlayerController.h"
+#include "ProyectoIntermedio3Character.h"
+
 UOxygenComponent::UOxygenComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -22,6 +26,11 @@ void UOxygenComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		DecreaseOxygen();
 		TimeSinceLastDecrease = 0.0f; 
 	}
+
+	Death();
+		
+	
+	
 }
 
 void UOxygenComponent::DecreaseOxygen()
@@ -40,4 +49,27 @@ void UOxygenComponent::SetCurrentOxygen(int32 NewOxygen)
 
 		OnOxygenChanged.Broadcast(CurrentOxygen, MaxOxygen);
 	}
+}
+
+void UOxygenComponent::Death()
+{
+	if(CurrentOxygen > 0)
+		return;
+	
+	auto* owner = Cast<AProyectoIntermedio3Character>(GetOwner());
+	
+	if(!owner)
+	{
+		return;
+	}
+
+	auto* controller = Cast<AProyecto3PlayerController>(owner->GetController());
+	controller->bShowMouseCursor = true;
+
+	if(!controller)
+	{
+		return;
+	}
+	
+	controller->MainWidget->ShowConcreteWidget(controller->MainWidget->GameOverWidget);
 }

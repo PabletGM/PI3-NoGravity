@@ -24,4 +24,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UUserWidget* InteractWidget = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UUserWidget* GameOverWidget = nullptr;
 };

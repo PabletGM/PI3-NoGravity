@@ -30,6 +30,8 @@ public:
 
 	void SetCurrentOxygen(int32 NewOxygen);
 
+	void Death();
+
 protected:
 	virtual void BeginPlay() override;
 
