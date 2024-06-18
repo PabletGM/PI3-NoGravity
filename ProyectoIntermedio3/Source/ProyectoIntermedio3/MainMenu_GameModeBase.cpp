@@ -4,7 +4,7 @@
 AMainMenu_GameModeBase::AMainMenu_GameModeBase()
 	: Super()
 {
-	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerBPClass(TEXT("/Game/ThirdPerson/Blueprints/BP_MainMenuPlayerController"));
+	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerBPClass(TEXT("/Game/_NoGravity/Blueprints/BP_MainMenuPlayerController"));
 	
 	if (PlayerControllerBPClass.Class != NULL)
 	{

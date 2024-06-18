@@ -4,6 +4,7 @@
 #include "Blueprint/UserWidget.h"
 #include "MainMenuWidget.generated.h"
 
+class UImage;
 class UButton;
 class UTextBlock;
 
@@ -15,9 +16,15 @@ class PROYECTOINTERMEDIO3_API UMainMenuWidget : public UUserWidget
 protected:
 	virtual void NativeConstruct() override;
 
-	void InitializeButtons();
-
 	void ConfigureMargins();
+
+	void InitializeButton(UButton* Button, UTextBlock* ButtonText, const FString& ButtonTextString);
+
+	UFUNCTION()
+	void OnButtonHovered();
+
+	UFUNCTION()
+	void OnButtonUnhovered();
 
 	//Fuctions click button
 	UFUNCTION()
@@ -26,6 +33,9 @@ protected:
 	void ExitGame();
 
 private:
+	UPROPERTY(meta = (BindWidget))
+	class UImage* Background = nullptr;
+
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* GameTitleText = nullptr;
 
@@ -43,4 +53,6 @@ private:
 	class UTextBlock* PlayButtonText = nullptr;
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* QuitButtonText = nullptr;
+
+	UTextBlock* CurrentButtonText;
 };

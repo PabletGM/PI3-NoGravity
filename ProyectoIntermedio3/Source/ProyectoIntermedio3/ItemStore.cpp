@@ -1,5 +1,4 @@
 #include "ItemStore.h"
-#include "Store.h"
 #include "Store_GameMode.h"
 
 AItemStore::AItemStore()
@@ -25,13 +24,3 @@ void AItemStore::Interact_Implementation()
     }
 }
 
-void AItemStore::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-void AItemStore::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
