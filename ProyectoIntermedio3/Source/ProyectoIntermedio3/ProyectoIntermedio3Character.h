@@ -61,6 +61,9 @@ public:
 	UFUNCTION()
 	void PerformAttackNotifyAnim();
 
+	UFUNCTION()
+	void TakeDamageFromAI(int32 damageAmmount);
+
 private:
 	UPROPERTY()
 	UAttackComponent* AttackComponent = nullptr;
@@ -80,7 +83,7 @@ public:
 	AProyectoIntermedio3Character();
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	UOxygenComponent* OxygenComponent;
+	UOxygenComponent* OxygenComponent = nullptr;
 
 protected:
 

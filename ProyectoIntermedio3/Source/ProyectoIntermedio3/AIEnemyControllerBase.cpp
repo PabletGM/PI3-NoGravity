@@ -4,6 +4,7 @@
 #include "AIEnemyControllerBase.h"
 
 #include "BrainComponent.h"
+#include "ProyectoIntermedio3Character.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
@@ -31,4 +32,13 @@ EPathFollowingRequestResult::Type AAIEnemyControllerBase::MoveToTarget()
 	EPathFollowingRequestResult::Type MoveToTargetResult = MoveToActor(PlayerCharacter);
 
 	return MoveToTargetResult;
+}
+
+void AAIEnemyControllerBase::AttackTarget()
+{
+	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
+
+	AActor* PlayerCharacter = Cast<AActor>(BlackboardComponent->GetValueAsObject("Target"));
+
+	Cast<AProyectoIntermedio3Character>(PlayerCharacter)->TakeDamageFromAI(AIDamage);
 }

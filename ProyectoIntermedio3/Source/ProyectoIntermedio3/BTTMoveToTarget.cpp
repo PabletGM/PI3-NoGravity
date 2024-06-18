@@ -31,5 +31,5 @@ void UBTTMoveToTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMe
 
 FString UBTTMoveToTarget::GetStaticDescription() const
 {
-	return TEXT("Follow Player");
+	return TEXT("Follow Target");
 }

@@ -15,6 +15,7 @@
 
 #include "Proyecto3PlayerController.h"
 #include "Store_PlayerController.h"
+#include "Logging/StructuredLog.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -188,14 +189,26 @@ void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 	{
 		AttackComponent->PerformRaycast();
 	}
-	
+}
+
+void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
+{
+	// TODO This fails, OxygenComponent is null for some reason
+	//OxygenComponent = GetComponentByClass<UOxygenComponent>();
+	//OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - 20);
+	//OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
+
+	//UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
+
+	// TODO Damage feedback
+	//
 }
 
 void AProyectoIntermedio3Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//counter to canAttack a true
+	//canAttack Counter
 	if(actualTimeAttackColdown >= attackCooldown)
 	{
 		//can attack when cooldown pass
