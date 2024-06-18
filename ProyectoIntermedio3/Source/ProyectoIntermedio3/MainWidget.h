@@ -16,6 +16,7 @@ public:
 	UFUNCTION(Category = "UI")
 	void ShowAllWidgets();
 
+	//Widgets
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget)) 
 	UUserWidget* PearlsWidget = nullptr;
 
@@ -27,4 +28,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UUserWidget* GameOverWidget = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UUserWidget* DamageWidget = nullptr;
 };

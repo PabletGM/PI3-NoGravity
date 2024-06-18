@@ -26,20 +26,15 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 {
-	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
-	// Don't rotate when the controller rotates. Let that just affect the camera.
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationYaw = false;
 	bUseControllerRotationRoll = false;
 
-	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Character moves in the direction of input...	
-	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); // ...at this rotation rate
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f); 
 
-	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
-	// instead of recompiling to adjust them
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
@@ -47,28 +42,22 @@ AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
 
-	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->TargetArmLength = 400.0f; // The camera follows at this distance behind the character	
-	CameraBoom->bUsePawnControlRotation = false; // Rotate the arm based on the controller
+	CameraBoom->TargetArmLength = 400.0f; 
+	CameraBoom->bUsePawnControlRotation = false; 
 
-	// Create a follow camera
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
-	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
-	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); 
+	FollowCamera->bUsePawnControlRotation = false;
 
 	OxygenComponent = CreateDefaultSubobject<UOxygenComponent>(TEXT("OxygenComponent"));
-	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
-	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
 
 void AProyectoIntermedio3Character::BeginPlay()
 {
-	// Call the base class  
 	Super::BeginPlay();
 
-	//Add Input Mapping Context
 	if (APlayerController* PlayerController = Cast<AProyecto3PlayerController>(Controller))
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
@@ -77,7 +66,6 @@ void AProyectoIntermedio3Character::BeginPlay()
 		}
 	}
 
-	// Cast to GameMode for update the variable with it
 	CurrentGameMode = Cast<AProyectoIntermedio3GameMode>(GetWorld()->GetAuthGameMode());
 }
 
@@ -86,13 +74,8 @@ void AProyectoIntermedio3Character::BeginPlay()
 
 void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) {
-		
-		// Jumping
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
-
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent)) 
+	{
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AProyectoIntermedio3Character::Move);
 
@@ -110,31 +93,23 @@ void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* P
 
 void AProyectoIntermedio3Character::Move(const FInputActionValue& Value)
 {
-	// input is a Vector2D, direction where the player desires to move the character
 	FVector2D MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
-		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	
-		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-		// Add movement input in the forward direction
 		AddMovementInput(ForwardDirection, MovementVector.Y);
 
-		
-
-		// Handle side movement (A/D)
 		if (MovementVector.X != 0.0f)
 		{
 			FVector Scale = GetActorScale3D();
-			Scale.Y = FMath::Sign(MovementVector.X) * FMath::Abs(Scale.Y); // Instant flip based on the direction
+			Scale.Y = FMath::Sign(MovementVector.X) * FMath::Abs(Scale.Y);
 			SetActorScale3D(Scale);
 		}
 		AddMovementInput(RightDirection, MovementVector.X);
@@ -158,12 +133,9 @@ void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 {
 	if(canAttack)
 	{
-		// Get the UInteractionComponent component
 		AttackComponent = GetComponentByClass<UAttackComponent>();
 		if (AttackComponent)
 		{
-			// PerformAttack(AttackComponent);
-     
 			//anim montage
 			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 			if(AnimInstance && AttackMontage)
@@ -197,15 +169,13 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 
 	UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
 
-	// TODO Damage feedback
-	//
+	OnTakeDamage.Broadcast();
 }
 
 void AProyectoIntermedio3Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	//canAttack Counter
 	if(actualTimeAttackColdown >= attackCooldown)
 	{
 		//can attack when cooldown pass
