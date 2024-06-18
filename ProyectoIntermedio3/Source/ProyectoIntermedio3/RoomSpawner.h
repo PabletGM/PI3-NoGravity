@@ -28,10 +28,26 @@ public:
 	TSubclassOf<ADefaultRoom> BP_Spawnable = nullptr;
 
 	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<ADefaultRoom>> BP_OneDoorRooms = {};
+
+	UPROPERTY(EditAnywhere)
+	TArray<TSubclassOf<ADefaultRoom>> BP_TwoDoorRooms = {};
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ADefaultRoom> BP_NoDoorRoom = nullptr;
+	inline static bool HasSplit = false;
+
+	UPROPERTY(EditAnywhere)
 	float ForwardSpawnOffset = 0;
 
 	UPROPERTY()
 	bool IsActive = true;
+
+	UPROPERTY()
+	bool DidntSpawnSplitRoom = true;
+
+	UPROPERTY(EditAnywhere)
+	bool IsFirstSpawner = false;
 
 	UFUNCTION()
 	void OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -39,7 +55,7 @@ public:
 		bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
-	void AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn);
+	bool AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn);
 
 	UPROPERTY()
 	ADefaultRoom* NextRoom = nullptr;
