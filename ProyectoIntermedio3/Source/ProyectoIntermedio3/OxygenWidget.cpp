@@ -12,6 +12,7 @@ void UOxygenWidget::NativeConstruct()
 		BackgroundBar->SetRenderScale({ 1.f, 1.f });
 	if (OxygenBar)
 		OxygenBar->SetRenderScale({ 1.f, 1.f });
+		OxygenBar->SetColorAndOpacity(FLinearColor::Green);
 
 	auto* world = GetWorld();
 
@@ -35,4 +36,24 @@ void UOxygenWidget::NativeConstruct()
 void UOxygenWidget::OnOxygenChanged(int cur, int max)
 {
 	OxygenBar->SetRenderScale({ (float)cur / (float)max, 1 });
+
+	float percentage = (float)cur / (float)max; //Change color based on remaining oxygen
+	FLinearColor color = GetOxygenColor(percentage);
+	OxygenBar->SetColorAndOpacity(color);
+}
+
+FLinearColor UOxygenWidget::GetOxygenColor(float oxygenPercentage) const
+{
+	if (oxygenPercentage > 0.5f)
+	{
+		return FLinearColor::LerpUsingHSV(FLinearColor::Yellow, FLinearColor::Green, (oxygenPercentage - 0.5f) * 2);
+	}
+	else if (oxygenPercentage > 0.25f)
+	{
+		return FLinearColor::LerpUsingHSV(FLinearColor::Red, FLinearColor::Yellow, (oxygenPercentage - 0.25f) * 4);
+	}
+	else
+	{
+		return FLinearColor::Red;
+	}
 }

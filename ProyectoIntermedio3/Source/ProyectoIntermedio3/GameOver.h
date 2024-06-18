@@ -56,7 +56,5 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
 	FName MainMenuLevelName;
-
-
 };
 

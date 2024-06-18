@@ -27,4 +27,6 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UImage* OxygenBar = nullptr;
+
+	FLinearColor GetOxygenColor(float oxygenPercentage) const;
 };
