@@ -4,28 +4,19 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
 
-AAudioManager* AAudioManager::Instance = nullptr;
-
-// Sets default values
+// Called when the game starts or when spawned
 AAudioManager::AAudioManager()
 {
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	if (Instance)
-	{
-		Destroy();
-	}
-	else
-	{
-		Instance = this;
-		SetLifeSpan(0.0f); // 0 means it will not be destroyed automatically
-	}
 }
 
 // Called when the game starts or when spawned
 void AAudioManager::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("AudioManager initialized"));
+
+	PlaySound(SoundArray[0]);
 }
 
 // Called every frame
@@ -34,6 +25,7 @@ void AAudioManager::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+// Function to play a sound
 void AAudioManager::PlaySound(USoundBase* Sound)
 {
 	if (Sound)
@@ -42,14 +34,17 @@ void AAudioManager::PlaySound(USoundBase* Sound)
 	}
 }
 
-void AAudioManager::BeginDestroy()
+// Function to find a sound by name
+USoundBase* AAudioManager::FindSoundByName(FString SoundName)
 {
-	if (Instance == this)
+	for (USoundBase* Sound : SoundArray)
 	{
-		Instance = nullptr;
+		if (Sound && Sound->GetName() == SoundName)
+		{
+			return Sound;
+		}
 	}
-	Super::BeginDestroy();
-	// Prevent this actor from being destroyed
-	SetLifeSpan(0.0f);
+	return nullptr;
 }
+
 

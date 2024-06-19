@@ -26,9 +26,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Audio")
 	void PlaySound(USoundBase* Sound);
 
-	// Ensure this actor is not destroyed when loading new levels
-	virtual void BeginDestroy() override;
+	// Array to hold sound references
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	TArray<USoundBase*> SoundArray;
 
-private:
-	static AAudioManager* Instance;
+	// Function to find a sound by name
+	UFUNCTION(BlueprintCallable, Category = "Audio")
+	USoundBase* FindSoundByName(FString SoundName);
+
 };

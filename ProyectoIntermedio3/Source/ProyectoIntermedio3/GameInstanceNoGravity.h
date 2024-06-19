@@ -25,11 +25,4 @@ protected:
 
 	UFUNCTION()
 	virtual void Init() override;
-	
-	
-
-
-private:
-	void InitializeAudioManager();
-	
 };
