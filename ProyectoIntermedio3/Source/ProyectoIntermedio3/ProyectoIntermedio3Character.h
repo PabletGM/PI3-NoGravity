@@ -14,6 +14,7 @@ class UInputMappingContext;
 class UInputAction;
 class UOxygenComponent;
 class  UShieldComponent;
+class AAudioManager;
 class AProyectoIntermedio3GameMode;
 struct FInputActionValue;
 
@@ -74,6 +75,9 @@ public:
 	UFUNCTION()
 	void OnDeathAnimationFinished();
 
+	UFUNCTION()
+	void MakeSound(FString nameSound);
+
 
 	UPROPERTY()
 	FOnTakeDamage OnTakeDamage;
@@ -97,6 +101,14 @@ public:
 	UPROPERTY()
 	UShieldComponent* ShieldComponent = nullptr;
 
+	// Reference to the AudioManager
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	TSubclassOf<AAudioManager> BP_AudioManager;
+
+	// Reference to the instantiated AudioManager
+	UPROPERTY()
+	AAudioManager* AudioManagerInstance;
+
 protected:
 	void Move(const FInputActionValue& Value);
 
@@ -105,6 +117,8 @@ protected:
 	void Attack(const FInputActionValue& Value);
 
 	void Tick(float DeltaTime);
+
+	void InitializeAudioManager();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	

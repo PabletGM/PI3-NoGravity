@@ -16,7 +16,7 @@ void AAudioManager::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlaySound(SoundArray[0]);
+	// PlaySound(SoundArray[0]);
 }
 
 // Called every frame
