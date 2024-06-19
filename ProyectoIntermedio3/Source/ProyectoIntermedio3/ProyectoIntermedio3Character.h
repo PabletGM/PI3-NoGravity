@@ -12,9 +12,10 @@ class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
-struct FInputActionValue;
 class UOxygenComponent;
+class  UShieldComponent;
 class AProyectoIntermedio3GameMode;
+struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTakeDamage);
@@ -92,6 +93,9 @@ public:
 	
 	UPROPERTY()
 	UOxygenComponent* OxygenComponent = nullptr;
+
+	UPROPERTY()
+	UShieldComponent* ShieldComponent = nullptr;
 
 protected:
 	void Move(const FInputActionValue& Value);

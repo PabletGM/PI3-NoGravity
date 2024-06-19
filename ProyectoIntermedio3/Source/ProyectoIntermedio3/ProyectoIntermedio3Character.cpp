@@ -12,6 +12,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "OxygenComponent.h"
+#include "ShieldComponent.h"
 #include "ProyectoIntermedio3GameMode.h"
 
 #include "Proyecto3PlayerController.h"
@@ -22,8 +23,6 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
 // AProyectoIntermedio3Character
-
-
 
 AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 {
@@ -53,6 +52,7 @@ AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 	FollowCamera->bUsePawnControlRotation = false;
 
 	OxygenComponent = CreateDefaultSubobject<UOxygenComponent>(TEXT("OxygenComponent"));
+	ShieldComponent = CreateDefaultSubobject<UShieldComponent>(TEXT("ShieldComponent"));
 }
 
 void AProyectoIntermedio3Character::BeginPlay()
@@ -166,7 +166,14 @@ void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 
 void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 {
-	OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
+	if (ShieldComponent->GetShield() > 0)
+	{
+		ShieldComponent->RemoveShield(1);
+	}
+	else
+	{
+		OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
+	}
 
 	UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
 

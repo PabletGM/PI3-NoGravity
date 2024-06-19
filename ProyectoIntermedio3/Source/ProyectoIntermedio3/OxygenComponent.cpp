@@ -28,9 +28,6 @@ void UOxygenComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	}
 
 	Death();
-		
-	
-	
 }
 
 void UOxygenComponent::DecreaseOxygen()
@@ -65,7 +62,6 @@ void UOxygenComponent::Death()
 		
 		//quit access to canDie
 		canDie = false;
-		
 		
 		if(!owner)
 		{
