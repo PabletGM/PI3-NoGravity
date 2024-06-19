@@ -35,6 +35,10 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ADefaultRoom> BP_NoDoorRoom = nullptr;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ADefaultRoom> BP_FinalRoom = nullptr;
+
 	inline static bool HasSplit = false;
 
 	UPROPERTY(EditAnywhere)
@@ -44,7 +48,7 @@ public:
 	bool IsActive = true;
 
 	UPROPERTY()
-	bool DidntSpawnSplitRoom = true;
+	bool SpawnedSplitRoom = false;
 
 	UPROPERTY(EditAnywhere)
 	bool IsFirstSpawner = false;
