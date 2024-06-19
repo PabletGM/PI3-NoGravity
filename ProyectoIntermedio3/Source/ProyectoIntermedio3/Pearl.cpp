@@ -7,11 +7,6 @@ APearl::APearl()
 
 }
 
-void APearl::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
 void APearl::Collected(AActor* Collector)
 {
 	APlayerController* PlayerController = Cast<APlayerController>(Collector->GetInstigatorController());

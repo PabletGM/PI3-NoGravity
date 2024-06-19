@@ -15,6 +15,9 @@ public:
     FString ItemName;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+    FString Description;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
     float ItemPrice;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")

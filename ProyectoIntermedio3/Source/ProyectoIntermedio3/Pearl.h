@@ -15,9 +15,6 @@ public:
 
 	virtual void Collected(class AActor* Collector) override;
 
-protected:
-	virtual void BeginPlay() override;
-
 private:
 	int32 pearlValue = 1;
 };

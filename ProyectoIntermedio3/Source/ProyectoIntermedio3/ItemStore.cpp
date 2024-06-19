@@ -11,7 +11,14 @@ AItemStore::AItemStore()
 
 FString AItemStore::GetInteractionText_Implementation()
 {
-	return FString::Printf(TEXT("Press [E] to buy %s for %d"), *ItemName, ItemPrice);
+    FString InteractionText = FString::Printf(TEXT("Interact with %s"));
+
+    if (ItemDataAsset && ItemDataAsset->Items.Num() > 0)
+    {
+        InteractionText += FString::Printf(TEXT(" (%s)"), *ItemDataAsset->Items[0].ItemName);
+    }
+
+    return InteractionText;
 }
 
 void AItemStore::Interact_Implementation()

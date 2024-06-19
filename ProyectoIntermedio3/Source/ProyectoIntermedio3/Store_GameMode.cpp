@@ -28,7 +28,7 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 	UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(GetGameInstance());
 	if (GameInstance)
 	{
-		if (GameInstance->GetTotalPearls() >= Item->GetItemPrice())
+		/*if (GameInstance->GetTotalPearls() >= Item->GetItemPrice())
 		{
 			GameInstance->SetTotalPearls(GameInstance->GetTotalPearls() - Item->GetItemPrice());
 
@@ -37,7 +37,7 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 		else
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
-		}
+		}*/
 	}
 }
 
