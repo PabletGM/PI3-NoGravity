@@ -41,10 +41,6 @@ public:
 
 	inline static bool HasSplit = false;
 
-	inline static int TotalRoomsSpawned = 0;
-
-	inline static int TotalRoomsSinceSplit = 0;
-
 	UPROPERTY(EditAnywhere)
 	float ForwardSpawnOffset = 0;
 

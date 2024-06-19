@@ -49,13 +49,9 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 			//only spawn a room once, otherwise they overlap on top of eachother
 			if(IsActive)
 			{
-				//we do this to reset the static variables on the first room
+				//we do this to reset HasSplit because it's a static bool
 				if (IsFirstSpawner)
-				{
 					HasSplit = false;
-					TotalRoomsSpawned = 0;
-					TotalRoomsSinceSplit = 0;
-				}
 
 				UE_LOGFMT(LogTemp, Log, "Map has a split?: {0}", HasSplit);
 
@@ -74,7 +70,7 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 					int randomSplit = FMath::RandRange(0, 3);
 
 					//if we hit the random, we spawn a two door room
-					if(randomSplit == 0 && !HasSplit && BP_TwoDoorRooms.Num() > 0 && TotalRoomsSpawned < 10)
+					if(randomSplit == 0 && !HasSplit && BP_TwoDoorRooms.Num() > 0)
 					{
 						//we check which room we spawn
 						int randomSplitRoom = FMath::RandRange(0, BP_TwoDoorRooms.Num() - 1);
@@ -97,13 +93,11 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 									break;
 								}
 							}
-
 							//correctly spawned two door room, so now we have a split
 							else
 							{
 								HasSplit = true;
 								SpawnedSplitRoom = true;
-								TotalRoomsSinceSplit = 0;
 								break;
 							}
 						}
@@ -115,25 +109,12 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 						//if we already have a split on the map, we won't spawn another split room until one of the paths closes, so we roll a dice to try to spawn a 0 door room
 						if(HasSplit)
 						{
-							int randomZeroRoom = FMath::RandRange(TotalRoomsSinceSplit, 4);
-							if(randomZeroRoom == 4)
+							int randomZeroRoom = FMath::RandRange(0, 3);
+							if(randomZeroRoom == 0)
 							{
 								HasSplit = false;
 								AttemptSpawn(BP_NoDoorRoom);
-								TotalRoomsSinceSplit = 0;
 								return;
-							}
-						}
-						else
-						{
-							if(TotalRoomsSpawned >= 10)
-							{
-								int randomFinalRoom = FMath::RandRange(TotalRoomsSpawned, 20);
-								if (randomFinalRoom == 20)
-								{
-									AttemptSpawn(BP_FinalRoom);
-									return;
-								}
 							}
 						}
 
@@ -160,7 +141,6 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 									{
 										AttemptSpawn(BP_NoDoorRoom);
 										HasSplit = false;
-										TotalRoomsSinceSplit = 0;
 									}
 
 									//if there is no other path, we need to spawn the final room of the level
@@ -219,12 +199,7 @@ bool ARoomSpawner::AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn)
 		else
 		{
 			IsActive = false;
-			TotalRoomsSpawned += 1;
-			UE_LOGFMT(LogTemp, Log, "Room Spawned, Total Rooms: {0}", TotalRoomsSpawned);
-			if(HasSplit)
-			{
-				TotalRoomsSinceSplit += 0;
-			}
+			UE_LOG(LogTemp, Log, TEXT("Room Spawned"));
 			return true;
 		}
 	}
