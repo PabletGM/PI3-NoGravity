@@ -185,6 +185,7 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 		}
 		else
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("PRUEBA"));
 			OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
 		}
 
