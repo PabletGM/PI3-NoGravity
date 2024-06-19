@@ -30,6 +30,8 @@ public:
 
 	void SetCurrentOxygen(int32 NewOxygen);
 
+	void AddOxygen(float Amount);
+
 	void Death();
 
 protected:

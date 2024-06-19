@@ -48,6 +48,14 @@ void UOxygenComponent::SetCurrentOxygen(int32 NewOxygen)
 	}
 }
 
+void UOxygenComponent::AddOxygen(float Amount)
+{
+	CurrentOxygen += Amount;
+	CurrentOxygen = FMath::Clamp(CurrentOxygen, 0.0f, MaxOxygen);
+
+	OnOxygenChanged.Broadcast(CurrentOxygen, MaxOxygen);
+}
+
 void UOxygenComponent::Death()
 {
 	if(canDie)
