@@ -186,7 +186,7 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 
 	OnTakeDamage.Broadcast();
 
-	MakeSoundEffect2("Foliage_Placed");
+	MakeSoundEffect2("playerHurt");
 }
 
 void AProyectoIntermedio3Character::Tick(float DeltaTime)
