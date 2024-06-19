@@ -11,5 +11,5 @@ void UBTSCheckTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMem
 
 	AAIEnemyControllerBase* AIEnemyControllerBase = Cast<AAIEnemyControllerBase>(OwnerComp.GetOwner());
 
-	AIEnemyControllerBase->CheckTargetDistance();
+	AIEnemyControllerBase->CheckTarget();
 }

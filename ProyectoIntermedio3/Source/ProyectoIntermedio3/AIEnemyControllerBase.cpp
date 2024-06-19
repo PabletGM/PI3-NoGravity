@@ -11,7 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Logging/StructuredLog.h"
 
-void AAIEnemyControllerBase::CheckTargetDistance()
+void AAIEnemyControllerBase::CheckTarget()
 {
 
 	// Checks AI Type and add to the
