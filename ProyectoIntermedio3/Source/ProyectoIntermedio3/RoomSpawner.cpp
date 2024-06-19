@@ -49,6 +49,12 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 			//only spawn a room once, otherwise they overlap on top of eachother
 			if(IsActive)
 			{
+				if(IsFinalSpawner)
+				{
+					IsActive = false;
+					FinalSpawnerImplementation(BP_Room);
+					return;
+				}
 				//we do this to reset the static variables on the first room
 				if (IsFirstSpawner)
 				{
@@ -60,9 +66,9 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 				UE_LOGFMT(LogTemp, Log, "Map has a split?: {0}", HasSplit);
 
 				//if it has a set room to spawn it spawns that, or if it cant it spawns a room with no doors
-				if(BP_Spawnable != nullptr)
+				if(BP_Room != nullptr)
 				{
-					if(!AttemptSpawn(BP_Spawnable))
+					if(!AttemptSpawn(BP_Room))
 					{
 						AttemptSpawn(BP_NoDoorRoom);
 					}
@@ -183,6 +189,11 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 				
 		}
 	}
+}
+
+void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSpawn)
+{
+	UE_LOG(LogTemp, Log, TEXT("haha funny implementation"));
 }
 
 //to try to spawn rooms

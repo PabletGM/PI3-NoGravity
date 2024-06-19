@@ -25,7 +25,7 @@ public:
 	USceneComponent* RootCmp = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<ADefaultRoom> BP_Spawnable = nullptr;
+	TSubclassOf<ADefaultRoom> BP_Room = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	TArray<TSubclassOf<ADefaultRoom>> BP_OneDoorRooms = {};
@@ -56,6 +56,12 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool IsFirstSpawner = false;
+
+	UPROPERTY(EditAnywhere)
+	bool IsFinalSpawner = false;
+
+	UFUNCTION()
+	void FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSpawn);
 
 	UFUNCTION()
 	void OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
