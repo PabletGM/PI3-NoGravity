@@ -73,7 +73,7 @@ void AProyectoIntermedio3Character::BeginPlay()
 	InitializeAudioManager();
 
 	MakeMusic("musicOcean");
-	MakeSoundEffect2("CompileFailed");
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -148,6 +148,7 @@ void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 			if(AnimInstance && AttackMontage)
 			{
 				AnimInstance->Montage_Play(AttackMontage);
+				
 			}
 
 			//quit access to attack
@@ -184,6 +185,8 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 	UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
 
 	OnTakeDamage.Broadcast();
+
+	MakeSoundEffect2("Foliage_Placed");
 }
 
 void AProyectoIntermedio3Character::Tick(float DeltaTime)
@@ -260,10 +263,10 @@ void AProyectoIntermedio3Character::MakeSoundEffect(FString nameSound)
 	{
 		// Example method call on AudioManagerInstance
 		// Replace PlaySound with your actual method name and parameters
-		USoundBase* Sound = AudioManagerInstance->FindSoundByName(nameSound);
-		if (Sound)
+		USoundBase* Music = AudioManagerInstance->FindSoundByName(nameSound);
+		if (Music)
 		{
-			AudioManagerInstance->PlaySoundEffect1(Sound);
+			AudioManagerInstance->PlaySoundEffect1(Music);
 		}
 		else
 		{
@@ -304,10 +307,10 @@ void AProyectoIntermedio3Character::MakeMusic(FString nameMusic)
 	{
 		// Example method call on AudioManagerInstance
 		// Replace PlaySound with your actual method name and parameters
-		USoundBase* Sound = AudioManagerInstance->FindSoundByName(nameMusic);
-		if (Sound)
+		USoundBase* Sound2 = AudioManagerInstance->FindSoundByName(nameMusic);
+		if (Sound2)
 		{
-			AudioManagerInstance->PlayMusic(Sound);
+			AudioManagerInstance->PlayMusic(Sound2);
 		}
 		else
 		{
