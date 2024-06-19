@@ -4,7 +4,6 @@
 #include "Blueprint/UserWidget.h"
 #include "OxygenWidget.generated.h"
 
-class UOverlay;
 class UImage;
 
 UCLASS()

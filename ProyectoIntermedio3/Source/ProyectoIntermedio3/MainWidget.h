@@ -24,6 +24,9 @@ public:
 	UUserWidget* OxygenWidget = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UUserWidget* ShieldWidget = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UUserWidget* InteractWidget = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
