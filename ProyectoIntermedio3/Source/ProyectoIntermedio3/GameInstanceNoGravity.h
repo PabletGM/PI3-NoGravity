@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "GameFramework/Actor.h"
 #include "GameInstanceNoGravity.generated.h"
 
 UCLASS()
@@ -21,4 +22,14 @@ public:
 protected:
 	UPROPERTY()
 	int32 TotalPearls;
+
+	UFUNCTION()
+	virtual void Init() override;
+	
+	
+
+
+private:
+	void InitializeAudioManager();
+	
 };
