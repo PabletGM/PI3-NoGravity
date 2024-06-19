@@ -15,4 +15,16 @@ public:
 	AStore_GameMode();
 	
 	void BuyItem(AItemStore* Item);
+
+	// // Reference to the AudioManager
+	// UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	// TSubclassOf<AAudioManager> BP_AudioManager;
+	//
+	// // Reference to the instantiated AudioManager
+	// UPROPERTY()
+	// AAudioManager* AudioManagerInstance;
+
+	
+private:
+	void InitializeAudioManager();
 };

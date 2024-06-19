@@ -1,4 +1,6 @@
 #include "Store_GameMode.h"
+
+#include "AudioManager.h"
 #include "PlayerStateProyectoIntermedio3.h"
 #include "ItemStore.h"
 #include "GameInstanceNoGravity.h"
@@ -37,4 +39,22 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
 		}
 	}
+}
+
+void AStore_GameMode::InitializeAudioManager()
+{
+	// if (BP_AudioManager)
+	// {
+	// 	// Spawn the AudioManager instance
+	// 	AudioManagerInstance = GetWorld()->SpawnActor<AAudioManager>(BP_AudioManager);
+	//
+	// 	if (!AudioManagerInstance)
+	// 	{
+	// 			UE_LOG(LogTemp, Warning, TEXT("Failed to spawn AudioManager instance!"));
+	// 	}
+	// }
+	// else
+	// {
+	// 	UE_LOG(LogTemp, Warning, TEXT("BP_AudioManager is not set!"));
+	// }
 }
