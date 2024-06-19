@@ -1,6 +1,5 @@
 #include "ShieldWidget.h"
 #include "Components/Image.h"
-#include "Components/Overlay.h"
 #include "Components/HorizontalBox.h"
 #include "Proyecto3PlayerController.h"
 #include "ProyectoIntermedio3Character.h"
@@ -9,8 +8,6 @@
 void UShieldWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
-	Overlay->AddChildToOverlay(HorizontalBox);
 
 	HorizontalBox->AddChildToHorizontalBox(ShieldImage);
 
@@ -32,11 +29,12 @@ void UShieldWidget::NativeConstruct()
 	player->ShieldComponent->OnShieldChanged.AddDynamic(this, &UShieldWidget::UpdateShieldImage);
 }
 
-void UShieldWidget::UpdateShieldImage(int AmountShield)
+void UShieldWidget::UpdateShieldImage(int32 amountShield)
 {
-    if (ShieldImages.IsValidIndex(AmountShield))
+    if (ShieldImages.IsValidIndex(amountShield))
     {
-        UTexture2D* NewShieldTexture = ShieldImages[AmountShield];
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "image");
+        UTexture2D* NewShieldTexture = ShieldImages[amountShield];
         if (NewShieldTexture)
         {
             ShieldImage->SetBrushFromTexture(NewShieldTexture);

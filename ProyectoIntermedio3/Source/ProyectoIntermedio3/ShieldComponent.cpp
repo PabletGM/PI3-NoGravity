@@ -9,7 +9,7 @@ void UShieldComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentShield = 0;
+	CurrentShield = 3;
 }
 
 void UShieldComponent::AddShield(int32 Amount)

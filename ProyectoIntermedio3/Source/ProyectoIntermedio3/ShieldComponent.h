@@ -18,10 +18,10 @@ public:
 	FOnShieldChanged OnShieldChanged;
 
 	UPROPERTY()
-	int CurrentShield;
+	int32 CurrentShield;
 
 	UPROPERTY(EditDefaultsOnly)
-	int MaxShield = 3;
+	int32 MaxShield = 3;
 
 	int32 GetShield() const { return CurrentShield; }
 
