@@ -4,6 +4,8 @@
 #include "Components/ActorComponent.h"
 #include "ShieldComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnShieldChanged, int32, NewShieldValue);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROYECTOINTERMEDIO3_API UShieldComponent : public UActorComponent
 {
@@ -11,6 +13,9 @@ class PROYECTOINTERMEDIO3_API UShieldComponent : public UActorComponent
 
 public:	
 	UShieldComponent();
+
+	UPROPERTY()
+	FOnShieldChanged OnShieldChanged;
 
 	UPROPERTY()
 	int CurrentShield;
