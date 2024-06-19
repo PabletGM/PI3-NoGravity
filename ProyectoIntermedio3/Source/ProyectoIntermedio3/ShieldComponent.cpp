@@ -9,7 +9,7 @@ void UShieldComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentShield = 3;
+	CurrentShield = 0;
 }
 
 void UShieldComponent::AddShield(int32 Amount)
@@ -24,11 +24,4 @@ void UShieldComponent::RemoveShield(int32 Amount)
 	OnShieldChanged.Broadcast(CurrentShield);
 }
 
-void UShieldComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	FString ShieldText = FString::Printf(TEXT("CurrentShield: %d"), CurrentShield);
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, ShieldText);
-}
 
