@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
+#include "ProyectoIntermedio3Character.h"
 #include "GameFramework/Actor.h"
 
 #include "RoomSpawner.generated.h"
@@ -39,6 +40,11 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ADefaultRoom> BP_FinalRoom = nullptr;
 
+	UPROPERTY()
+	ADefaultRoom* NextRoom = nullptr;
+
+	inline static TArray<ADefaultRoom*> SpawnedRoomsArray = {};
+
 	inline static bool HasSplit = false;
 
 	inline static int TotalRoomsSpawned = 0;
@@ -51,6 +57,9 @@ public:
 	UPROPERTY()
 	bool IsActive = true;
 
+	UPROPERTY(EditAnywhere)
+	bool ShouldDeactivate = true;
+
 	UPROPERTY()
 	bool SpawnedSplitRoom = false;
 
@@ -59,6 +68,11 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	bool IsFinalSpawner = false;
+
+	inline static AProyectoIntermedio3Character* MyCharacter = nullptr;
+
+	FVector PlayerSpawnLocation = { 300, 0, 200 };
+	FRotator PlayerSpawnRotation = { 0, 0, 0 };
 
 	UFUNCTION()
 	void FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSpawn);
@@ -70,9 +84,6 @@ public:
 
 	UFUNCTION()
 	bool AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn);
-
-	UPROPERTY()
-	ADefaultRoom* NextRoom = nullptr;
 
 protected:
 	// Called when the game starts or when spawned

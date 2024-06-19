@@ -4,7 +4,6 @@
 #include "RoomSpawner.h"
 
 #include "DefaultRoom.h"
-#include "ProyectoIntermedio3Character.h"
 #include "Logging/StructuredLog.h"
 
 // Sets default values
@@ -43,8 +42,8 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 	//check if its the player
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
-		AProyectoIntermedio3Character* character = Cast<AProyectoIntermedio3Character>(OtherActor);
-		if (character)
+		MyCharacter = Cast<AProyectoIntermedio3Character>(OtherActor);
+		if (MyCharacter)
 		{
 			//only spawn a room once, otherwise they overlap on top of eachother
 			if(IsActive)
@@ -68,7 +67,7 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 				//if it has a set room to spawn it spawns that, or if it cant it spawns a room with no doors
 				if(BP_Room != nullptr)
 				{
-					if(!AttemptSpawn(BP_Room))
+					if(!AttemptSpawn(BP_Room) && !IsFirstSpawner)
 					{
 						AttemptSpawn(BP_NoDoorRoom);
 					}
@@ -159,7 +158,7 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 								}
 
 								//if no room can spawn it means we have to spawn a 0 door room
-								if (randomRoom == firstRandomRoom)
+								if (randomRoom == firstRandomRoom && !IsFirstSpawner)
 								{
 									// if there is another path, we spawn a dead end room
 									if(HasSplit)
@@ -193,7 +192,20 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 
 void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSpawn)
 {
-	UE_LOG(LogTemp, Log, TEXT("haha funny implementation"));
+	UWorld* world = GetWorld();
+	if (!world)
+		return;
+
+	for(ADefaultRoom* room : SpawnedRoomsArray)
+	{
+		world->DestroyActor(room);
+	}
+	SpawnedRoomsArray.Empty();
+	if(MyCharacter)
+	{
+		MyCharacter->SetActorLocation(PlayerSpawnLocation);
+		MyCharacter->SetActorRotation(PlayerSpawnRotation);
+	}
 }
 
 //to try to spawn rooms
@@ -229,9 +241,12 @@ bool ARoomSpawner::AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn)
 		//otherwise, we spawn the room and we turn off the spawner, so it doesn't spawns more rooms
 		else
 		{
-			IsActive = false;
+			if(ShouldDeactivate)
+				IsActive = false;
+
 			TotalRoomsSpawned += 1;
 			UE_LOGFMT(LogTemp, Log, "Room Spawned, Total Rooms: {0}", TotalRoomsSpawned);
+			SpawnedRoomsArray.Add(MyRoom);
 			if(HasSplit)
 			{
 				TotalRoomsSinceSplit += 0;
