@@ -72,7 +72,8 @@ void AProyectoIntermedio3Character::BeginPlay()
 
 	InitializeAudioManager();
 
-	MakeSound("Click_on_Button");
+	MakeMusic("musicOcean");
+	MakeSoundEffect2("CompileFailed");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -253,7 +254,7 @@ void AProyectoIntermedio3Character::OnDeathAnimationFinished()
 	}
 }
 
-void AProyectoIntermedio3Character::MakeSound(FString nameSound)
+void AProyectoIntermedio3Character::MakeSoundEffect(FString nameSound)
 {
 	if (AudioManagerInstance)
 	{
@@ -262,7 +263,51 @@ void AProyectoIntermedio3Character::MakeSound(FString nameSound)
 		USoundBase* Sound = AudioManagerInstance->FindSoundByName(nameSound);
 		if (Sound)
 		{
-			AudioManagerInstance->PlaySound(Sound);
+			AudioManagerInstance->PlaySoundEffect1(Sound);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AudioManager instance is null!"));
+	}
+}
+
+void AProyectoIntermedio3Character::MakeSoundEffect2(FString nameSound2)
+{
+	if (AudioManagerInstance)
+	{
+		// Example method call on AudioManagerInstance
+		// Replace PlaySound with your actual method name and parameters
+		USoundBase* Sound = AudioManagerInstance->FindSoundByName(nameSound2);
+		if (Sound)
+		{
+			AudioManagerInstance->PlaySoundEffect2(Sound);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AudioManager instance is null!"));
+	}
+}
+
+void AProyectoIntermedio3Character::MakeMusic(FString nameMusic)
+{
+	if (AudioManagerInstance)
+	{
+		// Example method call on AudioManagerInstance
+		// Replace PlaySound with your actual method name and parameters
+		USoundBase* Sound = AudioManagerInstance->FindSoundByName(nameMusic);
+		if (Sound)
+		{
+			AudioManagerInstance->PlayMusic(Sound);
 		}
 		else
 		{

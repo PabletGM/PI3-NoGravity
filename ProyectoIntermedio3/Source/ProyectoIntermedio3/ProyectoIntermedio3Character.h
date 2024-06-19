@@ -76,8 +76,13 @@ public:
 	void OnDeathAnimationFinished();
 
 	UFUNCTION()
-	void MakeSound(FString nameSound);
+	void MakeSoundEffect(FString nameSound);
 
+	UFUNCTION()
+	void MakeSoundEffect2(FString nameSound2);
+
+	UFUNCTION()
+	void MakeMusic(FString nameMusic);
 
 	UPROPERTY()
 	FOnTakeDamage OnTakeDamage;

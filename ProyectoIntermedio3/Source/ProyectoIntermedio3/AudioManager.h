@@ -24,8 +24,17 @@ public:
 
 	// Function to play a sound
 	UFUNCTION(BlueprintCallable, Category = "Audio")
-	void PlaySound(USoundBase* Sound);
+	void PlaySoundEffect1(USoundBase* Sound);
 
+	// Function2 to play a sound
+	UFUNCTION(BlueprintCallable, Category = "Audio")
+	void PlaySoundEffect2(USoundBase* Sound);
+
+	// Function2 to play a music
+	UFUNCTION(BlueprintCallable, Category = "Audio")
+	void PlayMusic(USoundBase* Sound);
+
+	
 	// Array to hold sound references
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	TArray<USoundBase*> SoundArray;

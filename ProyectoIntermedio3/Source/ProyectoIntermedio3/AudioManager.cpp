@@ -26,7 +26,23 @@ void AAudioManager::Tick(float DeltaTime)
 }
 
 // Function to play a sound
-void AAudioManager::PlaySound(USoundBase* Sound)
+void AAudioManager::PlaySoundEffect1(USoundBase* Sound)
+{
+	if (Sound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation());
+	}
+}
+
+void AAudioManager::PlaySoundEffect2(USoundBase* Sound)
+{
+	if (Sound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation());
+	}
+}
+
+void AAudioManager::PlayMusic(USoundBase* Sound)
 {
 	if (Sound)
 	{
