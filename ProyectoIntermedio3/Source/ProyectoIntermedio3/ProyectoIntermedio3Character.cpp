@@ -100,65 +100,68 @@ void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* P
 
 void AProyectoIntermedio3Character::Move(const FInputActionValue& Value)
 {
-	FVector2D MovementVector = Value.Get<FVector2D>();
 
-	if (Controller != nullptr)
+	//if its not dead
+	if(!isDead)
 	{
-		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		FVector2D MovementVector = Value.Get<FVector2D>();
 
-		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	
-		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
-		AddMovementInput(ForwardDirection, MovementVector.Y);
-
-		if (MovementVector.X != 0.0f)
+		if (Controller != nullptr)
 		{
-			FVector Scale = GetActorScale3D();
-			Scale.Y = FMath::Sign(MovementVector.X) * FMath::Abs(Scale.Y);
-			SetActorScale3D(Scale);
+			const FRotator Rotation = Controller->GetControlRotation();
+			const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+			const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	
+			const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+			AddMovementInput(ForwardDirection, MovementVector.Y);
+
+			if (MovementVector.X != 0.0f)
+			{
+				FVector Scale = GetActorScale3D();
+				Scale.Y = FMath::Sign(MovementVector.X) * FMath::Abs(Scale.Y);
+				SetActorScale3D(Scale);
+			}
+			AddMovementInput(RightDirection, MovementVector.X);
 		}
-		AddMovementInput(RightDirection, MovementVector.X);
 	}
+	
 }
 
 void AProyectoIntermedio3Character::Look(const FInputActionValue& Value)
 {
-	//// input is a Vector2D
-	//FVector2D LookAxisVector = Value.Get<FVector2D>();
-
-	//if (Controller != nullptr)
-	//{
-	//	// add yaw and pitch input to controller
-	//	AddControllerYawInput(LookAxisVector.X);
-	//	AddControllerPitchInput(LookAxisVector.Y);
-	//}
+	
 }
 
 void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 {
-	if(canAttack)
+	//if its not dead
+	if(!isDead)
 	{
-		AttackComponent = GetComponentByClass<UAttackComponent>();
-		if (AttackComponent)
+		if(canAttack)
 		{
-			//anim montage
-			UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-			if(AnimInstance && AttackMontage)
+			AttackComponent = GetComponentByClass<UAttackComponent>();
+			if (AttackComponent)
 			{
-				AnimInstance->Montage_Play(AttackMontage);
+				//anim montage
+				UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+				if(AnimInstance && AttackMontage)
+				{
+					AnimInstance->Montage_Play(AttackMontage);
 				
-			}
+				}
 
-			//quit access to attack
-			canAttack = false;
-		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
+				//quit access to attack
+				canAttack = false;
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
+			}
 		}
 	}
+	
 	
 }
 
@@ -173,20 +176,25 @@ void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 
 void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 {
-	if (ShieldComponent->GetShield() > 0)
+	//if its not dead
+	if(!isDead)
 	{
-		ShieldComponent->RemoveShield(1);
+		if (ShieldComponent->GetShield() > 0)
+		{
+			ShieldComponent->RemoveShield(1);
+		}
+		else
+		{
+			OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
+		}
+
+		UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
+
+		OnTakeDamage.Broadcast();
+
+		MakeSoundEffect2("playerHurt");
 	}
-	else
-	{
-		OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
-	}
-
-	UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
-
-	OnTakeDamage.Broadcast();
-
-	MakeSoundEffect2("playerHurt");
+	
 }
 
 void AProyectoIntermedio3Character::Tick(float DeltaTime)
@@ -234,7 +242,9 @@ void AProyectoIntermedio3Character::DeathPlayer()
 		AnimInstance->Montage_Play(DeathMontage);
 		DisableMovement();
 		OnDeathAnimationFinished();
-		
+		MakeSoundEffect2("drownGameOver");
+		//player died notification
+		isDead = true;
 	}
 }
 

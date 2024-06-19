@@ -95,6 +95,9 @@ private:
 	bool canAttack = true;
 
 	UPROPERTY()
+	bool isDead = false;
+
+	UPROPERTY()
 	float actualTimeAttackColdown;
 
 public:
