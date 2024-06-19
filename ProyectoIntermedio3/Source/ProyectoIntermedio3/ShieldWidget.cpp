@@ -33,7 +33,6 @@ void UShieldWidget::UpdateShieldImage(int32 amountShield)
 {
     if (ShieldImages.IsValidIndex(amountShield))
     {
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, "image");
         UTexture2D* NewShieldTexture = ShieldImages[amountShield];
         if (NewShieldTexture)
         {

@@ -32,9 +32,5 @@ public:
 	void RemoveShield(int32 Amount);
 
 protected:
-	virtual void BeginPlay() override;
-
-public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-		
+	virtual void BeginPlay() override;	
 };
