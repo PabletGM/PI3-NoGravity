@@ -20,7 +20,6 @@ public:
 
 	void UpdateFadeEffect();
 
-
 protected:
 	virtual void NativeConstruct() override;
 
