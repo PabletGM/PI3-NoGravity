@@ -48,6 +48,10 @@ class AProyectoIntermedio3Character : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackMontage;
 
+	//Animation montage for death
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* DeathMontage;
+
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AttackParams", meta = (AllowPrivateAccess = "true"))
 	float attackCooldown;
@@ -57,6 +61,18 @@ public:
 
 	UFUNCTION()
 	void TakeDamageFromAI(int32 damageAmmount);
+
+	UFUNCTION()
+	void DeathPlayer();
+
+	// Function to disable movement
+	UFUNCTION()
+	void DisableMovement();
+
+	// Function to handle end of death animation
+	UFUNCTION()
+	void OnDeathAnimationFinished();
+
 
 	UPROPERTY()
 	FOnTakeDamage OnTakeDamage;

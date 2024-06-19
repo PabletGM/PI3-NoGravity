@@ -53,23 +53,34 @@ void UOxygenComponent::SetCurrentOxygen(int32 NewOxygen)
 
 void UOxygenComponent::Death()
 {
-	if(CurrentOxygen > 0)
-		return;
-	
-	auto* owner = Cast<AProyectoIntermedio3Character>(GetOwner());
-	
-	if(!owner)
+	if(canDie)
 	{
-		return;
-	}
+		if(CurrentOxygen > 0)
+			return;
+	
+		auto* owner = Cast<AProyectoIntermedio3Character>(GetOwner());
 
-	auto* controller = Cast<AProyecto3PlayerController>(owner->GetController());
-	controller->bShowMouseCursor = true;
+		//call death function
+		owner->DeathPlayer();
+		
+		//quit access to canDie
+		canDie = false;
+		
+		
+		if(!owner)
+		{
+			return;
+		}
 
-	if(!controller)
-	{
-		return;
+		auto* controller = Cast<AProyecto3PlayerController>(owner->GetController());
+		controller->bShowMouseCursor = true;
+
+		if(!controller)
+		{
+			return;
+		}
+	
+		controller->MainWidget->ShowConcreteWidget(controller->MainWidget->GameOverWidget);
 	}
 	
-	controller->MainWidget->ShowConcreteWidget(controller->MainWidget->GameOverWidget);
 }

@@ -41,5 +41,6 @@ private:
 	float TimeSinceLastDecrease = 0.0f;
 	float TimeBetweenDecreases = 1.5f;
 
+	bool canDie = true;
 	void DecreaseOxygen();
 };

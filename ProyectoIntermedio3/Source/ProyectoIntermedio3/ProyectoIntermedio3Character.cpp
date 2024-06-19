@@ -1,5 +1,6 @@
 #include "ProyectoIntermedio3Character.h"
 
+#include "AB_GameDiver.h"
 #include "AttackComponent.h"
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
@@ -189,3 +190,36 @@ void AProyectoIntermedio3Character::Tick(float DeltaTime)
 		actualTimeAttackColdown+= DeltaTime;
 	}
 }
+
+void AProyectoIntermedio3Character::DeathPlayer()
+{
+	//anim montage
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && DeathMontage)
+	{
+		AnimInstance->Montage_Play(DeathMontage);
+		DisableMovement();
+		OnDeathAnimationFinished();
+		
+	}
+}
+
+void AProyectoIntermedio3Character::DisableMovement()
+{
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->SetMovementMode(MOVE_None);
+	}
+}
+
+//quits all the animation to stay the death pose
+void AProyectoIntermedio3Character::OnDeathAnimationFinished()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	//Cast to the specific anim instance class and set the bIsDead variable
+	if (UAB_GameDiver* ABInstance = Cast<UAB_GameDiver>(AnimInstance))
+	{
+		ABInstance->Death();  // Set this to true to prevent idle animation
+	}
+}
+
