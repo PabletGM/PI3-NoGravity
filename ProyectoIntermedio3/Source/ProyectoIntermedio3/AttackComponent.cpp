@@ -100,6 +100,10 @@ void UAttackComponent::PerformRaycast()
 			//kill the enemy
 			UE_LOG(LogTemp, Warning, TEXT("Kill the Enemy!"));
 			HitActor->Destroy();
+			// TODO Must
+			//	TakeDamage(float damageAmmount)
+			// from AIEnemyCharacterBase
+			// TODO well it should have an override function from the damageable interface
 		}
 		else
 		{

@@ -17,6 +17,9 @@ public:
 	// Sets default values for this character's properties
 	AAIEnemyCharacterBase();
 
+	void TakeDamage(float damageAmmount);
+	void Death();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -28,4 +31,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+	UPROPERTY(EditDefaultsOnly) float MaxHealth;
+	UPROPERTY() float CurrentHealth;
+	UPROPERTY(EditDefaultsOnly) UEnum* AIType = nullptr;
 };

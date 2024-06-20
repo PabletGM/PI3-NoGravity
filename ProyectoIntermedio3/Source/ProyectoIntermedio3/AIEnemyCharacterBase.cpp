@@ -11,10 +11,27 @@ AAIEnemyCharacterBase::AAIEnemyCharacterBase()
 
 }
 
+void AAIEnemyCharacterBase::TakeDamage(float damageAmmount)
+{
+	CurrentHealth -= damageAmmount;
+
+	if(damageAmmount >= CurrentHealth)
+		Death();
+}
+
+void AAIEnemyCharacterBase::Death()
+{
+	// TODO Do whatever it needs to do before die
+
+	this->Destroy();
+}
+
 // Called when the game starts or when spawned
 void AAIEnemyCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	//AIType->GetValueAsName()
 
 }
 
