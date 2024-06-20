@@ -3,6 +3,7 @@
 
 #include "AIEnemyControllerBase.h"
 
+#include "AIEnemyCharacterBase.h"
 #include "BrainComponent.h"
 #include "Proyecto3PlayerController.h"
 #include "ProyectoIntermedio3Character.h"
@@ -11,6 +12,23 @@
 #include "Kismet/GameplayStatics.h"
 #include "Logging/StructuredLog.h"
 
+
+void AAIEnemyControllerBase::BeginPlay()
+{
+	Super::BeginPlay();
+	// Checks AI Type and add to the
+	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
+
+	// Sets type of AI
+	APawn* AIPawn = GetPawn();
+
+	if(AIPawn)
+	{
+		UE_LOGFMT(LogTemp, Log, "AI_Type");
+		BlackboardComponent->SetValueAsInt("AI_Type", Cast<AAIEnemyCharacterBase>(AIPawn)->AIType);
+	}
+}
+
 void AAIEnemyControllerBase::CheckTarget()
 {
 	// Checks AI Type and add to the
@@ -18,6 +36,7 @@ void AAIEnemyControllerBase::CheckTarget()
 
 	auto* target = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
+	// Checks for the Target
 	if(target)
 		BlackboardComponent->SetValueAsObject("Target", target->GetOwner());
 	else

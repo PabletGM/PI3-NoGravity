@@ -31,8 +31,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+public:
+	UPROPERTY(meta=(BItmask,BitmaskEnum="/Game/_NoGravity/Blueprints/AI/AI_Type.AI_Type"), EditAnywhere) int AIType = 0;
+
 private:
-	UPROPERTY(EditDefaultsOnly) float MaxHealth;
-	UPROPERTY() float CurrentHealth;
-	UPROPERTY(EditDefaultsOnly) UEnum* AIType = nullptr;
+	UPROPERTY(EditDefaultsOnly) float MaxHealth = 0.0f;
+	UPROPERTY() float CurrentHealth = 0.0f;;
 };

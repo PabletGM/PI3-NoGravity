@@ -31,8 +31,7 @@ void AAIEnemyCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//AIType->GetValueAsName()
-
+	CurrentHealth = MaxHealth;
 }
 
 // Called every frame
