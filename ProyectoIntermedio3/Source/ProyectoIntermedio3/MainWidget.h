@@ -30,6 +30,9 @@ public:
 	UUserWidget* InteractWidget = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UUserWidget* InventoryWidget = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UUserWidget* GameOverWidget = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))

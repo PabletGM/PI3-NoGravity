@@ -14,6 +14,7 @@ class UInputMappingContext;
 class UInputAction;
 class UOxygenComponent;
 class  UShieldComponent;
+class UInventoryComponent;
 class AAudioManager;
 class AProyectoIntermedio3GameMode;
 struct FInputActionValue;
@@ -108,6 +109,9 @@ public:
 
 	UPROPERTY()
 	UShieldComponent* ShieldComponent = nullptr;
+
+	UPROPERTY()
+	UInventoryComponent* InventoryComponent = nullptr;
 
 	// Reference to the AudioManager
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")

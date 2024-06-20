@@ -56,6 +56,7 @@ AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 
 	OxygenComponent = CreateDefaultSubobject<UOxygenComponent>(TEXT("OxygenComponent"));
 	ShieldComponent = CreateDefaultSubobject<UShieldComponent>(TEXT("ShieldComponent"));
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 }
 
 void AProyectoIntermedio3Character::BeginPlay()
@@ -75,7 +76,6 @@ void AProyectoIntermedio3Character::BeginPlay()
 	InitializeAudioManager();
 
 	MakeMusic("musicOcean");
-	
 }
 
 //////////////////////////////////////////////////////////////////////////
