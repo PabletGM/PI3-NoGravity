@@ -15,5 +15,5 @@ public:
 	ATinCan();
 
 protected:
-	//virtual void BuyItem() override;
+	virtual void BuyItem() override;
 };

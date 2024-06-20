@@ -19,6 +19,8 @@
 #include "Proyecto3PlayerController.h"
 #include "Store_PlayerController.h"
 #include "Logging/StructuredLog.h"
+#include "GameInstanceNoGravity.h"
+#include <Kismet/GameplayStatics.h>
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 

@@ -42,11 +42,6 @@ FString AItemStore::GetInteractionText_Implementation()
     return InteractionText;
 }
 
-/*void AItemStore::BuyItem()
-{
-    Destroy();
-}*/
-
 void AItemStore::Interact_Implementation()
 {
     AStore_GameMode* GameMode = Cast<AStore_GameMode>(GetWorld()->GetAuthGameMode());
@@ -55,5 +50,10 @@ void AItemStore::Interact_Implementation()
     {
         GameMode->BuyItem(this);
     }
+}
+
+void AItemStore::BuyItem()
+{
+    Destroy();
 }
 

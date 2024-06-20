@@ -115,8 +115,8 @@ void ACharacterStore::CheckMovementLimitToCamera()
 	{
 		FVector CameraPosition = CameraManager->GetCameraLocation();
 
-		float MinX = CameraPosition.X - 350;
-		float MaxX = CameraPosition.X + 350;
+		float MinX = CameraPosition.X - 250;
+		float MaxX = CameraPosition.X + 250;
 
 		CharacterPosition.X = FMath::Clamp(CharacterPosition.X, MinX, MaxX);
 
@@ -138,20 +138,23 @@ void ACharacterStore::Interact()
 
 void ACharacterStore::DetectInteractable()
 {
-	const FVector Start = GetActorLocation() + FVector(0.f, 0.f, 30.f);
+	const FVector Start = GetActorLocation() + FVector(0.f, 0.f, 50.f);
 	const FVector ForwardDirection = GetActorForwardVector();
 	const FVector End = Start + ForwardDirection * 200.f;
 	FHitResult Hit;
 
-	bool bHit = UKismetSystemLibrary::SphereTraceSingle(
+	FVector BoxHalfSize(50.f, 50.f, 50.f);
+
+	bool bHit = UKismetSystemLibrary::BoxTraceSingle(
 		this,
 		Start,
 		End,
-		20.f,
+		BoxHalfSize,
+		FRotator::ZeroRotator,
 		ETraceTypeQuery::TraceTypeQuery1,
 		false,
 		TArray<AActor*>(),
-		EDrawDebugTrace::ForOneFrame,
+		EDrawDebugTrace::None, 
 		Hit,
 		true,
 		FLinearColor::Red,

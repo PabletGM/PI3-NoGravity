@@ -28,6 +28,8 @@ public:
 
 	int32 GetItemPrice() const;
 
+	virtual void BuyItem();
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
 	int32 ItemIndex;
@@ -37,6 +39,4 @@ protected:
 
 public:	
 	virtual void Interact_Implementation() override;
-
-    //void BuyItem() override;
 };

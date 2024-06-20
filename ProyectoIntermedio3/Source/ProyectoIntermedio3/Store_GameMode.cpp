@@ -41,6 +41,7 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("BUY"));
 		totalPealrsPlayer -= Item->GetItemPrice();
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, FString::FromInt(totalPealrsPlayer));
+		Item->BuyItem();
 	}
 	else
 	{
