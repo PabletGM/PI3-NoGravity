@@ -88,6 +88,9 @@ public:
 	UPROPERTY()
 	FOnTakeDamage OnTakeDamage;
 
+	UPROPERTY()
+	bool isDead = false;
+
 private:
 	UPROPERTY()
 	UAttackComponent* AttackComponent = nullptr;
@@ -95,8 +98,7 @@ private:
 	UPROPERTY()
 	bool canAttack = true;
 
-	UPROPERTY()
-	bool isDead = false;
+	
 
 	UPROPERTY()
 	float actualTimeAttackColdown;

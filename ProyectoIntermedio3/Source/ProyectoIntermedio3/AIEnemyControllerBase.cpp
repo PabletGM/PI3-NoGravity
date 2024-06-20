@@ -15,18 +15,7 @@
 
 void AAIEnemyControllerBase::BeginPlay()
 {
-	Super::BeginPlay();
-	// Checks AI Type and add to the
-	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
-
-	// Sets type of AI
-	APawn* AIPawn = GetPawn();
-
-	if(AIPawn)
-	{
-		UE_LOGFMT(LogTemp, Log, "AI_Type");
-		BlackboardComponent->SetValueAsInt("AI_Type", Cast<AAIEnemyCharacterBase>(AIPawn)->AIType);
-	}
+	Super::BeginPlay();	
 }
 
 void AAIEnemyControllerBase::CheckTarget()
@@ -37,10 +26,24 @@ void AAIEnemyControllerBase::CheckTarget()
 	auto* target = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
 	// Checks for the Target
-	if(target)
+	if(target && !Cast<AProyectoIntermedio3Character>(target)->isDead)
 		BlackboardComponent->SetValueAsObject("Target", target->GetOwner());
 	else
 		BlackboardComponent->SetValueAsObject("Target", NULL);
+
+	
+}
+
+void AAIEnemyControllerBase::CheckAIType()
+{
+	// Checks AI Type and add to the
+	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
+
+	// Sets type of AI
+	APawn* AIPawn = GetPawn();
+
+	if(AIPawn)
+		BlackboardComponent->SetValueAsEnum("AI_Type", Cast<AAIEnemyCharacterBase>(AIPawn)->AIType - 1);
 }
 
 void AAIEnemyControllerBase::CheckTargetDistance()
@@ -53,7 +56,7 @@ void AAIEnemyControllerBase::CheckTargetDistance()
 
 	float Distance = (PlayerCharacter->GetActorLocation() - AIPawn->GetActorLocation()).Length();
 
-	if (Distance <= 500.0f)
+	if (Distance <= 100.0f)
 		BlackboardComponent->SetValueAsBool("Chase", true);
 	else
 		BlackboardComponent->SetValueAsBool("Chase", false);
