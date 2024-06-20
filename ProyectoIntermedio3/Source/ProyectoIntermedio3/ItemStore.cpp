@@ -9,17 +9,43 @@ AItemStore::AItemStore()
 	SetRootComponent(Mesh);
 }
 
+void AItemStore::InitializeItem()
+{
+    if (!ItemDataAsset || ItemIndex >= ItemDataAsset->Items.Num())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Invalid Item Data Asset or Item Index"));
+        return;
+    }
+
+    const FItemInfoStruct& ItemInfo = ItemDataAsset->Items[ItemIndex];
+}
+
+int32 AItemStore::GetItemPrice() const
+{
+    if (ItemDataAsset && ItemIndex < ItemDataAsset->Items.Num())
+    {
+        return ItemDataAsset->Items[ItemIndex].ItemPrice;
+    }
+
+    return 0;
+}
+
 FString AItemStore::GetInteractionText_Implementation()
 {
-    FString InteractionText = FString::Printf(TEXT("Interact with %s"));
+    FString InteractionText = "Buy ";
 
-    if (ItemDataAsset && ItemDataAsset->Items.Num() > 0)
+    if (ItemDataAsset && ItemIndex < ItemDataAsset->Items.Num())
     {
-        InteractionText += FString::Printf(TEXT(" (%s)"), *ItemDataAsset->Items[0].ItemName);
+        InteractionText += ItemDataAsset->Items[ItemIndex].ItemName;
     }
 
     return InteractionText;
 }
+
+/*void AItemStore::BuyItem()
+{
+    Destroy();
+}*/
 
 void AItemStore::Interact_Implementation()
 {

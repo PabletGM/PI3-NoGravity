@@ -23,21 +23,28 @@ AStore_GameMode::AStore_GameMode()
 	PlayerStateClass = APlayerStateProyectoIntermedio3::StaticClass();
 }
 
+bool AStore_GameMode::CanBuyItem(AItemStore* Item)
+{
+	if (!Item)
+	{
+		return false;
+	}
+
+	int32 ItemPrice = Item->GetItemPrice();
+	return totalPealrsPlayer >= ItemPrice;
+}
+
 void AStore_GameMode::BuyItem(AItemStore* Item)
 {
-	UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(GetGameInstance());
-	if (GameInstance)
+	if (CanBuyItem(Item))
 	{
-		/*if (GameInstance->GetTotalPearls() >= Item->GetItemPrice())
-		{
-			GameInstance->SetTotalPearls(GameInstance->GetTotalPearls() - Item->GetItemPrice());
-
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, FString::Printf(TEXT("You bought %s!"), *Item->GetItemName()));
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
-		}*/
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("BUY"));
+		totalPealrsPlayer -= Item->GetItemPrice();
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, FString::FromInt(totalPealrsPlayer));
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
 	}
 }
 
