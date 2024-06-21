@@ -161,30 +161,24 @@ void AProyectoIntermedio3Character::Attack(const FInputActionValue& Value)
 				UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 				if(AnimInstance && AttackMontage)
 				{
-					AnimInstance->Montage_Play(AttackMontage);
-				
+					//quit access to attack
+					canAttack = false;
+					//AnimInstance->Montage_Play(AttackMontage);
+					AnimInstance->Montage_Play(AttackMontage, AttackSpeed);
 				}
-
-				//quit access to attack
-				canAttack = false;
 			}
 			else
-			{
 				UE_LOG(LogTemp, Warning, TEXT("InteractionComponent not found!"));
-			}
 		}
 	}
-	
-	
 }
 
 void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 {
 	//attacks
-	if(canAttack)
-	{
-		AttackComponent->PerformRaycast();
-	}
+	canAttack = true;
+	AttackComponent->PerformRaycast();
+	
 }
 
 void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
@@ -215,18 +209,6 @@ void AProyectoIntermedio3Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if(actualTimeAttackColdown >= attackCooldown)
-	{
-		//can attack when cooldown pass
-		canAttack = true;
-		//restart timer
-		actualTimeAttackColdown = 0;
-	}
-	else
-	{
-		//add time
-		actualTimeAttackColdown+= DeltaTime;
-	}
 }
 
 void AProyectoIntermedio3Character::InitializeAudioManager()
@@ -272,9 +254,7 @@ void AProyectoIntermedio3Character::DeathPlayer()
 void AProyectoIntermedio3Character::DisableMovement()
 {
 	if (GetCharacterMovement())
-	{
 		GetCharacterMovement()->SetMovementMode(MOVE_None);
-	}
 }
 
 //quits all the animation to stay the death pose
@@ -283,9 +263,7 @@ void AProyectoIntermedio3Character::OnDeathAnimationFinished()
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	//Cast to the specific anim instance class and set the bIsDead variable
 	if (UAB_GameDiver* ABInstance = Cast<UAB_GameDiver>(AnimInstance))
-	{
 		ABInstance->Death();  // Set this to true to prevent idle animation
-	}
 }
 
 void AProyectoIntermedio3Character::MakeSoundEffect(FString nameSound)

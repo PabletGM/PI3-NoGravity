@@ -57,7 +57,7 @@ class AProyectoIntermedio3Character : public ACharacter
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AttackParams", meta = (AllowPrivateAccess = "true"))
-	float attackCooldown;
+	float AttackSpeed = 0.0f;
 
 	UFUNCTION()
 	void PerformAttackNotifyAnim();
@@ -97,11 +97,6 @@ private:
 
 	UPROPERTY()
 	bool canAttack = true;
-
-	
-
-	UPROPERTY()
-	float actualTimeAttackColdown;
 
 public:
 	AProyectoIntermedio3Character();
