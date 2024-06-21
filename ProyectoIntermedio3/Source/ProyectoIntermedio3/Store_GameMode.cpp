@@ -35,6 +35,10 @@ void AStore_GameMode::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Failed to cast to UGameInstanceNoGravity"));
 	}
+
+	Super::BeginPlay();
+	GetWorldTimerManager().SetTimerForNextTick(this, &AStore_GameMode::PostBeginPlay);
+	
 }
 
 
@@ -64,18 +68,58 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 
 void AStore_GameMode::InitializeAudioManager()
 {
-	// if (BP_AudioManager)
-	// {
-	// 	// Spawn the AudioManager instance
-	// 	AudioManagerInstance = GetWorld()->SpawnActor<AAudioManager>(BP_AudioManager);
-	//
-	// 	if (!AudioManagerInstance)
-	// 	{
-	// 			UE_LOG(LogTemp, Warning, TEXT("Failed to spawn AudioManager instance!"));
-	// 	}
-	// }
-	// else
-	// {
-	// 	UE_LOG(LogTemp, Warning, TEXT("BP_AudioManager is not set!"));
-	// }
+	
+	if (BP_AudioManager)
+	{
+		// Spawn the AudioManager instance
+		AudioManagerInstance = GetWorld()->SpawnActor<AAudioManager>(BP_AudioManager);
+
+		//add a tag to the AudioManager
+		if (AudioManagerInstance)
+		{
+			// Assign a unique tag to the AudioManager instance
+			AudioManagerInstance->Tags.Add(FName("AudioManager"));
+		}
+		
+		if (!AudioManagerInstance)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Failed to spawn AudioManager instance!"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BP_AudioManager is not set!"));
+	}
+
 }
+
+void AStore_GameMode::MakeMusic(FString nameMusic)
+{
+	if (AudioManagerInstance)
+	{
+		// Example method call on AudioManagerInstance
+		// Replace PlaySound with your actual method name and parameters
+		USoundBase* Sound2 = AudioManagerInstance->FindSoundByName(nameMusic);
+		if (Sound2)
+		{
+			AudioManagerInstance->PlayMusic(Sound2);
+		}
+		else
+		{
+			// UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AudioManager instance is null!"));
+	}
+}
+
+
+void AStore_GameMode::PostBeginPlay()
+{
+	InitializeAudioManager();
+	MakeMusic("mainMenuMusic");
+}
+
+

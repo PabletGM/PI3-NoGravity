@@ -2,9 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "AudioManager.h"
 #include "Store_GameMode.generated.h"
 
 class AItemStore;
+class AAudioManager;
 
 UCLASS()
 class PROYECTOINTERMEDIO3_API AStore_GameMode : public AGameModeBase
@@ -21,16 +23,27 @@ public:
 
 	void BuyItem(AItemStore* Item);
 
-	// // Reference to the AudioManager
-	// UPROPERTY(EditDefaultsOnly, Category = "Audio")
-	// TSubclassOf<AAudioManager> BP_AudioManager;
-	//
-	// // Reference to the instantiated AudioManager
-	// UPROPERTY()
-	// AAudioManager* AudioManagerInstance;
+	// Reference to the instantiated AudioManager
+	UPROPERTY()
+	AAudioManager* AudioManagerInstance;
+
+	// Reference to the AudioManager
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	TSubclassOf<AAudioManager> BP_AudioManager;
+
+	UFUNCTION()
+	void MakeMusic(FString nameMusic);
+
+protected:
+
+	void InitializeAudioManager();
+
+	void PostBeginPlay();
+
+	
 
 private:
 	int32 totalPealrsPlayer = 0;
 
-	void InitializeAudioManager();
+
 };
