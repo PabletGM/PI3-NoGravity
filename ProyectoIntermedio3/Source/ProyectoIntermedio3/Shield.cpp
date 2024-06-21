@@ -1,5 +1,6 @@
 #include "Shield.h"
 #include "ProyectoIntermedio3Character.h"
+#include "ShieldComponent.h"
 
 AShield::AShield()
 {
@@ -11,7 +12,7 @@ void AShield::Collected(AActor* Collector)
     AProyectoIntermedio3Character* Character = Cast<AProyectoIntermedio3Character>(Collector);
     if (Character && Character->ShieldComponent)
     {
-        Character->ShieldComponent->AddShield(1); 
+        Character->ShieldComponent->AddShield(1);
     }
 }
 

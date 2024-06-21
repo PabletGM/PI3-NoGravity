@@ -1,7 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Collectable.h"
 #include "GameFramework/Actor.h"
+
 #include "Shield.generated.h"
 
 UCLASS()
