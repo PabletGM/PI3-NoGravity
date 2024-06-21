@@ -84,6 +84,6 @@ void AMainMenu_GameModeBase::InitializeAudioManager()
 void AMainMenu_GameModeBase::PostBeginPlay()
 {
 	InitializeAudioManager();
-	MakeMusic("musicOcean");
+	MakeMusic("mainMenuMusic");
 }
 
