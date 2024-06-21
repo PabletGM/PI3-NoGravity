@@ -25,7 +25,6 @@ bool UInventoryComponent::AddItem(AItemStore* Item)
 		return false;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("ADDD"));
 	ItemsPurchased.Add(Item);
 	OnInventoryUpdated.Broadcast(Item->GetItemIcon());
 
@@ -45,3 +44,5 @@ bool UInventoryComponent::RemoveItem(AItemStore* Item)
 
 	return false;
 }
+
+
