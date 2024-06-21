@@ -36,7 +36,7 @@ void UGameOver::InitializeButtons()
 
 	if (QuitButtonText)
 	{
-		QuitButtonText->SetText(FText::FromString(TEXT("Return Main Menu")));
+		QuitButtonText->SetText(FText::FromString(TEXT("Main Menu")));
 	}
 }
 
