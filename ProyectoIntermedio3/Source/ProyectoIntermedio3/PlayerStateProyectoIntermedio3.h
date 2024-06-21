@@ -12,14 +12,20 @@ class PROYECTOINTERMEDIO3_API APlayerStateProyectoIntermedio3 : public APlayerSt
 	GENERATED_BODY()
 	
 public:
+	APlayerStateProyectoIntermedio3();
+
 	UPROPERTY(BlueprintAssignable)
 	FOnPearlCountChanged OnPearlCountChanged;
+
+	virtual void BeginPlay() override;
 
 	UFUNCTION()
 	void AddPearl(int32 value);
 
 	UFUNCTION()
 	int32 GetPearlCount() const { return totalPealrs; }
+
+	void UpdateWidgetPearl();
 
 private:
 	int32 totalPealrs = 0;

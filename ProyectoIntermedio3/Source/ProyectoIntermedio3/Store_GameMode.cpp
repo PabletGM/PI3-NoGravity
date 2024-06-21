@@ -1,5 +1,4 @@
 #include "Store_GameMode.h"
-
 #include "AudioManager.h"
 #include "PlayerStateProyectoIntermedio3.h"
 #include "ItemStore.h"
@@ -23,6 +22,22 @@ AStore_GameMode::AStore_GameMode()
 	PlayerStateClass = APlayerStateProyectoIntermedio3::StaticClass();
 }
 
+void AStore_GameMode::BeginPlay()
+{
+	UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(GetGameInstance());
+
+	if (GameInstance)
+	{
+		totalPealrsPlayer = GameInstance->GetTotalPearls();
+		UE_LOG(LogTemp, Log, TEXT("Total Pearls Player initialized to %d"), totalPealrsPlayer);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed to cast to UGameInstanceNoGravity"));
+	}
+}
+
+
 bool AStore_GameMode::CanBuyItem(AItemStore* Item)
 {
 	if (!Item)
@@ -38,9 +53,7 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 {
 	if (CanBuyItem(Item))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("BUY"));
 		totalPealrsPlayer -= Item->GetItemPrice();
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Green, FString::FromInt(totalPealrsPlayer));
 		Item->BuyItem();
 	}
 	else

@@ -1,12 +1,31 @@
 #include "PlayerStateProyectoIntermedio3.h"
 #include "PearlsWidget.h"
 #include "GameInstanceNoGravity.h"
+#include <Kismet/GameplayStatics.h>
+
+APlayerStateProyectoIntermedio3::APlayerStateProyectoIntermedio3()
+{
+    GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
+}
+
+void APlayerStateProyectoIntermedio3::BeginPlay()
+{
+    Super::BeginPlay();
+
+    UpdateWidgetPearl();
+}
 
 void APlayerStateProyectoIntermedio3::AddPearl(int32 value)
 {
 	totalPealrs += value;
 
-	OnPearlCountChanged.Broadcast(totalPealrs);
+    UpdateWidgetPearl();
 
-	GameInstance->SetTotalPearls(value); //CORRECT: PASS INFORMATION PEARLS WHEN CHANGE SCENE TO STORE ONLY
+	GameInstance->SetTotalPearls(value); 
+}
+
+void APlayerStateProyectoIntermedio3::UpdateWidgetPearl()
+{
+    totalPealrs = GameInstance->GetTotalPearls();
+    OnPearlCountChanged.Broadcast(totalPealrs);
 }

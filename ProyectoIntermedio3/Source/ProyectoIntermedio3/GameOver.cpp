@@ -7,6 +7,7 @@
 #include "Components/TextBlock.h"
 #include "Components/VerticalBoxSlot.h"
 #include "Kismet/GameplayStatics.h"
+#include "PlayerStateProyectoIntermedio3.h"
 
 void UGameOver::NativeConstruct()
 {
@@ -62,6 +63,8 @@ void UGameOver::ConfigureMargins()
 
 void UGameOver::RestartGame()
 {
+	APlayerStateProyectoIntermedio3* PlayerState = Cast<APlayerStateProyectoIntermedio3>(UGameplayStatics::GetPlayerState(GetWorld(), 0));
+	PlayerState->UpdateWidgetPearl();
 	UE_LOG(LogTemp, Warning, TEXT("RestartGame"));
 	UGameplayStatics::OpenLevel(this, StoreLevelName);
 }

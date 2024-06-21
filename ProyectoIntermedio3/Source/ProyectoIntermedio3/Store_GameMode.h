@@ -14,6 +14,8 @@ class PROYECTOINTERMEDIO3_API AStore_GameMode : public AGameModeBase
 public:
 	AStore_GameMode();
 	
+	virtual void BeginPlay() override;
+
 	UFUNCTION()
 	bool CanBuyItem(AItemStore* Item);
 
@@ -28,7 +30,7 @@ public:
 	// AAudioManager* AudioManagerInstance;
 
 private:
-	int32 totalPealrsPlayer = 10;
+	int32 totalPealrsPlayer = 0;
 
 	void InitializeAudioManager();
 };
