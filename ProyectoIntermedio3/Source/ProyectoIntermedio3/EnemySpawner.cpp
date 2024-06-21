@@ -29,7 +29,6 @@ void AEnemySpawner::BeginPlay()
 	if (randomSpawn > 0)
 		return;
 
-	
 	FVector SpawnLocation = GetActorLocation();
 	FRotator SpawnRotation = GetActorRotation();
 	FActorSpawnParameters SpawnParams;
