@@ -9,10 +9,12 @@ ACollectable::ACollectable()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
-	SetRootComponent(Mesh);
-	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	RootCmp = CreateDefaultSubobject<USceneComponent>(TEXT("RootCmp"));
+	SetRootComponent(RootCmp);
 
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
+	Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	Mesh->SetupAttachment(RootCmp);
 	Collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
 	Collider->SetupAttachment(Mesh);
 	Collider->SetCollisionEnabled(ECollisionEnabled::QueryOnly);

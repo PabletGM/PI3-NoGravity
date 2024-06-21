@@ -11,6 +11,9 @@ UCLASS()
 class PROYECTOINTERMEDIO3_API ACollectable : public AActor
 {
 	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly)
+	USceneComponent* RootCmp = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* Mesh = nullptr;
