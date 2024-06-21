@@ -40,6 +40,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ADefaultRoom> BP_FinalRoom = nullptr;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> BP_BonusObject = nullptr;
+
 	UPROPERTY()
 	ADefaultRoom* NextRoom = nullptr;
 
@@ -50,6 +53,10 @@ public:
 	inline static int TotalRoomsSpawned = 0;
 
 	inline static int TotalRoomsSinceSplit = 0;
+
+	inline static AProyectoIntermedio3Character* MyCharacter = nullptr;
+
+	inline static bool IsFirstSpawnerActive = true;
 
 	UPROPERTY(EditAnywhere)
 	float ForwardSpawnOffset = 0;
@@ -69,10 +76,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	bool IsFinalSpawner = false;
 
-	inline static AProyectoIntermedio3Character* MyCharacter = nullptr;
-
+	UPROPERTY(EditDefaultsOnly)
 	FVector PlayerSpawnLocation = { 300, 0, 200 };
+	UPROPERTY(EditDefaultsOnly)
 	FRotator PlayerSpawnRotation = { 0, 0, 0 };
+
+	UPROPERTY(EditDefaultsOnly)
+	FVector BonusObjectSpawnLocation = { 600, 0, 200 };
 
 	UFUNCTION()
 	void FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSpawn);

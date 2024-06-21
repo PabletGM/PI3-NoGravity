@@ -4,6 +4,8 @@
 #include "RoomSpawner.h"
 
 #include "DefaultRoom.h"
+#include "GameFramework/CharacterMovementComponent.h"
+
 #include "Logging/StructuredLog.h"
 
 // Sets default values
@@ -25,6 +27,12 @@ ARoomSpawner::ARoomSpawner()
 void ARoomSpawner::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (IsFirstSpawner)
+	{
+		IsFirstSpawnerActive = true;
+		SpawnedRoomsArray.Empty();
+	}
 
 }
 
@@ -51,23 +59,27 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 				if(IsFinalSpawner)
 				{
 					IsActive = false;
+					IsFirstSpawnerActive = true;
 					FinalSpawnerImplementation(BP_Room);
 					return;
 				}
 				//we do this to reset the static variables on the first room
 				if (IsFirstSpawner)
 				{
+					if (!IsFirstSpawnerActive)
+						return;
 					HasSplit = false;
 					TotalRoomsSpawned = 0;
 					TotalRoomsSinceSplit = 0;
+					IsFirstSpawnerActive = false;
 				}
 
-				UE_LOGFMT(LogTemp, Log, "Map has a split?: {0}", HasSplit);
+				//UE_LOGFMT(LogTemp, Log, "Map has a split?: {0}", HasSplit);
 
 				//if it has a set room to spawn it spawns that, or if it cant it spawns a room with no doors
 				if(BP_Room != nullptr)
 				{
-					if(!AttemptSpawn(BP_Room) && !IsFirstSpawner)
+					if (!AttemptSpawn(BP_Room))
 					{
 						AttemptSpawn(BP_NoDoorRoom);
 					}
@@ -196,6 +208,14 @@ void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSp
 	if (!world)
 		return;
 
+	if (BP_BonusObject)
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = GetInstigator();
+
+		world->SpawnActor<AActor>(BP_BonusObject, BonusObjectSpawnLocation, { 0, 0, 0 }, SpawnParams);
+	}
 	for(ADefaultRoom* room : SpawnedRoomsArray)
 	{
 		world->DestroyActor(room);
@@ -205,7 +225,9 @@ void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSp
 	{
 		MyCharacter->SetActorLocation(PlayerSpawnLocation);
 		MyCharacter->SetActorRotation(PlayerSpawnRotation);
+		MyCharacter->GetVelocity() = { 0, 0, 0 };
 	}
+
 }
 
 //to try to spawn rooms
