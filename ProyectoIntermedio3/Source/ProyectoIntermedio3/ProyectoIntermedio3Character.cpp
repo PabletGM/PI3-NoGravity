@@ -202,6 +202,7 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 		OnTakeDamage.Broadcast();
 
 		MakeSoundEffect2("playerHurt");
+		MakeSoundEffect("bite2");
 	}
 	
 }

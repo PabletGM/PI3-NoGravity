@@ -105,7 +105,7 @@ void UAttackComponent::PerformRaycast()
 			if (EnemyCharacter)
 			{
 				// Call the method on AAIEnemyCharacterBase
-				EnemyCharacter->TakeDamage(300.0f);
+				EnemyCharacter->TakeDamage(damageToEnemyAttackPlayer);
 			}
 			//kill the enemy
 			UE_LOG(LogTemp, Warning, TEXT("Kill the Enemy!"));

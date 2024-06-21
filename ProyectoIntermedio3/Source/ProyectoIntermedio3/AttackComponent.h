@@ -21,6 +21,10 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+public:
+	UPROPERTY()
+	float damageToEnemyAttackPlayer = 100;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

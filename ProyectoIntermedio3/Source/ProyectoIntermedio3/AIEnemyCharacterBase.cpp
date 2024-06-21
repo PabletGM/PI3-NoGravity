@@ -19,8 +19,8 @@ void AAIEnemyCharacterBase::TakeDamage(float damageAmmount)
 {
 	CurrentHealth -= damageAmmount;
 
-	// //take damage sound IA
-	MakeSoundEffect("bite2");
+	// // //take damage sound IA
+	
 	
 	if(damageAmmount >= CurrentHealth)
 		Death();
@@ -29,7 +29,7 @@ void AAIEnemyCharacterBase::TakeDamage(float damageAmmount)
 void AAIEnemyCharacterBase::Death()
 {
 	// TODO Do whatever it needs to do before die
-
+	MakeSoundEffect("enemyDeathSound");
 	this->Destroy();
 }
 
