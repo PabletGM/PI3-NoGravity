@@ -1,6 +1,8 @@
 #include "Collectable.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
+#include "ProyectoIntermedio3Character.h"
+
 #include "Engine/Engine.h"
 
 ACollectable::ACollectable()
@@ -29,10 +31,14 @@ void ACollectable::BeginPlay()
 
 void ACollectable::OnOverlapBegin(AActor* OverlappedActor, AActor* OtherActor)
 {
-	if (OtherActor && OtherActor != this)
+	if (OtherActor && (OtherActor != this))
 	{
-		Collected(OtherActor);
-		Destroy();
+		AProyectoIntermedio3Character* myCharacter = Cast<AProyectoIntermedio3Character>(OtherActor);
+		if (myCharacter)
+		{
+			Collected(OtherActor);
+			Destroy();
+		}
 	}
 }
 

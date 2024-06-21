@@ -2,9 +2,7 @@
 
 
 #include "RoomSpawner.h"
-
 #include "DefaultRoom.h"
-#include "GameFramework/CharacterMovementComponent.h"
 
 #include "Logging/StructuredLog.h"
 
@@ -207,15 +205,6 @@ void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSp
 	UWorld* world = GetWorld();
 	if (!world)
 		return;
-
-	if (BP_BonusObject)
-	{
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.Owner = this;
-		SpawnParams.Instigator = GetInstigator();
-
-		world->SpawnActor<AActor>(BP_BonusObject, BonusObjectSpawnLocation, { 0, 0, 0 }, SpawnParams);
-	}
 	for(ADefaultRoom* room : SpawnedRoomsArray)
 	{
 		world->DestroyActor(room);
@@ -227,7 +216,14 @@ void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSp
 		MyCharacter->SetActorRotation(PlayerSpawnRotation);
 		MyCharacter->GetVelocity() = { 0, 0, 0 };
 	}
+	if (BP_BonusObject)
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = GetInstigator();
 
+		world->SpawnActor<ACollectable>(BP_BonusObject, BonusObjectSpawnLocation, FRotator::ZeroRotator, SpawnParams);
+	}
 }
 
 //to try to spawn rooms

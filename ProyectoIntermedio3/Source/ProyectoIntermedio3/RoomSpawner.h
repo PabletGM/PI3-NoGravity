@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
 #include "ProyectoIntermedio3Character.h"
+#include "Collectable.h"
 #include "GameFramework/Actor.h"
 
 #include "RoomSpawner.generated.h"
@@ -41,7 +42,7 @@ public:
 	TSubclassOf<ADefaultRoom> BP_FinalRoom = nullptr;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<AActor> BP_BonusObject = nullptr;
+	TSubclassOf<ACollectable> BP_BonusObject = nullptr;
 
 	UPROPERTY()
 	ADefaultRoom* NextRoom = nullptr;
@@ -82,7 +83,7 @@ public:
 	FRotator PlayerSpawnRotation = { 0, 0, 0 };
 
 	UPROPERTY(EditDefaultsOnly)
-	FVector BonusObjectSpawnLocation = { 600, 0, 200 };
+	FVector BonusObjectSpawnLocation = { 700, 0, 200 };
 
 	UFUNCTION()
 	void FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSpawn);
