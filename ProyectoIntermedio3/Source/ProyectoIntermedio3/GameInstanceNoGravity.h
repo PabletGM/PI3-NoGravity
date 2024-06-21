@@ -31,4 +31,5 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	TArray<AItemStore*> ItemsPurchasedStore;
+
 };
