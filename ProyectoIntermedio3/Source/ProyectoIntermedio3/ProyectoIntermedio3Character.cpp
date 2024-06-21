@@ -76,8 +76,13 @@ void AProyectoIntermedio3Character::BeginPlay()
 		GameInstance->RestoreInventoryIcons(InventoryComponent);
 	}
 
-	InitializeAudioManager();
+	GetWorldTimerManager().SetTimerForNextTick(this, &AProyectoIntermedio3Character::PostBeginPlay);
+	
+}
 
+void AProyectoIntermedio3Character::PostBeginPlay()
+{
+	InitializeAudioManager();
 	MakeMusic("musicOcean");
 }
 
@@ -320,7 +325,7 @@ void AProyectoIntermedio3Character::MakeMusic(FString nameMusic)
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
+			// UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
 		}
 	}
 	else

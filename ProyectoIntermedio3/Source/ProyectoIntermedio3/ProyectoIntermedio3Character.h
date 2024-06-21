@@ -134,6 +134,8 @@ protected:
 	
 	virtual void BeginPlay();
 
+	void PostBeginPlay();
+
 public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
