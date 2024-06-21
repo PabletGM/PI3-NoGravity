@@ -4,6 +4,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "MainMenu_GameModeBase.generated.h"
 
+class UItemDataAsset;
+
 UCLASS()
 class PROYECTOINTERMEDIO3_API AMainMenu_GameModeBase : public AGameModeBase
 {
@@ -11,4 +13,9 @@ class PROYECTOINTERMEDIO3_API AMainMenu_GameModeBase : public AGameModeBase
 
 public:
     AMainMenu_GameModeBase();
+
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
+	UItemDataAsset* ItemDataAsset;
 };

@@ -15,14 +15,14 @@ AAIEnemyCharacterBase::AAIEnemyCharacterBase()
 	
 }
 
-void AAIEnemyCharacterBase::TakeDamage(float damageAmmount)
+void AAIEnemyCharacterBase::TakeDamage(float damageAmount)
 {
-	CurrentHealth -= damageAmmount;
+	CurrentHealth -= damageAmount;
 
 	// // //take damage sound IA
 	
 	
-	if(damageAmmount >= CurrentHealth)
+	if(damageAmount >= CurrentHealth)
 		Death();
 }
 

@@ -45,8 +45,6 @@ class AProyectoIntermedio3Character : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* AttackAction;
 
-	AProyectoIntermedio3GameMode* CurrentGameMode = nullptr;
-
 	//Animation montage for attack
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* AttackMontage;

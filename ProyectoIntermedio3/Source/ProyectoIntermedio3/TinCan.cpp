@@ -1,7 +1,5 @@
 #include "TinCan.h"
-#include "ProyectoIntermedio3Character.h"
 #include "GameInstanceNoGravity.h"
-#include <Kismet/GameplayStatics.h>
 
 ATinCan::ATinCan()
 {

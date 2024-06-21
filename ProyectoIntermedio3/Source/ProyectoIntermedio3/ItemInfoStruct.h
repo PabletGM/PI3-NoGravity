@@ -23,8 +23,8 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
     UTexture2D* ItemIcon;
 
-    FItemInfoStruct()
-        : ItemName(TEXT("Default Item")), ItemPrice(0.0f), ItemIcon(nullptr)
-    {
-    }
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+    int32 amount;
+
+    FItemInfoStruct() : ItemName(TEXT("Default Item")), ItemPrice(0.0f), ItemIcon(nullptr), amount(0){}
 };

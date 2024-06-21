@@ -2,7 +2,6 @@
 #include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Store_GameMode.h"
 #include "AB_StoreDiver.h"
 #include "InventoryComponent.h"
 #include "Store_PlayerController.h"
@@ -37,10 +36,7 @@ void ACharacterStore::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
-	}
-
-	CurrentGameMode = Cast<AStore_GameMode>(GetWorld()->GetAuthGameMode());
-}
+	}}
 
 	void ACharacterStore::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	{

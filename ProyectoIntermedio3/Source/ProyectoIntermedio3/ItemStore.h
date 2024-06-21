@@ -36,7 +36,7 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
-	int32 ItemIndex;
+	int32 ItemIndex = 0.0f;
 
 public:	
 	virtual void Interact_Implementation() override;

@@ -17,7 +17,6 @@
 #include "InventoryComponent.h"
 #include "ProyectoIntermedio3GameMode.h"
 #include "Proyecto3PlayerController.h"
-#include "Store_PlayerController.h"
 #include "Logging/StructuredLog.h"
 #include "GameInstanceNoGravity.h"
 #include <Kismet/GameplayStatics.h>
@@ -70,8 +69,6 @@ void AProyectoIntermedio3Character::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-
-	CurrentGameMode = Cast<AProyectoIntermedio3GameMode>(GetWorld()->GetAuthGameMode());
 
 	UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
 	if (GameInstance && InventoryComponent)
@@ -331,4 +328,3 @@ void AProyectoIntermedio3Character::MakeMusic(FString nameMusic)
 		UE_LOG(LogTemp, Warning, TEXT("AudioManager instance is null!"));
 	}
 }
-

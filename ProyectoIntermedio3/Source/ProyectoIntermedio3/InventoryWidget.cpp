@@ -3,7 +3,7 @@
 #include "Components/VerticalBox.h"
 #include "Store_PlayerController.h"
 #include "CharacterStore.h"
-#include "ItemStore.h"
+#include "Components/VerticalBoxSlot.h"
 
 void UInventoryWidget::NativeConstruct()
 {
@@ -26,7 +26,7 @@ void UInventoryWidget::NativeConstruct()
 	if (!player || !player->InventoryComponent)
 		return;
 
-	player->InventoryComponent->OnInventoryUpdated.AddDynamic(this, &UInventoryWidget::OnInventoryUpdated);
+    player->InventoryComponent->OnInventoryUpdated.AddDynamic(this, &UInventoryWidget::OnInventoryUpdated);
 }
 
 void UInventoryWidget::ConfigurationWidget()
@@ -35,7 +35,7 @@ void UInventoryWidget::ConfigurationWidget()
     {
         VerticalBox->ClearChildren();
         
-        for (int32 i = 0; i < 6; ++i)
+       for (int32 i = 0; i < 6; ++i)
         {
             UVerticalBoxSlot* NewSlot = Cast<UVerticalBoxSlot>(VerticalBox->AddChild(InventoryImages[i]));
 
@@ -46,16 +46,13 @@ void UInventoryWidget::ConfigurationWidget()
                 NewSlot->SetPadding(FMargin(0.f, 10.f, 0.f, 0.f)); 
             }
         }
-
     }
 }
 
 void UInventoryWidget::OnInventoryUpdated(UTexture2D* ItemIcon)
 {
     if (!ItemIcon)
-    {
-        return;
-    }
+		return;
 
     GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, FString::Printf(TEXT("ItemIcon: %s"), *ItemIcon->GetName()));
 

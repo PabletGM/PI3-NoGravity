@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InventoryComponent.h"
 #include "GameFramework/Character.h"
 
 #include "CharacterStore.generated.h"
@@ -8,7 +9,6 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
-class UInventoryComponent;
 class AStore_GameMode;
 
 DECLARE_DYNAMIC_DELEGATE_OneParam(FInteractDelegate, FString, text);
@@ -27,8 +27,6 @@ class PROYECTOINTERMEDIO3_API ACharacterStore : public ACharacter
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* InteractAction;
-
-	AStore_GameMode* CurrentGameMode = nullptr;
 
 public:
 	ACharacterStore();

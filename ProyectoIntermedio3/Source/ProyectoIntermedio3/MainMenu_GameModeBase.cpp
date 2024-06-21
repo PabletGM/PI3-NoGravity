@@ -1,5 +1,6 @@
 #include "MainMenu_GameModeBase.h"
-#include "MainMenu_PlayerController.h"
+
+#include "GameInstanceNoGravity.h"
 
 AMainMenu_GameModeBase::AMainMenu_GameModeBase()
 	: Super()
@@ -10,4 +11,19 @@ AMainMenu_GameModeBase::AMainMenu_GameModeBase()
 	{
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
+}
+
+void AMainMenu_GameModeBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if(ItemDataAsset)
+	{
+		for (int32 i = 0; i < ItemDataAsset->Items.Max(); ++i)
+		{
+			ItemDataAsset->Items[i].amount = 0;
+		}
+	}
+	else
+		UE_LOG(LogTemp, Warning, TEXT("DataAsset Not found"));
 }

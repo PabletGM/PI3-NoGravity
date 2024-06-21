@@ -88,6 +88,8 @@ void AItemStore::BuyItem()
 
     InventoryComponent->AddItem(this);
 
+    InventoryComponent->UpdateInventory(ItemDataAsset, ItemIndex);
+
     Destroy();
 }
 

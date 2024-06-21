@@ -45,4 +45,9 @@ bool UInventoryComponent::RemoveItem(AItemStore* Item)
 	return false;
 }
 
+void UInventoryComponent::UpdateInventory(UItemDataAsset* dataAsset, int32 index)
+{
+	dataAsset->Items[index].amount += 1;
+}
+
 

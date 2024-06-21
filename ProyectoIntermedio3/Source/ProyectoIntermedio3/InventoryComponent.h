@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ItemDataAsset.h"
 #include "Components/ActorComponent.h"
 
 #include "InventoryComponent.generated.h"
@@ -20,6 +21,8 @@ public:
 
 	bool AddItem(AItemStore* Item);
 	bool RemoveItem(AItemStore* Item);
+
+	void UpdateInventory(UItemDataAsset* dataAsset, int32 index);
 
 	UPROPERTY(BlueprintAssignable, Category = "Inventory")
 	FOnInventoryUpdated OnInventoryUpdated;

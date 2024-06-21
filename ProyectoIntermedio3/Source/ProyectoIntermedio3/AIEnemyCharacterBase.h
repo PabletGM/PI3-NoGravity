@@ -17,7 +17,7 @@ public:
 	// Sets default values for this character's properties
 	AAIEnemyCharacterBase();
 
-	void TakeDamage(float damageAmmount);
+	void TakeDamage(float damageAmount);
 	void Death();
 
 protected:
@@ -49,6 +49,8 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly) float MaxHealth = 0.0f;
 	UPROPERTY() float CurrentHealth = 0.0f;
+
+	// TODO Damage
 
 	// Reference to the instantiated AudioManager
 	UPROPERTY()

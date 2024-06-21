@@ -26,7 +26,7 @@ void UGameOver::InitializeButtons()
 
 	if (PlayButtonText)
 	{
-		PlayButtonText->SetText(FText::FromString(TEXT("Play")));
+		PlayButtonText->SetText(FText::FromString(TEXT("Try Again")));
 	}
 
 	if (QuitButton)
@@ -36,7 +36,7 @@ void UGameOver::InitializeButtons()
 
 	if (QuitButtonText)
 	{
-		QuitButtonText->SetText(FText::FromString(TEXT("Quit")));
+		QuitButtonText->SetText(FText::FromString(TEXT("Return Main Menu")));
 	}
 }
 
