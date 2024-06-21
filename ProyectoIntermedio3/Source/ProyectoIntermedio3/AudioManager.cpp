@@ -30,7 +30,7 @@ void AAudioManager::PlaySoundEffect1(USoundBase* Sound)
 {
 	if (Sound)
 	{
-		UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation());
+		UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation(), SFXVolume);
 	}
 }
 
@@ -38,7 +38,7 @@ void AAudioManager::PlaySoundEffect2(USoundBase* Sound)
 {
 	if (Sound)
 	{
-		UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation());
+		UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation(), SFXVolume);
 	}
 }
 
@@ -46,7 +46,7 @@ void AAudioManager::PlayMusic(USoundBase* Sound)
 {
 	if (Sound)
 	{
-		UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation());
+		UGameplayStatics::PlaySoundAtLocation(this, Sound, GetActorLocation(), MusicVolume);
 	}
 }
 

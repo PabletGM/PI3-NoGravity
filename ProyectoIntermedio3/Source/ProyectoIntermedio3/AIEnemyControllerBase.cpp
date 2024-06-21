@@ -31,7 +31,7 @@ void AAIEnemyControllerBase::CheckTarget()
 	else
 		BlackboardComponent->SetValueAsObject("Target", NULL);
 
-	
+	CheckAIType();
 }
 
 void AAIEnemyControllerBase::CheckAIType()
@@ -54,9 +54,11 @@ void AAIEnemyControllerBase::CheckTargetDistance()
 
 	AActor* PlayerCharacter = Cast<AActor>(BlackboardComponent->GetValueAsObject("Target"));
 
-	float Distance = (PlayerCharacter->GetActorLocation() - AIPawn->GetActorLocation()).Length();
+	float Distance = AIPawn->GetDistanceTo(PlayerCharacter);
 
-	if (Distance <= 100.0f)
+	UE_LOGFMT(LogTemp, Log, "Distance {0}", Distance);
+
+	if (Distance <= 200.0f)
 		BlackboardComponent->SetValueAsBool("Chase", true);
 	else
 		BlackboardComponent->SetValueAsBool("Chase", false);
@@ -71,6 +73,22 @@ EPathFollowingRequestResult::Type AAIEnemyControllerBase::MoveToTarget()
 	EPathFollowingRequestResult::Type MoveToTargetResult = MoveToActor(PlayerCharacter);
 
 	return MoveToTargetResult;
+}
+
+void AAIEnemyControllerBase::MoveRandom()
+{
+	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
+
+	auto* controller= Cast<AProyecto3PlayerController>(BlackboardComponent->GetValueAsObject("Target"));
+
+	FVector FwdVector = controller->GetPawn()->GetActorLocation() - GetPawn()->GetActorLocation();
+	FwdVector.Normalize();
+
+	FRotator LookAtRotator = FRotationMatrix::MakeFromX(FwdVector).Rotator();
+
+	GetPawn()->SetActorRotation(LookAtRotator);
+
+	//UE_LOGFMT(LogTemp, Log, "Moving Randomly");
 }
 
 void AAIEnemyControllerBase::AttackTarget()

@@ -23,6 +23,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckAIType();
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckTargetDistance();
 	UFUNCTION(BlueprintCallable, Category = "AI") EPathFollowingRequestResult::Type MoveToTarget();
+	UFUNCTION(BlueprintCallable, Category = "AI") void MoveRandom();
 	UFUNCTION(BlueprintCallable, Category = "AI") void AttackTarget();
 
 private:

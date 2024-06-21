@@ -43,4 +43,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Audio")
 	USoundBase* FindSoundByName(FString SoundName);
 
+	UPROPERTY(EditAnywhere) float SFXVolume = 0.005f;
+	UPROPERTY(EditAnywhere) float MusicVolume = 0.005f;
 };
