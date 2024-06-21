@@ -57,8 +57,6 @@ AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 	OxygenComponent = CreateDefaultSubobject<UOxygenComponent>(TEXT("OxygenComponent"));
 	ShieldComponent = CreateDefaultSubobject<UShieldComponent>(TEXT("ShieldComponent"));
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
-
-	
 }
 
 void AProyectoIntermedio3Character::BeginPlay()
@@ -74,6 +72,12 @@ void AProyectoIntermedio3Character::BeginPlay()
 	}
 
 	CurrentGameMode = Cast<AProyectoIntermedio3GameMode>(GetWorld()->GetAuthGameMode());
+
+	UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
+	if (GameInstance && InventoryComponent)
+	{
+		GameInstance->RestoreInventoryIcons(InventoryComponent);
+	}
 
 	InitializeAudioManager();
 
