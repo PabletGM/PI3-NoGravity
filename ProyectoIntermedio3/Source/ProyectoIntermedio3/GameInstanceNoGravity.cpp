@@ -1,5 +1,6 @@
 #include "GameInstanceNoGravity.h"
 #include "AudioManager.h"
+#include "InventoryComponent.h"
 #include "ItemStore.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -8,32 +9,49 @@ UGameInstanceNoGravity::UGameInstanceNoGravity()
 	TotalPearls = 0;
 }
 
-void UGameInstanceNoGravity::SetInventoryIcons(TArray<UTexture2D*> Icons)
+void UGameInstanceNoGravity::SaveInventoryIcons(UInventoryComponent* InventoryComponent)
 {
-    InventoryIcons = Icons;
+    if (!InventoryComponent)
+    {
+        return;
+    }
+
+    ItemsPurchasedIcons.Empty();
+
+    for (int32 i = 0; i < InventoryComponent->GetNumItemsPurchased(); ++i)
+    {
+        AItemStore* Item = InventoryComponent->GetItem(i);
+
+        if (Item)
+        {
+            UTexture2D* ItemIcon = Item->GetItemIcon();
+
+            if (ItemIcon)
+            {
+                ItemsPurchasedIcons.Add(ItemIcon);
+            }
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("SaveInventoryIcons: Found NULL Item at index %d"), i);
+        }
+    }
+
+    UE_LOG(LogTemp, Log, TEXT("SaveInventoryIcons: Saved %d items' icons to ItemsPurchasedIcons."), ItemsPurchasedIcons.Num());
 }
 
-UTexture2D* UGameInstanceNoGravity::GetInventoryIcon(int32 Index) const
+void UGameInstanceNoGravity::RestoreInventoryIcons(UInventoryComponent* InventoryComponent)
 {
-    if (Index >= 0 && Index < InventoryIcons.Num())
+    if (!InventoryComponent)
     {
-        return InventoryIcons[Index];
+        return;
     }
-    return nullptr;
+
+  
 }
 
 void UGameInstanceNoGravity::SetTotalPearls(int32 Value)
 {
-	TotalPearls = Value;
+    TotalPearls = Value;
 }
-
-
-void UGameInstanceNoGravity::Init()
-{
-	Super::Init();
-
-}
-
-
-
 

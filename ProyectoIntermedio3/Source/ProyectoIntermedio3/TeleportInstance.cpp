@@ -21,10 +21,15 @@ void ATeleportInstance::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp
     if (OtherActor && (OtherActor != this) && OtherComp)
     {
         UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
-        if (GameInstance)
+        ACharacterStore* PlayerCharacter = Cast<ACharacterStore>(OtherActor);
+
+        if (GameInstance && PlayerCharacter)
         {
-           
-            
+            UInventoryComponent* InventoryComponent = PlayerCharacter->InventoryComponent;
+            if (InventoryComponent)
+            {
+                GameInstance->SaveInventoryIcons(InventoryComponent);
+            }
         }
 
         if (LevelName != NAME_None)

@@ -38,7 +38,6 @@ UTexture2D* AItemStore::GetItemIcon() const
 {
     if (ItemDataAsset && ItemIndex < ItemDataAsset->Items.Num())
     {
-        GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("GET ITEM"));
         return ItemDataAsset->Items[ItemIndex].ItemIcon; 
     }
 
