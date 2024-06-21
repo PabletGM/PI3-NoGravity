@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Damageable.h"
 #include "GameFramework/Character.h"
-
+#include "AudioManager.h"
 #include "AIEnemyCharacterBase.generated.h"
 
 UCLASS()
@@ -23,6 +23,8 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	
+	void PostBeginPlay();
 
 public:	
 	// Called every frame
@@ -31,10 +33,30 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-public:
+	UFUNCTION()
+	void MakeSoundEffect(FString nameSound);
+
+	UFUNCTION()
+	void MakeSoundEffect2(FString nameSound2);
+
+	UFUNCTION()
+	void FindAudioManager();
+
 	UPROPERTY(meta=(BItmask,BitmaskEnum="/Game/_NoGravity/Blueprints/AI/AI_Type.AI_Type"), EditAnywhere) int AIType = 0;
 
+	
+	
 private:
 	UPROPERTY(EditDefaultsOnly) float MaxHealth = 0.0f;
-	UPROPERTY() float CurrentHealth = 0.0f;;
+	UPROPERTY() float CurrentHealth = 0.0f;
+
+	// Reference to the instantiated AudioManager
+	UPROPERTY()
+	AAudioManager* AudioManagerInstance;
+
+	// Reference to the AudioManager
+	UPROPERTY(EditDefaultsOnly, Category = "Audio")
+	TSubclassOf<AAudioManager> BP_AudioManager;
+
+	
 };

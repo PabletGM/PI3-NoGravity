@@ -3,18 +3,25 @@
 
 #include "AIEnemyCharacterBase.h"
 
+
+#include "ProyectoIntermedio3Character.h"
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 AAIEnemyCharacterBase::AAIEnemyCharacterBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
 }
 
 void AAIEnemyCharacterBase::TakeDamage(float damageAmmount)
 {
 	CurrentHealth -= damageAmmount;
 
+	// //take damage sound IA
+	MakeSoundEffect("bite2");
+	
 	if(damageAmmount >= CurrentHealth)
 		Death();
 }
@@ -32,6 +39,14 @@ void AAIEnemyCharacterBase::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentHealth = MaxHealth;
+
+	
+	GetWorldTimerManager().SetTimerForNextTick(this, &AAIEnemyCharacterBase::PostBeginPlay);
+}
+
+void AAIEnemyCharacterBase::PostBeginPlay()
+{
+	FindAudioManager();
 }
 
 // Called every frame
@@ -45,6 +60,62 @@ void AAIEnemyCharacterBase::Tick(float DeltaTime)
 void AAIEnemyCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+}
+
+void AAIEnemyCharacterBase::MakeSoundEffect(FString nameSound)
+{
+	if (AudioManagerInstance)
+	{
+		// Example method call on AudioManagerInstance
+		// Replace PlaySound with your actual method name and parameters
+		USoundBase* Sound = AudioManagerInstance->FindSoundByName(nameSound);
+		if (Sound)
+		{
+			AudioManagerInstance->PlaySoundEffect2(Sound);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AudioManager instance is null!"));
+	}
+}
+
+void AAIEnemyCharacterBase::MakeSoundEffect2(FString nameSound2)
+{
+	if (AudioManagerInstance)
+	{
+		// Example method call on AudioManagerInstance
+		// Replace PlaySound with your actual method name and parameters
+		USoundBase* Sound = AudioManagerInstance->FindSoundByName(nameSound2);
+		if (Sound)
+		{
+			AudioManagerInstance->PlaySoundEffect2(Sound);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AudioManager instance is null!"));
+	}
+}
+
+void AAIEnemyCharacterBase::FindAudioManager()
+{
+	//look for AudioManager character
+	// Get the player character
+	AProyectoIntermedio3Character* PlayerCharacter = Cast<AProyectoIntermedio3Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (PlayerCharacter)
+	{
+		AudioManagerInstance = PlayerCharacter->GetAudioManagerInstance();
+	}
 
 }
 

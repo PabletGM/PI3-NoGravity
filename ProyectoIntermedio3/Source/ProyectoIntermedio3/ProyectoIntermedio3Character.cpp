@@ -57,6 +57,8 @@ AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 	OxygenComponent = CreateDefaultSubobject<UOxygenComponent>(TEXT("OxygenComponent"));
 	ShieldComponent = CreateDefaultSubobject<UShieldComponent>(TEXT("ShieldComponent"));
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
+
+	
 }
 
 void AProyectoIntermedio3Character::BeginPlay()
@@ -98,6 +100,11 @@ void AProyectoIntermedio3Character::SetupPlayerInputComponent(UInputComponent* P
 	{
 		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	}
+}
+
+AAudioManager* AProyectoIntermedio3Character::GetAudioManagerInstance() const
+{
+	return AudioManagerInstance;
 }
 
 void AProyectoIntermedio3Character::Move(const FInputActionValue& Value)
@@ -224,6 +231,13 @@ void AProyectoIntermedio3Character::InitializeAudioManager()
 		// Spawn the AudioManager instance
 		AudioManagerInstance = GetWorld()->SpawnActor<AAudioManager>(BP_AudioManager);
 
+		//add a tag to the AudioManager
+		if (AudioManagerInstance)
+		{
+			// Assign a unique tag to the AudioManager instance
+			AudioManagerInstance->Tags.Add(FName("AudioManager"));
+		}
+		
 		if (!AudioManagerInstance)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Failed to spawn AudioManager instance!"));

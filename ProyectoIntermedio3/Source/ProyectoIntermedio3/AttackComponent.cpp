@@ -2,6 +2,8 @@
 
 
 #include "AttackComponent.h"
+
+#include "AIEnemyCharacterBase.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "ProyectoIntermedio3Character.h"
 #include "Kismet/GameplayStatics.h"
@@ -94,12 +96,20 @@ void UAttackComponent::PerformRaycast()
 
 		//detect enemyInterface IDamageable
 		IDamageable* damageable = Cast<IDamageable>(HitResult.GetActor());
+
 		//if it exists
 		if(damageable)
 		{
+			// Cast to AAIEnemyCharacterBase
+			AAIEnemyCharacterBase* EnemyCharacter = Cast<AAIEnemyCharacterBase>(HitResult.GetActor());
+			if (EnemyCharacter)
+			{
+				// Call the method on AAIEnemyCharacterBase
+				EnemyCharacter->TakeDamage(300.0f);
+			}
 			//kill the enemy
 			UE_LOG(LogTemp, Warning, TEXT("Kill the Enemy!"));
-			HitActor->Destroy();
+			
 			// TODO Must
 			//	TakeDamage(float damageAmmount)
 			// from AIEnemyCharacterBase

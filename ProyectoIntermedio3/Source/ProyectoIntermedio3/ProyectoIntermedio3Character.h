@@ -123,6 +123,9 @@ public:
 	UPROPERTY()
 	AAudioManager* AudioManagerInstance;
 
+	UFUNCTION(BlueprintCallable, Category = "Audio")
+	AAudioManager* GetAudioManagerInstance() const;
+
 protected:
 	void Move(const FInputActionValue& Value);
 
