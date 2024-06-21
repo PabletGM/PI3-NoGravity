@@ -3,7 +3,6 @@
 
 #include "RoomSpawner.h"
 #include "DefaultRoom.h"
-
 #include "Logging/StructuredLog.h"
 
 // Sets default values
