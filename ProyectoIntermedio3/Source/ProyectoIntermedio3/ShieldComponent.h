@@ -32,5 +32,8 @@ public:
 	void RemoveShield(int32 Amount);
 
 protected:
-	virtual void BeginPlay() override;	
+	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void SetFloaterVisibility(bool bVisibility);
 };
