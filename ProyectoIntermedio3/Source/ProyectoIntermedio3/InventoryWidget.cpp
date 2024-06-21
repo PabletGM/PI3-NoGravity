@@ -1,7 +1,8 @@
 #include "InventoryWidget.h"
 #include "Components/Image.h"
 #include "Components/VerticalBox.h"
-#include "ProyectoIntermedio3Character.h"
+#include "Store_PlayerController.h"
+#include "CharacterStore.h"
 #include "ItemStore.h"
 
 void UInventoryWidget::NativeConstruct()
@@ -15,12 +16,12 @@ void UInventoryWidget::NativeConstruct()
 	if (!world)
 		return;
 
-	auto controller = Cast<AProyecto3PlayerController>(world->GetFirstPlayerController());
+	auto controller = Cast<AStore_PlayerController>(world->GetFirstPlayerController());
 
 	if (!controller)
 		return;
 
-	auto* player = Cast<AProyectoIntermedio3Character>(controller->GetPawn());
+	auto* player = Cast<ACharacterStore>(controller->GetPawn());
 
 	if (!player || !player->InventoryComponent)
 		return;
@@ -40,6 +41,8 @@ void UInventoryWidget::ConfigurationWidget()
 
             if (NewSlot)
             {
+                InventoryImages[i]->Brush.ImageSize.X = 32.0f;
+                InventoryImages[i]->Brush.ImageSize.Y = 125.0f;
                 NewSlot->SetPadding(FMargin(0.f, 10.f, 0.f, 0.f)); 
             }
         }
@@ -49,7 +52,12 @@ void UInventoryWidget::ConfigurationWidget()
 
 void UInventoryWidget::OnInventoryUpdated(UTexture2D* ItemIcon)
 {
-    GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("ICOOON"));
+    if (!ItemIcon)
+    {
+        return;
+    }
+
+    GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, FString::Printf(TEXT("ItemIcon: %s"), *ItemIcon->GetName()));
 
     for (int32 i = 0; i < 6; ++i)
     {

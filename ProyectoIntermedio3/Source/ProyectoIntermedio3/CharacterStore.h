@@ -8,6 +8,7 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
+class UInventoryComponent;
 class AStore_GameMode;
 
 DECLARE_DYNAMIC_DELEGATE_OneParam(FInteractDelegate, FString, text);
@@ -34,6 +35,9 @@ public:
 
 	UPROPERTY()
 	FInteractDelegate OnInteract;
+
+	UPROPERTY()
+	UInventoryComponent* InventoryComponent = nullptr;
 
 protected:
 	virtual void BeginPlay() override;

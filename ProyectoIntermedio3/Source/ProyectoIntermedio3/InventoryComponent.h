@@ -30,12 +30,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Items")
 	TArray<AItemStore*> ItemsPurchased;
 
-protected:
-	virtual void BeginPlay() override;
+	AItemStore* GetItem(int32 Index) const;
 
-	UPROPERTY()
-	UInventoryComponent* InventoryComponent;
-
-public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	int32 GetNumItemsPurchased() const { return ItemsPurchased.Num(); }
 };

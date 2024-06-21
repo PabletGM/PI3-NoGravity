@@ -5,7 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "GameInstanceNoGravity.generated.h"
 
-class AProyectoIntermedio3Character;
+class AItemStore;
 
 UCLASS()
 class PROYECTOINTERMEDIO3_API UGameInstanceNoGravity : public UGameInstance
@@ -15,8 +15,14 @@ class PROYECTOINTERMEDIO3_API UGameInstanceNoGravity : public UGameInstance
 public:
 	UGameInstanceNoGravity();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player")
-	AProyectoIntermedio3Character* PlayerCharacter;
+	UPROPERTY(BlueprintReadOnly, Category = "Inventory")
+	TArray<UTexture2D*> InventoryIcons;
+
+	UFUNCTION(BlueprintCallable)
+	void SetInventoryIcons(TArray<UTexture2D*> Icons);
+
+	UFUNCTION(BlueprintCallable)
+	UTexture2D* GetInventoryIcon(int32 Index) const;
 
 	UFUNCTION()
 	void SetTotalPearls(int32 Value);

@@ -1,7 +1,9 @@
 #include "ItemStore.h"
 #include "Store_GameMode.h"
-#include "ProyectoIntermedio3Character.h"
+#include "CharacterStore.h"
+#include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
+#include "Engine/Engine.h"
 
 AItemStore::AItemStore()
 {
@@ -36,6 +38,7 @@ UTexture2D* AItemStore::GetItemIcon() const
 {
     if (ItemDataAsset && ItemIndex < ItemDataAsset->Items.Num())
     {
+        GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("GET ITEM"));
         return ItemDataAsset->Items[ItemIndex].ItemIcon; 
     }
 
@@ -66,24 +69,25 @@ void AItemStore::Interact_Implementation()
 
 void AItemStore::BuyItem()
 {
-    AProyectoIntermedio3Character* PlayerCharacter = Cast<AProyectoIntermedio3Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-    if (PlayerCharacter)
+    UWorld* World = GetWorld();
+    if (!World)
     {
-        UInventoryComponent* InventoryComponent = PlayerCharacter->InventoryComponent;
+        return;
+    }
 
-        if (InventoryComponent)
-        {
-            InventoryComponent->AddItem(this);
-        }
-        else
-        {
-            UE_LOG(LogTemp, Warning, TEXT("InventoryComponent not found on player character!"));
-        }
-    }
-    else
+    ACharacterStore* PlayerCharacter = Cast<ACharacterStore>(UGameplayStatics::GetPlayerCharacter(World, 0));
+    if (!PlayerCharacter)
     {
-        UE_LOG(LogTemp, Warning, TEXT("Player character not found!"));
+        return;
     }
+
+    UInventoryComponent* InventoryComponent = PlayerCharacter->InventoryComponent;
+    if (!InventoryComponent)
+    {
+        return;
+    }
+
+    InventoryComponent->AddItem(this);
 
     Destroy();
 }

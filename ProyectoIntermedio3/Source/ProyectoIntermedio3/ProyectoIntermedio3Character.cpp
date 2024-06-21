@@ -14,8 +14,8 @@
 #include "InputActionValue.h"
 #include "OxygenComponent.h"
 #include "ShieldComponent.h"
+#include "InventoryComponent.h"
 #include "ProyectoIntermedio3GameMode.h"
-
 #include "Proyecto3PlayerController.h"
 #include "Store_PlayerController.h"
 #include "Logging/StructuredLog.h"

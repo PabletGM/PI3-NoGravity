@@ -4,16 +4,12 @@
 #include "EnhancedInputSubsystems.h"
 #include "Store_GameMode.h"
 #include "AB_StoreDiver.h"
-
+#include "InventoryComponent.h"
 #include "Store_PlayerController.h"
-
 #include "GameFramework/CharacterMovementComponent.h"
 #include <Kismet/GameplayStatics.h>
 #include "Interactable.h"
 #include <Kismet/KismetSystemLibrary.h>
-
-
-
 
 ACharacterStore::ACharacterStore()
 {
@@ -27,6 +23,8 @@ ACharacterStore::ACharacterStore()
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
+
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 }
 
 void ACharacterStore::BeginPlay()

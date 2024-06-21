@@ -13,11 +13,6 @@ class PROYECTOINTERMEDIO3_API ATeleportInstance : public AActor
 
 public:    
 	ATeleportInstance();
-protected:
-	virtual void BeginPlay() override;
-
-public:    
-	virtual void Tick(float DeltaTime) override;
 
 private:
 	UFUNCTION()

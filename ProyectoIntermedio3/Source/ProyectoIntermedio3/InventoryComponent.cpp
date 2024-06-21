@@ -1,10 +1,21 @@
 #include "InventoryComponent.h"
+#include "ItemStore.h"
 
 UInventoryComponent::UInventoryComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
 	Capacity = 6;
+}
+
+AItemStore* UInventoryComponent::GetItem(int32 Index) const
+{
+	if (Index >= 0 && Index < ItemsPurchased.Num())
+	{
+		return ItemsPurchased[Index];
+	}
+
+	return nullptr;
 }
 
 bool UInventoryComponent::AddItem(AItemStore* Item)
@@ -14,6 +25,7 @@ bool UInventoryComponent::AddItem(AItemStore* Item)
 		return false;
 	}
 
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("ADDD"));
 	ItemsPurchased.Add(Item);
 	OnInventoryUpdated.Broadcast(Item->GetItemIcon());
 
@@ -33,15 +45,3 @@ bool UInventoryComponent::RemoveItem(AItemStore* Item)
 
 	return false;
 }
-
-
-void UInventoryComponent::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-}
-
