@@ -34,6 +34,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AAIController> BP_EnemyController = nullptr;
 
+	UPROPERTY(EditAnywhere)
+	UBehaviorTree* BP_BehaviourTree = nullptr;
+
 protected:
 	virtual void BeginPlay() override;
 

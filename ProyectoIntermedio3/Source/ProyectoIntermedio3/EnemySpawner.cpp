@@ -1,5 +1,6 @@
 #include "EnemySpawner.h"
 #include "AIEnemyCharacterBase.h"
+#include "AIEnemyControllerBase.h"
 
 AEnemySpawner::AEnemySpawner()
 {
@@ -25,8 +26,8 @@ void AEnemySpawner::BeginPlay()
 		return;
 
 	int randomSpawn = FMath::RandRange(0, 3);
-	/*if (randomSpawn > 0)
-		return;*/
+	if (randomSpawn > 0)
+		return;
 
 	if (BP_Enemy)
 	{
@@ -38,7 +39,15 @@ void AEnemySpawner::BeginPlay()
 
 		AAIEnemyCharacterBase* MyEnemy = world->SpawnActor<AAIEnemyCharacterBase>(BP_Enemy, SpawnLocation, SpawnRotation, SpawnParams);
 
-		MyEnemy->AutoPossessAI;
+		AAIEnemyControllerBase* MyEnemyController = world->SpawnActor<AAIEnemyControllerBase>(BP_EnemyController, SpawnLocation, SpawnRotation, SpawnParams);
+		if(MyEnemyController)
+		{
+			MyEnemyController->Possess(MyEnemy);
+			if (BP_BehaviourTree)
+			{
+				MyEnemyController->RunBehaviorTree(BP_BehaviourTree);
+			}
+		}
 	}
 }
 
