@@ -1,5 +1,7 @@
 #include "ItemStore.h"
 #include "Store_GameMode.h"
+#include "ProyectoIntermedio3Character.h"
+#include "InventoryComponent.h"
 
 AItemStore::AItemStore()
 {
@@ -30,6 +32,16 @@ int32 AItemStore::GetItemPrice() const
     return 0;
 }
 
+UTexture2D* AItemStore::GetItemIcon() const
+{
+    if (ItemDataAsset && ItemIndex < ItemDataAsset->Items.Num())
+    {
+        return ItemDataAsset->Items[ItemIndex].ItemIcon; 
+    }
+
+    return nullptr;
+}
+
 FString AItemStore::GetInteractionText_Implementation()
 {
     FString InteractionText = "Buy ";
@@ -54,6 +66,25 @@ void AItemStore::Interact_Implementation()
 
 void AItemStore::BuyItem()
 {
+    AProyectoIntermedio3Character* PlayerCharacter = Cast<AProyectoIntermedio3Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+    if (PlayerCharacter)
+    {
+        UInventoryComponent* InventoryComponent = PlayerCharacter->InventoryComponent;
+
+        if (InventoryComponent)
+        {
+            InventoryComponent->AddItem(this);
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("InventoryComponent not found on player character!"));
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Player character not found!"));
+    }
+
     Destroy();
 }
 

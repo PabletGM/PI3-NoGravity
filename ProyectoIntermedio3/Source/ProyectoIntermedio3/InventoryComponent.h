@@ -6,8 +6,9 @@
 #include "InventoryComponent.generated.h"
 
 class AItemStore;
+class UInventoryComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnInventoryUpdated);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnInventoryUpdated, UTexture2D*, ItemIcon);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROYECTOINTERMEDIO3_API UInventoryComponent : public UActorComponent
@@ -31,6 +32,9 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY()
+	UInventoryComponent* InventoryComponent;
 
 public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

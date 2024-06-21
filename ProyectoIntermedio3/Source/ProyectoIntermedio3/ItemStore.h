@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -24,18 +23,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Items")
 	virtual void InitializeItem();
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
+	UItemDataAsset* ItemDataAsset;
+
 	virtual FString GetInteractionText_Implementation() override;
 
 	int32 GetItemPrice() const;
+
+	UTexture2D* GetItemIcon() const;
 
 	virtual void BuyItem();
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
 	int32 ItemIndex;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
-	UItemDataAsset* ItemDataAsset;
 
 public:	
 	virtual void Interact_Implementation() override;

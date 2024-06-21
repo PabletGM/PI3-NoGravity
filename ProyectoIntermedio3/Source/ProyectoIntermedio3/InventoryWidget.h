@@ -4,6 +4,9 @@
 #include "Blueprint/UserWidget.h"
 #include "InventoryWidget.generated.h"
 
+class UVerticalBox;
+class UImage;
+
 UCLASS()
 class PROYECTOINTERMEDIO3_API UInventoryWidget : public UUserWidget
 {
@@ -12,6 +15,15 @@ class PROYECTOINTERMEDIO3_API UInventoryWidget : public UUserWidget
 protected:
 	virtual void NativeConstruct() override;
 
+	void ConfigurationWidget();
+
 	UFUNCTION()
-	void OnInventoryUpdated();
+	void OnInventoryUpdated(UTexture2D* ItemIcon);
+
+private:
+	UPROPERTY(meta = (BindWidget))
+	UVerticalBox* VerticalBox;
+
+	UPROPERTY(meta = (BindWidget))
+	UImage* InventoryImages[6];
 };

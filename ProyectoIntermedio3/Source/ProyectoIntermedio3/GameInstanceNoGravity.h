@@ -5,6 +5,8 @@
 #include "GameFramework/Actor.h"
 #include "GameInstanceNoGravity.generated.h"
 
+class AProyectoIntermedio3Character;
+
 UCLASS()
 class PROYECTOINTERMEDIO3_API UGameInstanceNoGravity : public UGameInstance
 {
@@ -12,6 +14,9 @@ class PROYECTOINTERMEDIO3_API UGameInstanceNoGravity : public UGameInstance
 
 public:
 	UGameInstanceNoGravity();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Player")
+	AProyectoIntermedio3Character* PlayerCharacter;
 
 	UFUNCTION()
 	void SetTotalPearls(int32 Value);

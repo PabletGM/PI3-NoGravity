@@ -21,6 +21,7 @@ void AStore_PlayerController::BeginPlay()
         if (MainWidget)
         {
             MainWidget->ShowConcreteWidget(MainWidget->PearlsWidget);
+            MainWidget->ShowConcreteWidget(MainWidget->InventoryWidget);
             MainWidget->AddToViewport(0);
             bShowMouseCursor = false;
         }

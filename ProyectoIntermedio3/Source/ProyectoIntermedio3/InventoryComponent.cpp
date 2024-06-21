@@ -15,8 +15,7 @@ bool UInventoryComponent::AddItem(AItemStore* Item)
 	}
 
 	ItemsPurchased.Add(Item);
-
-	OnInventoryUpdated.Broadcast();
+	OnInventoryUpdated.Broadcast(Item->GetItemIcon());
 
 	return true;
 }
@@ -27,13 +26,14 @@ bool UInventoryComponent::RemoveItem(AItemStore* Item)
 	{
 		ItemsPurchased.RemoveSingle(Item);
 
-		OnInventoryUpdated.Broadcast();
+		OnInventoryUpdated.Broadcast(nullptr);
 
 		return true;
 	}
 
 	return false;
 }
+
 
 void UInventoryComponent::BeginPlay()
 {

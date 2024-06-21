@@ -68,7 +68,7 @@ void UMainMenuWidget::ConfigureMargins()
 
 void UMainMenuWidget::PlayGame()
 {
-    UGameplayStatics::OpenLevel(this, FName("Game"));
+    UGameplayStatics::OpenLevel(this, FName("L_Store"));
 }
 
 void UMainMenuWidget::ExitGame()
