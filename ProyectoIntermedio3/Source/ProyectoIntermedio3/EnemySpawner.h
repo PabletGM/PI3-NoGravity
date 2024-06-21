@@ -29,7 +29,10 @@ public:
 	AEnemySpawner();
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<ACharacter> BP_Enemy = nullptr;
+	TSubclassOf<ACharacter> BP_PiranhaEnemy = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ACharacter> BP_SharkEnemy = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AAIController> BP_EnemyController = nullptr;
