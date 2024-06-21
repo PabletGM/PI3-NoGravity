@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "GameFramework/Actor.h"
+#include "ItemStore.h"
 #include "GameInstanceNoGravity.generated.h"
 
 class UInventoryComponent;
@@ -14,9 +15,6 @@ class PROYECTOINTERMEDIO3_API UGameInstanceNoGravity : public UGameInstance
 
 public:
 	UGameInstanceNoGravity();
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Inventory")
-	TArray<UTexture2D*> ItemsPurchasedIcons;
 
 	void SaveInventoryIcons(UInventoryComponent* InventoryComponent);
 	void RestoreInventoryIcons(UInventoryComponent* InventoryComponent);
@@ -30,4 +28,7 @@ public:
 protected:
 	UPROPERTY()
 	int32 TotalPearls;
+
+	UPROPERTY(BlueprintReadOnly)
+	TArray<AItemStore*> ItemsPurchasedStore;
 };
