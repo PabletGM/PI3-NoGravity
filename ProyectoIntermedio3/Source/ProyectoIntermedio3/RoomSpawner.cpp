@@ -3,6 +3,8 @@
 
 #include "RoomSpawner.h"
 #include "DefaultRoom.h"
+#include "AIEnemyCharacterBase.h"
+#include "AIEnemyControllerBase.h"
 #include "Logging/StructuredLog.h"
 
 // Sets default values
@@ -29,8 +31,21 @@ void ARoomSpawner::BeginPlay()
 	{
 		IsFirstSpawnerActive = true;
 		SpawnedRoomsArray.Empty();
+		SpawnedEnemyArray.Empty();
 	}
 
+	if(IsEnemySpawner)
+	{
+		int randomSpawn = FMath::RandRange(0, 0);
+		if (randomSpawn == 0)
+		{
+			int randomFish = FMath::RandRange(0, 0);
+			if (randomFish == 2)
+				EnemySpawnerImplementation(BP_SharkEnemy);
+			else
+				EnemySpawnerImplementation(BP_PiranhaEnemy);
+		}
+	}
 }
 
 // Called every frame
@@ -44,6 +59,8 @@ void ARoomSpawner::Tick(float DeltaTime)
 void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (IsEnemySpawner)
+		return;
 	//check if its the player
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
@@ -217,6 +234,13 @@ void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSp
 		world->DestroyActor(room);
 	}
 	SpawnedRoomsArray.Empty();
+
+	for(AAIEnemyCharacterBase* enemy : SpawnedEnemyArray)
+	{
+		world->DestroyActor(enemy);
+	}
+	SpawnedEnemyArray.Empty();
+
 	if(MyCharacter)
 	{
 		MyCharacter->SetActorLocation(PlayerSpawnLocation);
@@ -231,6 +255,33 @@ void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSp
 
 		world->SpawnActor<ACollectable>(BP_BonusObject, BonusObjectSpawnLocation, FRotator::ZeroRotator, SpawnParams);
 	}
+}
+
+void ARoomSpawner::EnemySpawnerImplementation(TSubclassOf<ACharacter> Spawnable)
+{
+	UWorld* world = GetWorld();
+	if (!world)
+		return;
+
+	FVector SpawnLocation = GetActorLocation();
+	FRotator SpawnRotation = GetActorRotation();
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.Owner = this;
+	SpawnParams.Instigator = GetInstigator();
+
+	AAIEnemyCharacterBase* MyEnemy = world->SpawnActor<AAIEnemyCharacterBase>(Spawnable, SpawnLocation + ForwardSpawnOffset, SpawnRotation, SpawnParams);
+
+	SpawnedEnemyArray.Add(MyEnemy);
+
+	/*AAIEnemyControllerBase* MyEnemyController = world->SpawnActor<AAIEnemyControllerBase>(BP_EnemyController, SpawnLocation, SpawnRotation, SpawnParams);
+	if (MyEnemyController)
+	{
+		MyEnemyController->Possess(MyEnemy);
+		if (BP_BehaviourTree)
+		{
+			MyEnemyController->RunBehaviorTree(BP_BehaviourTree);
+		}
+	}*/
 }
 
 //to try to spawn rooms
@@ -269,9 +320,9 @@ bool ARoomSpawner::AttemptSpawn(TSubclassOf<ADefaultRoom> RoomToSpawn)
 			if(ShouldDeactivate)
 				IsActive = false;
 
+			SpawnedRoomsArray.Add(MyRoom);
 			TotalRoomsSpawned += 1;
 			UE_LOGFMT(LogTemp, Log, "Room Spawned, Total Rooms: {0}", TotalRoomsSpawned);
-			SpawnedRoomsArray.Add(MyRoom);
 			if(HasSplit)
 			{
 				TotalRoomsSinceSplit += 0;

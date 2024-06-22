@@ -6,6 +6,7 @@
 #include "Components/BoxComponent.h"
 #include "ProyectoIntermedio3Character.h"
 #include "Collectable.h"
+#include "AIEnemyCharacterBase.h"
 #include "GameFramework/Actor.h"
 
 #include "RoomSpawner.generated.h"
@@ -44,8 +45,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACollectable> BP_BonusObject = nullptr;
 
-	UPROPERTY()
-	ADefaultRoom* NextRoom = nullptr;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ACharacter> BP_PiranhaEnemy = nullptr;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ACharacter> BP_SharkEnemy = nullptr;
+
+	inline static TArray<AAIEnemyCharacterBase*> SpawnedEnemyArray = {};
 
 	inline static TArray<ADefaultRoom*> SpawnedRoomsArray = {};
 
@@ -77,6 +83,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	bool IsFinalSpawner = false;
 
+	UPROPERTY(EditAnywhere)
+	bool IsEnemySpawner = false;
+
 	UPROPERTY(EditDefaultsOnly)
 	FVector PlayerSpawnLocation = { 300, 0, 200 };
 	UPROPERTY(EditDefaultsOnly)
@@ -87,6 +96,9 @@ public:
 
 	UFUNCTION()
 	void FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSpawn);
+
+	UFUNCTION()
+	void EnemySpawnerImplementation(TSubclassOf<ACharacter> Spawnable);
 
 	UFUNCTION()
 	void OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
