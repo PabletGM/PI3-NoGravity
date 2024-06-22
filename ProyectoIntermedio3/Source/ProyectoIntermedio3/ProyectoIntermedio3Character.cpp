@@ -73,6 +73,8 @@ void AProyectoIntermedio3Character::BeginPlay()
 	{
 		if(GameInstance->PlayerDataAsset)
 			GetCharacterMovement()->MaxWalkSpeed = GameInstance->PlayerDataAsset->PlayerData.MaxWalkSpeed;
+		if(GameInstance->PlayerDataAsset)
+			OxygenComponent->OxygenDecrement = GameInstance->PlayerDataAsset->PlayerData.OxygenDecrement;
 	}
 	else
 	{

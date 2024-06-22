@@ -11,6 +11,7 @@
 class UStaticMeshComponent;
 class UTextRenderComponent;
 class UGameInstanceNoGravity;
+class UPlayerDataAsset;
 
 UCLASS()
 class PROYECTOINTERMEDIO3_API AItemStore : public AActor, public IInteractable
