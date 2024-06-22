@@ -125,3 +125,12 @@ void AAIEnemyControllerBase::AttackTarget()
 	if(AIPawn)
 		player->TakeDamageFromAI(AIPawn->Damage);
 }
+
+void AAIEnemyControllerBase::Death()
+{
+	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
+	if(AIPawn)
+	{
+		
+	}
+}

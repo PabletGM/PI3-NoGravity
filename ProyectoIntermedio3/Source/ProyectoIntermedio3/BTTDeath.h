@@ -5,17 +5,18 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
 
-#include "BTTAttackToTarget.generated.h"
+#include "BTTDeath.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROYECTOINTERMEDIO3_API UBTTAttackToTarget : public UBTTaskNode
+class PROYECTOINTERMEDIO3_API UBTTDeath : public UBTTaskNode
 {
 	GENERATED_BODY()
 
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 	virtual FString GetStaticDescription() const override;
+
 };

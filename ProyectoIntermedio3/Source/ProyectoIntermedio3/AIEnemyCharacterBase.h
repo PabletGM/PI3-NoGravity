@@ -51,7 +51,6 @@ public:
 	UPROPERTY(EditAnywhere) int32 Damage = 10.0f;
 	UPROPERTY(EditAnywhere) float Speed = 100.0f;
 
-	
 private:
 	// TODO Damage
 
