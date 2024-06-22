@@ -50,6 +50,7 @@ void AAIEnemyCharacterBase::Death()
 void AAIEnemyCharacterBase::PerformDeathNotifyAnim()
 {
 	UE_LOGFMT(LogTemp, Log, "Enemy Dies");
+	SetActorEnableCollision(false);
 	if(BP_Pearl)
 	{
 		UWorld* world = GetWorld();

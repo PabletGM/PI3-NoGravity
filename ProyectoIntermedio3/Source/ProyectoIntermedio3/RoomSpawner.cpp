@@ -37,7 +37,7 @@ void ARoomSpawner::BeginPlay()
 
 	if(IsEnemySpawner)
 	{
-		int randomSpawn = FMath::RandRange(0, 3);
+		int randomSpawn = FMath::RandRange(0, 2);
 		if (randomSpawn == 0)
 		{
 			int randomFish = FMath::RandRange(0, 2);
@@ -168,7 +168,7 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 						{
 							if(TotalRoomsSpawned >= 10)
 							{
-								int randomFinalRoom = FMath::RandRange(TotalRoomsSpawned, 20);
+								int randomFinalRoom = FMath::RandRange(TotalRoomsSpawned, 18);
 								if (randomFinalRoom == 20)
 								{
 									AttemptSpawn(BP_FinalRoom);
