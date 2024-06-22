@@ -132,8 +132,16 @@ void ARoomSpawner::OnBeginBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor
 							int randomZeroRoom = FMath::RandRange(TotalRoomsSinceSplit, 4);
 							if(randomZeroRoom == 4)
 							{
+								int randomFinalRoom = FMath::RandRange(0, 2);
+								if(randomFinalRoom == 0 && TotalRoomsSpawned >= 8)
+								{
+									AttemptSpawn(BP_FinalRoom);
+								}
+								else
+								{
+									AttemptSpawn(BP_NoDoorRoom);
+								}
 								HasSplit = false;
-								AttemptSpawn(BP_NoDoorRoom);
 								TotalRoomsSinceSplit = 0;
 								return;
 							}
