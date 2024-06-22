@@ -5,13 +5,13 @@
 
 #include "ProyectoIntermedio3Character.h"
 #include "Kismet/GameplayStatics.h"
+#include "Logging/StructuredLog.h"
 
 // Sets default values
 AAIEnemyCharacterBase::AAIEnemyCharacterBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
 }
 
 void AAIEnemyCharacterBase::TakeDamage(float damageAmount)
@@ -21,16 +21,32 @@ void AAIEnemyCharacterBase::TakeDamage(float damageAmount)
 	// // //take damage sound IA
 
 	if(damageAmount >= CurrentHealth)
-		Death();
+		IsAlive = false;
 }
 
 void AAIEnemyCharacterBase::Death()
-{
-	// TODO Do whatever it needs to do before die
-	IsAlive = false;
+{	
 	MakeSoundEffect("enemyDeathSound");
-	//this->Destroy();
+
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && DeathMontage && !isAlreadyDeath)
+	{
+		isAlreadyDeath = true;
+		AnimInstance->Montage_Play(DeathMontage);
+	}
 }
+
+void AAIEnemyCharacterBase::PerformDeathNotifyAnim()
+{
+	DestroyItself();
+}
+
+void AAIEnemyCharacterBase::DestroyItself()
+{
+	UE_LOGFMT(LogTemp, Log, "Destroy");	
+	this->Destroy();
+}
+
 
 // Called when the game starts or when spawned
 void AAIEnemyCharacterBase::BeginPlay()
@@ -38,7 +54,6 @@ void AAIEnemyCharacterBase::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentHealth = MaxHealth;
-
 
 	GetWorldTimerManager().SetTimerForNextTick(this, &AAIEnemyCharacterBase::PostBeginPlay);
 }
@@ -52,14 +67,12 @@ void AAIEnemyCharacterBase::PostBeginPlay()
 void AAIEnemyCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input
 void AAIEnemyCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }
 
 void AAIEnemyCharacterBase::MakeSoundEffect(FString nameSound)

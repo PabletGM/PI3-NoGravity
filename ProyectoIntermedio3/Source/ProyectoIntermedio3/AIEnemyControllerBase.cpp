@@ -18,6 +18,8 @@ void AAIEnemyControllerBase::BeginPlay()
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
 	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
+	if(!AIPawn)
+		return;
 
 	if(AIPawn->IsAlive)
 		BlackboardComponent->SetValueAsBool("IsAlive", true);
@@ -30,6 +32,8 @@ void AAIEnemyControllerBase::CheckIsAlive()
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
 	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
+	if(!AIPawn)
+		return;
 
 	if(AIPawn->IsAlive)
 		BlackboardComponent->SetValueAsBool("IsAlive", true);
@@ -131,6 +135,6 @@ void AAIEnemyControllerBase::Death()
 	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
 	if(AIPawn)
 	{
-		
+		AIPawn->Death();
 	}
 }

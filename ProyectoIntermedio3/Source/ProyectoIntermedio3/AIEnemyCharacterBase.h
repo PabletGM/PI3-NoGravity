@@ -14,12 +14,22 @@ class PROYECTOINTERMEDIO3_API AAIEnemyCharacterBase : public ACharacter, public 
 {
 	GENERATED_BODY()
 
+	//Animation montage for attack
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* AttackMontage = nullptr;
+
+	//Animation montage for death
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animations", meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* DeathMontage = nullptr;
+
 public:
 	// Sets default values for this character's properties
 	AAIEnemyCharacterBase();
 
-	void TakeDamage(float damageAmount);
-	void Death();
+	UFUNCTION() void TakeDamage(float damageAmount);
+	UFUNCTION() void Death();
+	UFUNCTION() void PerformDeathNotifyAnim();
+	UFUNCTION() void DestroyItself();
 
 protected:
 	// Called when the game starts or when spawned
@@ -52,7 +62,8 @@ public:
 	UPROPERTY(EditAnywhere) float Speed = 100.0f;
 
 private:
-	// TODO Damage
+	
+	bool isAlreadyDeath = false;
 
 	// Reference to the instantiated AudioManager
 	UPROPERTY()

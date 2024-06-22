@@ -14,7 +14,6 @@
 #include "OxygenComponent.h"
 #include "ShieldComponent.h"
 #include "InventoryComponent.h"
-#include "ProyectoIntermedio3GameMode.h"
 #include "Proyecto3PlayerController.h"
 #include "Logging/StructuredLog.h"
 #include "GameInstanceNoGravity.h"
@@ -72,7 +71,8 @@ void AProyectoIntermedio3Character::BeginPlay()
 
 	if (GameInstance)
 	{
-		GameInstance->PlayerDataAsset->PlayerData.MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
+		if(GameInstance->PlayerDataAsset)
+			GameInstance->PlayerDataAsset->PlayerData.MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	}
 	else
 	{
@@ -188,7 +188,6 @@ void AProyectoIntermedio3Character::PerformAttackNotifyAnim()
 	//attacks
 	canAttack = true;
 	AttackComponent->PerformRaycast();
-	
 }
 
 void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
@@ -205,7 +204,7 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 			OxygenComponent->SetCurrentOxygen(OxygenComponent->GetOxygen() - damageAmmount);
 		}
 
-		UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
+		//UE_LOGFMT(LogTemp, Log, "Current Oxigen: {0}", OxygenComponent->GetOxygen());
 
 		OnTakeDamage.Broadcast();
 
