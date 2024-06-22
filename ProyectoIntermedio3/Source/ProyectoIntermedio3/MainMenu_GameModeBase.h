@@ -41,8 +41,13 @@ public:
 	UFUNCTION()
 	void MakeSoundEffect1(FString nameSound);
 
+	
+
 protected:
 	void InitializeAudioManager();
 
 	void PostBeginPlay();
+	
+private:
+	void ResetPlayer();
 };

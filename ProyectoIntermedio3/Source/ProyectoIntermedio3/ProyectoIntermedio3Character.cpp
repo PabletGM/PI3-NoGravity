@@ -72,7 +72,7 @@ void AProyectoIntermedio3Character::BeginPlay()
 	if (GameInstance)
 	{
 		if(GameInstance->PlayerDataAsset)
-			GameInstance->PlayerDataAsset->PlayerData.MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
+			GetCharacterMovement()->MaxWalkSpeed = GameInstance->PlayerDataAsset->PlayerData.MaxWalkSpeed;
 	}
 	else
 	{
@@ -216,9 +216,9 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 void AProyectoIntermedio3Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FString SpeedText = FString::Printf(TEXT("Speed: %.2f"), GetCharacterMovement()->MaxWalkSpeed);
-
-	GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::White, SpeedText);
+	
+	
+	
 }
 
 void AProyectoIntermedio3Character::InitializeAudioManager()
