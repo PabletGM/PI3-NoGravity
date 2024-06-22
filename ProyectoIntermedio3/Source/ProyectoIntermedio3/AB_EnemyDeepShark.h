@@ -4,23 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "AB_GameDiver.generated.h"
+#include "AB_EnemyDeepShark.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROYECTOINTERMEDIO3_API UAB_GameDiver : public UAnimInstance
+class PROYECTOINTERMEDIO3_API UAB_EnemyDeepShark : public UAnimInstance
 {
 	GENERATED_BODY()
-	
+
 public:
-	UAB_GameDiver();
+	UAB_EnemyDeepShark();
 
 	// Function to update the float variable
 	UFUNCTION(BlueprintCallable, Category = "Animation")
 	void Death();
-
+		
 	// This will be a variable exposed to Blueprints
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animation")
 	bool bIsDead = false;

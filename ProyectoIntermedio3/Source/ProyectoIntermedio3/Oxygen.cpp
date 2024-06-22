@@ -1,4 +1,6 @@
 #include "Oxygen.h"
+
+#include "OxygenComponent.h"
 #include "ProyectoIntermedio3Character.h"
 
 AOxygen::AOxygen()

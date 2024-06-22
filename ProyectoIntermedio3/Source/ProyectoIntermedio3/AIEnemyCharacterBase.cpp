@@ -3,6 +3,8 @@
 
 #include "AIEnemyCharacterBase.h"
 
+#include "AB_EnemyDeepShark.h"
+#include "AB_EnemyPiranha.h"
 #include "ProyectoIntermedio3Character.h"
 #include "Kismet/GameplayStatics.h"
 #include "Logging/StructuredLog.h"
@@ -33,6 +35,14 @@ void AAIEnemyCharacterBase::Death()
 	{
 		isAlreadyDeath = true;
 		AnimInstance->Montage_Play(DeathMontage);
+
+		//Cast to the specific anim instance class and set the bIsDead variable
+		if (UAB_EnemyDeepShark* ABInstanceDeepShark = Cast<UAB_EnemyDeepShark>(AnimInstance))
+			ABInstanceDeepShark->Death();  // Set this to true to prevent idle animation
+
+		//Cast to the specific anim instance class and set the bIsDead variable
+		if (UAB_EnemyPiranha* ABInstancePiranha = Cast<UAB_EnemyPiranha>(AnimInstance))
+			ABInstancePiranha->Death();  // Set this to true to prevent idle animation
 	}
 }
 
