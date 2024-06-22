@@ -26,7 +26,6 @@ void AMainMenu_GameModeBase::BeginPlay()
 		for (int32 i = 0; i < ItemDataAsset->Items.Max(); ++i)
 		{
 			ItemDataAsset->Items[i].amount = 0;
-
 		}
 	}
 	else
@@ -126,6 +125,7 @@ void AMainMenu_GameModeBase::ResetPlayer()
 {
 	PlayerDataAsset->PlayerData.MaxWalkSpeed = 500.0f;
 	PlayerDataAsset->PlayerData.PlayerLevel = 1;
+	PlayerDataAsset->PlayerData.CurrentShield = 0;
 	PlayerDataAsset->PlayerData.MaxOxygen = 100;
 	PlayerDataAsset->PlayerData.OxygenDecrement = 0.5f;
 	PlayerDataAsset->PlayerData.CapacityInventory = 6;

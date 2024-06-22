@@ -6,6 +6,7 @@
 UShieldComponent::UShieldComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
+	OnShieldChanged.Broadcast(CurrentShield);
 }
 
 void UShieldComponent::BeginPlay()

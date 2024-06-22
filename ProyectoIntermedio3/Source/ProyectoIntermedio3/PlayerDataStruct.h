@@ -17,6 +17,9 @@ public:
     int32 PlayerLevel; 
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    int32 CurrentShield;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     int32 MaxOxygen;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -28,6 +31,7 @@ public:
     FPlayerData()
         : MaxWalkSpeed(500.0f) 
         , PlayerLevel(1)
+        , CurrentShield(0)
         , MaxOxygen(100)
         , OxygenDecrement(0.5f)
         , CapacityInventory(6)
