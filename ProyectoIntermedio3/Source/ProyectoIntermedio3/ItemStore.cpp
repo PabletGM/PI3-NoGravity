@@ -15,11 +15,9 @@ AItemStore::AItemStore()
 	SetRootComponent(Mesh);
 
     TextRenderComponent = CreateDefaultSubobject<UTextRenderComponent>(TEXT("ItemPriceText"));
-    // TextRenderComponent->SetupAttachment(RootComponent); 
+    TextRenderComponent->SetupAttachment(RootComponent); 
     TextRenderComponent->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
     TextRenderComponent->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
-    TextRenderComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 250.0f));
-    TextRenderComponent->SetWorldSize(85.0f);
 }
 
 void AItemStore::BeginPlay()
