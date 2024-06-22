@@ -54,6 +54,8 @@ AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 	OxygenComponent = CreateDefaultSubobject<UOxygenComponent>(TEXT("OxygenComponent"));
 	ShieldComponent = CreateDefaultSubobject<UShieldComponent>(TEXT("ShieldComponent"));
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
+
+	GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
 }
 
 void AProyectoIntermedio3Character::BeginPlay()
@@ -68,15 +70,9 @@ void AProyectoIntermedio3Character::BeginPlay()
 		}
 	}
 
-	UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
-
 	if (GameInstance)
 	{
-		FPlayerData PlayerData = GameInstance->GetPlayerData();
-
-		PlayerData.MaxOxygen = GetCharacterMovement()->MaxWalkSpeed;
-		FString Message = FString::Printf(TEXT("MaxWalkSpeed: %f"), PlayerData.MaxWalkSpeed);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, Message);
+		GameInstance->PlayerDataAsset->PlayerData.MaxWalkSpeed = GetCharacterMovement()->MaxWalkSpeed;
 	}
 	else
 	{

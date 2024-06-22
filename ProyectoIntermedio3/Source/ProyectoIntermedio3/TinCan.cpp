@@ -10,9 +10,14 @@ ATinCan::ATinCan()
 
 void ATinCan::BuyItem()
 {
-	Super::BuyItem();
+    if (GameInstance && GameInstance->PlayerDataAsset)
+    {
+        Super::BuyItem();
 
-	FPlayerData PlayerData = GameInstance->GetPlayerData();
-
-	PlayerData.MaxWalkSpeed += 50.0f;
+        GameInstance->PlayerDataAsset->PlayerData.MaxWalkSpeed *= 50.f;
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("GameInstance o PlayerDataAsset no está definido en ATinCan."));
+    }
 }

@@ -2,6 +2,7 @@
 #include "InventoryComponent.h"
 #include "ItemDataAsset.h"
 #include "ItemStore.h"
+#include "PlayerDataAsset.h"
 
 UGameInstanceNoGravity::UGameInstanceNoGravity()
 {

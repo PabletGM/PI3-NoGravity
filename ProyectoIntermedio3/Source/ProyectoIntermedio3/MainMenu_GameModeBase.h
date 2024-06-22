@@ -21,11 +21,8 @@ public:
 
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player")  
-	FPlayerData PlayerData;
-
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
-	UPlayerDataAsset* PlayarDataAsset;
+	UPlayerDataAsset* PlayerDataAsset;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
 	UItemDataAsset* ItemDataAsset;

@@ -28,6 +28,8 @@ void AItemStore::BeginPlay()
 
     FString PriceText = FString::Printf(TEXT("%d$"), GetItemPrice());
     TextRenderComponent->SetText(FText::FromString(PriceText));
+
+    GameInstance = Cast<UGameInstanceNoGravity>(GetGameInstance());
 }
 
 int32 AItemStore::GetItemPrice() const

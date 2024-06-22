@@ -4,6 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "Interactable.h"
 #include "ItemDataAsset.h"
+#include "PlayerDataAsset.h"
 
 #include "ItemStore.generated.h"
 

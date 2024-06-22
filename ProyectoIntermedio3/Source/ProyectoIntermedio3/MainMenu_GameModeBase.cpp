@@ -32,8 +32,19 @@ void AMainMenu_GameModeBase::BeginPlay()
 	else
 		UE_LOG(LogTemp, Warning, TEXT("DataAsset Not found"));
 
-	GameInstance->GetPlayerData() = PlayerData;
-	
+	if (PlayerDataAsset)
+	{
+		GameInstance->PlayerDataAsset = PlayerDataAsset;
+
+		PlayerDataAsset->PlayerData.MaxWalkSpeed = 500.0f;
+		PlayerDataAsset->PlayerData.PlayerLevel = 1;
+		PlayerDataAsset->PlayerData.MaxOxygen = 100;
+		PlayerDataAsset->PlayerData.OxygenDecrement = 0.5f;
+		PlayerDataAsset->PlayerData.CapacityInventory = 6;
+	}
+	else
+		UE_LOG(LogTemp, Warning, TEXT("PlayarDataAsset Not found"));
+
 	GetWorldTimerManager().SetTimerForNextTick(this, &AMainMenu_GameModeBase::PostBeginPlay);
 }
 

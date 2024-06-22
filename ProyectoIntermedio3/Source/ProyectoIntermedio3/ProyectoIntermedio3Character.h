@@ -17,6 +17,7 @@ class UShieldComponent;
 class UInventoryComponent;
 class AAudioManager;
 class AProyectoIntermedio3GameMode;
+class UGameInstanceNoGravity;
 struct FInputActionValue;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
@@ -90,6 +91,8 @@ public:
 	bool isDead = false;
 
 private:
+	UGameInstanceNoGravity* GameInstance;
+
 	UPROPERTY()
 	UAttackComponent* AttackComponent = nullptr;
 
