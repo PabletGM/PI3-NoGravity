@@ -59,7 +59,7 @@ void UAttackComponent::PerformRaycast()
 	FVector SphereTraceEnd = PlayerLocation + ForwardDirection * 200.f;
 
 	//create hitResult
-	FHitResult HitResult;
+	TArray<FHitResult> HitResults;
 
 	//creates the variable
 	FCollisionQueryParams CollisionParams;
@@ -75,7 +75,7 @@ void UAttackComponent::PerformRaycast()
 	float SphereRadius = 50.f;
 
 	//Make parameters of collision
-	bool bHit = UKismetSystemLibrary::SphereTraceSingle(
+	bool bHit = UKismetSystemLibrary::SphereTraceMulti(
 		GetWorld(), 
 		PlayerLocation, 
 		SphereTraceEnd, 
@@ -83,42 +83,45 @@ void UAttackComponent::PerformRaycast()
 		TraceTypeQuery1, 
 		true, 
 		{ player }, 
-		EDrawDebugTrace::ForDuration, 
-		HitResult, 
+		EDrawDebugTrace::None, 
+		HitResults, 
 		true
 	);
 
 	//if sphere trace hit
 	if (bHit)
 	{
-		//the actor that has hit the sphere trace
-		AActor* HitActor = HitResult.GetActor();
-
-		//detect enemyInterface IDamageable
-		IDamageable* damageable = Cast<IDamageable>(HitResult.GetActor());
-
-		//if it exists
-		if(damageable)
+		for(FHitResult result : HitResults)
 		{
-			// Cast to AAIEnemyCharacterBase
-			AAIEnemyCharacterBase* EnemyCharacter = Cast<AAIEnemyCharacterBase>(HitResult.GetActor());
-			if (EnemyCharacter)
+			//the actor that has hit the sphere trace
+			AActor* HitActor = result.GetActor();
+
+			//detect enemyInterface IDamageable
+			IDamageable* damageable = Cast<IDamageable>(result.GetActor());
+
+			//if it exists
+			if (damageable)
 			{
-				// Call the method on AAIEnemyCharacterBase
-				EnemyCharacter->TakeDamage(damageToEnemyAttackPlayer);
+				// Cast to AAIEnemyCharacterBase
+				AAIEnemyCharacterBase* EnemyCharacter = Cast<AAIEnemyCharacterBase>(result.GetActor());
+				if (EnemyCharacter)
+				{
+					// Call the method on AAIEnemyCharacterBase
+					EnemyCharacter->TakeDamage(damageToEnemyAttackPlayer);
+				}
+				//kill the enemy
+				UE_LOG(LogTemp, Warning, TEXT("Kill the Enemy!"));
+
+				// TODO Must
+				//	TakeDamage(float damageAmmount)
+				// from AIEnemyCharacterBase
+				// TODO well it should have an override function from the damageable interface
 			}
-			//kill the enemy
-			UE_LOG(LogTemp, Warning, TEXT("Kill the Enemy!"));
-			
-			// TODO Must
-			//	TakeDamage(float damageAmmount)
-			// from AIEnemyCharacterBase
-			// TODO well it should have an override function from the damageable interface
-		}
-		else
-		{
-			//enemy not found
-			UE_LOG(LogTemp, Warning, TEXT("Enemy not found!"));
+			else
+			{
+				//enemy not found
+				UE_LOG(LogTemp, Warning, TEXT("Enemy not found!"));
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 #include "Store_GameMode.h"
 #include "AudioManager.h"
 #include "PlayerStateProyectoIntermedio3.h"
+#include "Store_PlayerController.h"
 #include "ItemStore.h"
 #include "GameInstanceNoGravity.h"
 
@@ -57,12 +58,27 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 	if (CanBuyItem(Item))
     {
 		totalPealrsPlayer -= Item->GetItemPrice();
+
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+
+		if (PlayerController)
+		{
+			APlayerState* PlayerState = PlayerController->GetPlayerState<APlayerState>();
+
+			APlayerStateProyectoIntermedio3* MyPlayerState = Cast<APlayerStateProyectoIntermedio3>(PlayerState);
+
+			if (MyPlayerState)
+			{
+				MyPlayerState->AddPearl(-Item->GetItemPrice());
+			}
+		}
+
 		Item->BuyItem();
 		MakeSoundEffect("buyItem");
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
+		/*GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));*/
 		MakeSoundEffect("errorBuying");
 	}
 }

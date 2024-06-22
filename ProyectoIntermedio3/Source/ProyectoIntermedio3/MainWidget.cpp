@@ -17,10 +17,10 @@ void UMainWidget::ShowConcreteWidget(UUserWidget* WidgetToShow)
         ShieldWidget->SetVisibility(WidgetToShow == ShieldWidget ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
     }
 
-    if (InventoryWidget)
+    /*if (InventoryWidget)
     {
         InventoryWidget->SetVisibility(WidgetToShow == InventoryWidget ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
-    }
+    }*/
 
     if (GameOverWidget)
     {
@@ -33,5 +33,5 @@ void UMainWidget::ShowAllWidgets()
     PearlsWidget->SetVisibility(ESlateVisibility::Visible);
     OxygenWidget->SetVisibility(ESlateVisibility::Visible);
     ShieldWidget->SetVisibility(ESlateVisibility::Visible);
-    InventoryWidget->SetVisibility(ESlateVisibility::Visible);
+    /*InventoryWidget->SetVisibility(ESlateVisibility::Visible);*/
 }

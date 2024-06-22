@@ -22,7 +22,7 @@ void UGameInstanceNoGravity::RestoreInventoryIcons(UInventoryComponent* Inventor
 		{
 			if (ItemDataAsset->Items[i].amount > 0)
 			{
-				//InventoryComponent->UpdateInventory(ItemDataAsset, i);
+				InventoryComponent->UpdateInventory(ItemDataAsset, i);
 			}
 		}
 	}
