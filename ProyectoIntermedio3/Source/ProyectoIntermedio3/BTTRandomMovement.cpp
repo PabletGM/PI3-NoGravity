@@ -3,12 +3,6 @@
 
 #include "BTTRandomMovement.h"
 #include "AIEnemyControllerBase.h"
-#include "Navigation/PathFollowingComponent.h"
-
-UBTTRandomMovement::UBTTRandomMovement()
-{
-	bNotifyTick = true;
-}
 
 EBTNodeResult::Type UBTTRandomMovement::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {

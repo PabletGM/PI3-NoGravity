@@ -14,8 +14,6 @@ class PROYECTOINTERMEDIO3_API UBTTRandomMovement : public UBTTaskNode
 {
 	GENERATED_BODY()
 
-	UBTTRandomMovement();
-
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 	virtual FString GetStaticDescription() const override;

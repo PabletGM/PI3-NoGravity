@@ -2,7 +2,6 @@
 
 
 #include "BTTAttackToTarget.h"
-
 #include "AIEnemyControllerBase.h"
 
 EBTNodeResult::Type UBTTAttackToTarget::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)

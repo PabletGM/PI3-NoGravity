@@ -5,7 +5,6 @@
 
 #include "AIEnemyCharacterBase.h"
 #include "BrainComponent.h"
-#include "Proyecto3PlayerController.h"
 #include "ProyectoIntermedio3Character.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
@@ -52,13 +51,15 @@ void AAIEnemyControllerBase::CheckTargetDistance()
 
 	APawn* AIPawn = GetPawn();
 
-	AActor* PlayerCharacter = Cast<AActor>(BlackboardComponent->GetValueAsObject("Target"));
+	APlayerController* PlayerController = Cast<APlayerController>(BlackboardComponent->GetValueAsObject("Target"));
 
-	float Distance = AIPawn->GetDistanceTo(PlayerCharacter);
+	//float Distance = AIPawn->GetDistanceTo(PlayerCharacter->GetOwner());
+
+	float Distance = (AIPawn->GetActorLocation() - PlayerController->GetPawn()->GetActorLocation()).Length();
 
 	UE_LOGFMT(LogTemp, Log, "Distance {0}", Distance);
 
-	if (Distance <= 200.0f)
+	if (Distance <= 300.0f)
 		BlackboardComponent->SetValueAsBool("Chase", true);
 	else
 		BlackboardComponent->SetValueAsBool("Chase", false);
@@ -68,42 +69,37 @@ EPathFollowingRequestResult::Type AAIEnemyControllerBase::MoveToTarget()
 {
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
-	AActor* PlayerCharacter = Cast<AActor>(BlackboardComponent->GetValueAsObject("Target"));
+	APlayerController* PlayerController = Cast<APlayerController>(BlackboardComponent->GetValueAsObject("Target"));
 
-	EPathFollowingRequestResult::Type MoveToTargetResult = MoveToActor(PlayerCharacter);
+	EPathFollowingRequestResult::Type MoveToTargetResult = MoveToActor(PlayerController);
 
 	return MoveToTargetResult;
 }
 
 void AAIEnemyControllerBase::MoveRandom()
 {
-	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
-
-	auto* controller= Cast<AProyecto3PlayerController>(BlackboardComponent->GetValueAsObject("Target"));
-
-	FVector FwdVector = controller->GetPawn()->GetActorLocation() - GetPawn()->GetActorLocation();
-	FwdVector.Normalize();
-
-	FRotator LookAtRotator = FRotationMatrix::MakeFromX(FwdVector).Rotator();
-
-	GetPawn()->SetActorRotation(LookAtRotator);
-
 	//UE_LOGFMT(LogTemp, Log, "Moving Randomly");
+
+	APawn* AIPawn = GetPawn();
+	FVector2D perlinInitialLocation = {AIPawn->GetActorLocation().X, AIPawn->GetActorLocation().Y};
+
+	AIPawn->SetActorLocation(AIPawn->GetActorLocation() + FMath::PerlinNoise2D(perlinInitialLocation) * 100);
+
 }
 
 void AAIEnemyControllerBase::AttackTarget()
 {
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
-	auto* controller= Cast<AProyecto3PlayerController>(BlackboardComponent->GetValueAsObject("Target"));
+	APlayerController* PlayerController = Cast<APlayerController>(BlackboardComponent->GetValueAsObject("Target"));
 
-	if(!controller)
+	if(!PlayerController)
 	{
 		UE_LOGFMT(LogTemp, Log, "Failed controller");
 		return;
 	}
 
-	auto *player = Cast<AProyectoIntermedio3Character>(controller->GetCharacter());
+	auto *player = Cast<AProyectoIntermedio3Character>(PlayerController->GetCharacter());
 
 	if(!player)
 	{
