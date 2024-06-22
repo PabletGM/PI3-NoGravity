@@ -58,10 +58,14 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 	{
 		totalPealrsPlayer -= Item->GetItemPrice();
 		Item->BuyItem();
+		//sound to buy item
+		MakeSoundEffect("buyItem");
 	}
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
+		//sound to not buy item
+		MakeSoundEffect("errorBuying");
 	}
 }
 
@@ -102,6 +106,28 @@ void AStore_GameMode::MakeMusic(FString nameMusic)
 		if (Sound2)
 		{
 			AudioManagerInstance->PlayMusic(Sound2);
+		}
+		else
+		{
+			// UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AudioManager instance is null!"));
+	}
+}
+
+void AStore_GameMode::MakeSoundEffect(FString nameSound)
+{
+	if (AudioManagerInstance)
+	{
+		// Example method call on AudioManagerInstance
+		// Replace PlaySound with your actual method name and parameters
+		USoundBase* Sound1 = AudioManagerInstance->FindSoundByName(nameSound);
+		if (Sound1)
+		{
+			AudioManagerInstance->PlaySoundEffect1(Sound1);
 		}
 		else
 		{
