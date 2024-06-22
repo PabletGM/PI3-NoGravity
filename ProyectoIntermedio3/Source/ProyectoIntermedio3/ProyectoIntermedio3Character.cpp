@@ -1,5 +1,4 @@
 #include "ProyectoIntermedio3Character.h"
-
 #include "AB_GameDiver.h"
 #include "AttackComponent.h"
 #include "AudioManager.h"
@@ -39,7 +38,6 @@ AProyectoIntermedio3Character::AProyectoIntermedio3Character()
 
 	GetCharacterMovement()->JumpZVelocity = 700.f;
 	GetCharacterMovement()->AirControl = 0.35f;
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
@@ -71,6 +69,20 @@ void AProyectoIntermedio3Character::BeginPlay()
 	}
 
 	UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
+
+	if (GameInstance)
+	{
+		FPlayerData PlayerData = GameInstance->GetPlayerData();
+
+		PlayerData.MaxOxygen = GetCharacterMovement()->MaxWalkSpeed;
+		FString Message = FString::Printf(TEXT("MaxWalkSpeed: %f"), PlayerData.MaxWalkSpeed);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, Message);
+	}
+	else
+	{
+		UE_LOG(LogTemplateCharacter, Error, TEXT("Cant initialize player data"));
+	}
+
 	if (GameInstance && InventoryComponent)
 	{
 		GameInstance->RestoreInventoryIcons(InventoryComponent);
@@ -209,7 +221,9 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 void AProyectoIntermedio3Character::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	FString SpeedText = FString::Printf(TEXT("Speed: %.2f"), GetCharacterMovement()->MaxWalkSpeed);
 
+	GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::White, SpeedText);
 }
 
 void AProyectoIntermedio3Character::InitializeAudioManager()

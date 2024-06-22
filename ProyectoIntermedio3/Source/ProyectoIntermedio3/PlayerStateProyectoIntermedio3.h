@@ -4,6 +4,8 @@
 #include "GameFramework/PlayerState.h"
 #include "PlayerStateProyectoIntermedio3.generated.h"
 
+class UGameInstanceNoGravity;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPearlCountChanged, int32, NewPearlCount);
 
 UCLASS()
@@ -31,5 +33,5 @@ public:
 private:
 	int32 totalPealrs = 0;
 
-	class UGameInstanceNoGravity* GameInstance = nullptr;
+	UGameInstanceNoGravity* GameInstance = nullptr;
 };

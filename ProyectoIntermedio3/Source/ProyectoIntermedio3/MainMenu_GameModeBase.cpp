@@ -17,9 +17,10 @@ void AMainMenu_GameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
+
 	if(ItemDataAsset)
 	{
-		UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
 		GameInstance->ItemDataAsset = ItemDataAsset;
 
 		for (int32 i = 0; i < ItemDataAsset->Items.Max(); ++i)
@@ -30,9 +31,10 @@ void AMainMenu_GameModeBase::BeginPlay()
 	}
 	else
 		UE_LOG(LogTemp, Warning, TEXT("DataAsset Not found"));
+
+	GameInstance->GetPlayerData() = PlayerData;
 	
 	GetWorldTimerManager().SetTimerForNextTick(this, &AMainMenu_GameModeBase::PostBeginPlay);
-	
 }
 
 

@@ -54,10 +54,15 @@ bool AStore_GameMode::CanBuyItem(AItemStore* Item)
 
 void AStore_GameMode::BuyItem(AItemStore* Item)
 {
-	if (CanBuyItem(Item))
-	{
+	//if (CanBuyItem(Item))
+//{
 		totalPealrsPlayer -= Item->GetItemPrice();
 		Item->BuyItem();
+	/* }
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
+	}*/
 		//sound to buy item
 		MakeSoundEffect("buyItem");
 	}

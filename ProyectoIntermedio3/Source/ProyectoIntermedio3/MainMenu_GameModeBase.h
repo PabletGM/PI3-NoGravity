@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "PlayerDataStruct.h"
+#include "ItemInfoStruct.h"
 #include "AudioManager.h"
 #include "MainMenu_GameModeBase.generated.h"
 
@@ -18,10 +20,12 @@ public:
 
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player")  
+	FPlayerData PlayerData;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
 	UItemDataAsset* ItemDataAsset;
 
-	
 	// Reference to the instantiated AudioManager
 	UPROPERTY()
 	AAudioManager* AudioManagerInstance;
@@ -37,7 +41,6 @@ public:
 	void MakeSoundEffect1(FString nameSound);
 
 protected:
-
 	void InitializeAudioManager();
 
 	void PostBeginPlay();

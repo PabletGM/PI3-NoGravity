@@ -5,6 +5,7 @@
 #include "InventoryComponent.h"
 #include "Engine/Engine.h"
 #include "Components/TextRenderComponent.h"
+#include "GameInstanceNoGravity.h"
 
 AItemStore::AItemStore()
 {
@@ -19,6 +20,11 @@ AItemStore::AItemStore()
     TextRenderComponent->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
     TextRenderComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 250.0f));
     TextRenderComponent->SetWorldSize(85.0f);
+}
+
+void AItemStore::BeginPlay()
+{
+    Super::BeginPlay();
 
     FString PriceText = FString::Printf(TEXT("%d$"), GetItemPrice());
     TextRenderComponent->SetText(FText::FromString(PriceText));
@@ -101,12 +107,4 @@ void AItemStore::BuyItem()
     InventoryComponent->UpdateInventory(ItemDataAsset, ItemIndex);
 
     Destroy();
-}
-
-void AItemStore::BeginPlay()
-{
-    Super::BeginPlay();
-
-    FString PriceText = FString::Printf(TEXT("$%d"), GetItemPrice());
-    TextRenderComponent->SetText(FText::FromString(PriceText));
 }

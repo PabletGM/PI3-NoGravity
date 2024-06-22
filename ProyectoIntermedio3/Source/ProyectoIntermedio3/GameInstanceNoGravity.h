@@ -4,8 +4,11 @@
 #include "Engine/GameInstance.h"
 #include "GameFramework/Actor.h"
 #include "ItemStore.h"
+#include "PlayerDataStruct.h"
+
 #include "GameInstanceNoGravity.generated.h"
 
+class AProyectoIntermedio3Character;
 class UInventoryComponent;
 class UItemDataAsset;
 
@@ -17,16 +20,23 @@ class PROYECTOINTERMEDIO3_API UGameInstanceNoGravity : public UGameInstance
 public:
 	UGameInstanceNoGravity();
 
+	FPlayerData GetPlayerData() { return PlayerData; }
+
+	//INVENTORY
 	void RestoreInventoryIcons(UInventoryComponent* InventoryComponent);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
-	UItemDataAsset* ItemDataAsset;
+	UItemDataAsset* ItemDataAsset = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player")
+	FPlayerData PlayerData;
+
+	//PEARLS
 	UFUNCTION()
 	void SetTotalPearls(int32 Value);
 
 	UFUNCTION()
-	int32 GetTotalPearls() const { return TotalPearls; }
+	int32 GetTotalPearls() { return TotalPearls; }
 
 protected:
 	UPROPERTY()

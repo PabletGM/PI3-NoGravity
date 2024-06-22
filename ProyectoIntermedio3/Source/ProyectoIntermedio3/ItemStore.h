@@ -9,6 +9,7 @@
 
 class UStaticMeshComponent;
 class UTextRenderComponent;
+class UGameInstanceNoGravity;
 
 UCLASS()
 class PROYECTOINTERMEDIO3_API AItemStore : public AActor, public IInteractable
@@ -42,6 +43,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
 	int32 ItemIndex = 0;
+
+	UGameInstanceNoGravity* GameInstance = nullptr;
 
 public:	
 	virtual void Interact_Implementation() override;

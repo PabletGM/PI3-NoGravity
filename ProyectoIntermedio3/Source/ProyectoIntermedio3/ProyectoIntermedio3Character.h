@@ -13,7 +13,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class UOxygenComponent;
-class  UShieldComponent;
+class UShieldComponent;
 class UInventoryComponent;
 class AAudioManager;
 class AProyectoIntermedio3GameMode;
