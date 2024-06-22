@@ -6,6 +6,7 @@
 #include "Damageable.h"
 #include "GameFramework/Character.h"
 #include "AudioManager.h"
+
 #include "AIEnemyCharacterBase.generated.h"
 
 UCLASS()
@@ -42,14 +43,15 @@ public:
 	UFUNCTION()
 	void FindAudioManager();
 
+public:
 	UPROPERTY(meta=(BItmask,BitmaskEnum="/Game/_NoGravity/Blueprints/AI/AI_Type.AI_Type"), EditAnywhere) int AIType = 0;
+	UPROPERTY(EditAnywhere) float MaxHealth = 0.0f;
+	UPROPERTY(EditAnywhere) float CurrentHealth = 0.0f;
+	UPROPERTY(EditAnywhere) int32 Damage = 10.0f;
+	UPROPERTY(EditAnywhere) float Speed = 100.0f;
 
-	
 	
 private:
-	UPROPERTY(EditDefaultsOnly) float MaxHealth = 0.0f;
-	UPROPERTY() float CurrentHealth = 0.0f;
-
 	// TODO Damage
 
 	// Reference to the instantiated AudioManager
@@ -59,6 +61,4 @@ private:
 	// Reference to the AudioManager
 	UPROPERTY(EditDefaultsOnly, Category = "Audio")
 	TSubclassOf<AAudioManager> BP_AudioManager;
-
-	
 };

@@ -3,7 +3,6 @@
 
 #include "AIEnemyCharacterBase.h"
 
-
 #include "ProyectoIntermedio3Character.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -20,8 +19,7 @@ void AAIEnemyCharacterBase::TakeDamage(float damageAmount)
 	CurrentHealth -= damageAmount;
 
 	// // //take damage sound IA
-	
-	
+
 	if(damageAmount >= CurrentHealth)
 		Death();
 }
@@ -40,7 +38,7 @@ void AAIEnemyCharacterBase::BeginPlay()
 
 	CurrentHealth = MaxHealth;
 
-	
+
 	GetWorldTimerManager().SetTimerForNextTick(this, &AAIEnemyCharacterBase::PostBeginPlay);
 }
 
@@ -116,6 +114,4 @@ void AAIEnemyCharacterBase::FindAudioManager()
 	{
 		AudioManagerInstance = PlayerCharacter->GetAudioManagerInstance();
 	}
-
 }
-

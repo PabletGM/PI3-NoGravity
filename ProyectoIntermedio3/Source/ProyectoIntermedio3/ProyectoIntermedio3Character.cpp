@@ -204,7 +204,6 @@ void AProyectoIntermedio3Character::TakeDamageFromAI(int32 damageAmmount)
 		MakeSoundEffect2("playerHurt");
 		MakeSoundEffect("bite2");
 	}
-	
 }
 
 void AProyectoIntermedio3Character::Tick(float DeltaTime)

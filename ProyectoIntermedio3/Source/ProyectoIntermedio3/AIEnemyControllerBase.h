@@ -26,10 +26,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AI") EPathFollowingRequestResult::Type MoveToTarget();
 	UFUNCTION(BlueprintCallable, Category = "AI") EPathFollowingRequestResult::Type MoveRandom();
 	UFUNCTION(BlueprintCallable, Category = "AI") void AttackTarget();
-
-
-	UNavigationSystemV1* NavSystem = nullptr;
-
 private:
-	UPROPERTY(EditAnywhere) int32 AIDamage = 10.0f;
+	UNavigationSystemV1* NavSystem = nullptr;
 };

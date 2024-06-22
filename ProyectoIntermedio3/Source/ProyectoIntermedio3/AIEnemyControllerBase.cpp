@@ -2,13 +2,13 @@
 
 
 #include "AIEnemyControllerBase.h"
+
 #include "AIEnemyCharacterBase.h"
 #include "BrainComponent.h"
 #include "ProyectoIntermedio3Character.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
-#include "Logging/StructuredLog.h"
 
 
 void AAIEnemyControllerBase::BeginPlay()
@@ -41,7 +41,6 @@ void AAIEnemyControllerBase::CheckAIType()
 
 	// Sets type of AI
 	APawn* AIPawn = GetPawn();
-
 	if(AIPawn)
 		BlackboardComponent->SetValueAsEnum("AI_Type", Cast<AAIEnemyCharacterBase>(AIPawn)->AIType - 1);
 }
@@ -54,11 +53,12 @@ void AAIEnemyControllerBase::CheckTargetDistance()
 
 	APlayerController* PlayerController = Cast<APlayerController>(BlackboardComponent->GetValueAsObject("Target"));
 
+	if(!PlayerController)
+		return;
+
 	float Distance = (AIPawn->GetActorLocation() - PlayerController->GetPawn()->GetActorLocation()).Length();
 
-	UE_LOGFMT(LogTemp, Log, "Distance {0}", Distance);
-
-	if (Distance <= 300.0f)
+	if (Distance <= 400.0f)
 		BlackboardComponent->SetValueAsBool("Chase", true);
 	else
 		BlackboardComponent->SetValueAsBool("Chase", false);
@@ -92,20 +92,15 @@ void AAIEnemyControllerBase::AttackTarget()
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
 	APlayerController* PlayerController = Cast<APlayerController>(BlackboardComponent->GetValueAsObject("Target"));
-
 	if(!PlayerController)
-	{
-		UE_LOGFMT(LogTemp, Log, "Failed controller");
 		return;
-	}
 
-	auto *player = Cast<AProyectoIntermedio3Character>(PlayerController->GetCharacter());
-
+	AProyectoIntermedio3Character *player = Cast<AProyectoIntermedio3Character>(PlayerController->GetCharacter());
 	if(!player)
-	{
-		UE_LOGFMT(LogTemp, Log, "Failed player");
 		return;
-	}
-	
-	player->TakeDamageFromAI(AIDamage);
+
+	// Apply Damage to the character
+	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
+	if(AIPawn)
+		player->TakeDamageFromAI(AIPawn->Damage);
 }
