@@ -62,7 +62,7 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
-	}*/
+	}
 		//sound to buy item
 		MakeSoundEffect("buyItem");
 	}
@@ -71,7 +71,7 @@ void AStore_GameMode::BuyItem(AItemStore* Item)
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, TEXT("0 money"));
 		//sound to not buy item
 		MakeSoundEffect("errorBuying");
-	}
+	}*/
 }
 
 void AStore_GameMode::InitializeAudioManager()

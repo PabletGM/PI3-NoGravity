@@ -9,6 +9,7 @@
 
 class UItemDataAsset;
 class AAudioManager;
+class UPlayerDataAsset;
 
 UCLASS()
 class PROYECTOINTERMEDIO3_API AMainMenu_GameModeBase : public AGameModeBase
@@ -22,6 +23,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Player")  
 	FPlayerData PlayerData;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
+	UPlayerDataAsset* PlayarDataAsset;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
 	UItemDataAsset* ItemDataAsset;
