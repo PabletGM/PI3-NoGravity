@@ -2,7 +2,6 @@
 
 
 #include "BTTMoveToTarget.h"
-
 #include "AIEnemyControllerBase.h"
 #include "Navigation/PathFollowingComponent.h"
 
@@ -24,7 +23,6 @@ void UBTTMoveToTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMe
 	
 	if(MoveToTargetResult == EPathFollowingRequestResult::AlreadyAtGoal)
 	{
-		
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 	}
 }

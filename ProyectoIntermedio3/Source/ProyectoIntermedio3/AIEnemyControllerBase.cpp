@@ -2,7 +2,6 @@
 
 
 #include "AIEnemyControllerBase.h"
-
 #include "AIEnemyCharacterBase.h"
 #include "BrainComponent.h"
 #include "ProyectoIntermedio3Character.h"
@@ -14,7 +13,9 @@
 
 void AAIEnemyControllerBase::BeginPlay()
 {
-	Super::BeginPlay();	
+	Super::BeginPlay();
+
+	NavSystem = Cast<UNavigationSystemV1>(GetWorld()->GetNavigationSystem());
 }
 
 void AAIEnemyControllerBase::CheckTarget()
@@ -53,8 +54,6 @@ void AAIEnemyControllerBase::CheckTargetDistance()
 
 	APlayerController* PlayerController = Cast<APlayerController>(BlackboardComponent->GetValueAsObject("Target"));
 
-	//float Distance = AIPawn->GetDistanceTo(PlayerCharacter->GetOwner());
-
 	float Distance = (AIPawn->GetActorLocation() - PlayerController->GetPawn()->GetActorLocation()).Length();
 
 	UE_LOGFMT(LogTemp, Log, "Distance {0}", Distance);
@@ -76,15 +75,16 @@ EPathFollowingRequestResult::Type AAIEnemyControllerBase::MoveToTarget()
 	return MoveToTargetResult;
 }
 
-void AAIEnemyControllerBase::MoveRandom()
+EPathFollowingRequestResult::Type AAIEnemyControllerBase::MoveRandom()
 {
-	//UE_LOGFMT(LogTemp, Log, "Moving Randomly");
-
 	APawn* AIPawn = GetPawn();
-	FVector2D perlinInitialLocation = {AIPawn->GetActorLocation().X, AIPawn->GetActorLocation().Y};
 
-	AIPawn->SetActorLocation(AIPawn->GetActorLocation() + FMath::PerlinNoise2D(perlinInitialLocation) * 100);
+	FNavLocation Result;
+	NavSystem->GetRandomReachablePointInRadius(AIPawn->GetActorLocation(),20000, Result);
 
+	EPathFollowingRequestResult::Type MoveToRandomResult = MoveToLocation(Result);
+
+	return MoveToRandomResult;
 }
 
 void AAIEnemyControllerBase::AttackTarget()

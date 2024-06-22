@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "NavigationSystem.h"
 
 #include "AIEnemyControllerBase.generated.h"
 
@@ -23,8 +24,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckAIType();
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckTargetDistance();
 	UFUNCTION(BlueprintCallable, Category = "AI") EPathFollowingRequestResult::Type MoveToTarget();
-	UFUNCTION(BlueprintCallable, Category = "AI") void MoveRandom();
+	UFUNCTION(BlueprintCallable, Category = "AI") EPathFollowingRequestResult::Type MoveRandom();
 	UFUNCTION(BlueprintCallable, Category = "AI") void AttackTarget();
+
+
+	UNavigationSystemV1* NavSystem = nullptr;
 
 private:
 	UPROPERTY(EditAnywhere) int32 AIDamage = 10.0f;
