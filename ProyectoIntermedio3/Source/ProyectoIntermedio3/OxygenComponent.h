@@ -21,7 +21,7 @@ public:
 	int CurrentOxygen;
 
 	UPROPERTY(EditDefaultsOnly)
-	int MaxOxygen = 100;
+	int MaxOxygen = 150;
 
 	UPROPERTY(EditDefaultsOnly)
 	float OxygenDecrement = 0.5f;
