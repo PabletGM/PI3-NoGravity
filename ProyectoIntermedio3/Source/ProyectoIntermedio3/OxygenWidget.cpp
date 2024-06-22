@@ -32,7 +32,6 @@ void UOxygenWidget::NativeConstruct()
 	player->OxygenComponent->OnOxygenChanged.AddDynamic(this, &UOxygenWidget::OnOxygenChanged);
 }
 
-
 void UOxygenWidget::OnOxygenChanged(int cur, int max)
 {
 	OxygenBar->SetRenderScale({ (float)cur / (float)max, 1 });

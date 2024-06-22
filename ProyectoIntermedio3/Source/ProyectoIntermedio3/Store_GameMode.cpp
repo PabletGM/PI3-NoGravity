@@ -38,7 +38,6 @@ void AStore_GameMode::BeginPlay()
 
 	Super::BeginPlay();
 	GetWorldTimerManager().SetTimerForNextTick(this, &AStore_GameMode::PostBeginPlay);
-	
 }
 
 

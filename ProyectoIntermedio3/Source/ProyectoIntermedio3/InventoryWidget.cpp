@@ -56,7 +56,7 @@ void UInventoryWidget::ConfigurationWidget()
 
             if (NewSlot)
             {
-                InventoryImages[i]->Brush.ImageSize.X = 32.0f;
+                InventoryImages[i]->Brush.ImageSize.X = 25.0f;
                 InventoryImages[i]->Brush.ImageSize.Y = 125.0f;
                 NewSlot->SetPadding(FMargin(0.f, 10.f, 0.f, 0.f)); 
             }

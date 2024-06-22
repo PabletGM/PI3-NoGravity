@@ -19,7 +19,7 @@ void UMainWidget::ShowConcreteWidget(UUserWidget* WidgetToShow)
 
     if (InventoryWidget)
     {
-        GameOverWidget->SetVisibility(WidgetToShow == InventoryWidget ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+        InventoryWidget->SetVisibility(WidgetToShow == InventoryWidget ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
     }
 
     if (GameOverWidget)
