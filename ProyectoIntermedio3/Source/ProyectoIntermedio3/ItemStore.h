@@ -28,6 +28,8 @@ public:
 
 	virtual FString GetInteractionText_Implementation() override;
 
+	virtual FString GetDescriptionText_Implementation() override;
+
 	int32 GetItemPrice() const;
 
 	UTexture2D* GetItemIcon() const;

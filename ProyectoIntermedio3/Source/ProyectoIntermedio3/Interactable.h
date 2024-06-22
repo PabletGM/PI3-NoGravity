@@ -21,4 +21,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, Category = Interact)
 	FString GetInteractionText();
+
+	UFUNCTION(BlueprintNativeEvent, Category = Interact)
+	FString GetDescriptionText();
 };

@@ -56,6 +56,18 @@ FString AItemStore::GetInteractionText_Implementation()
     return InteractionText;
 }
 
+FString AItemStore::GetDescriptionText_Implementation()
+{
+    FString DescriptionText;
+
+    if (ItemDataAsset && ItemIndex < ItemDataAsset->Items.Num())
+    {
+        DescriptionText += ItemDataAsset->Items[ItemIndex].Description;
+    }
+
+    return DescriptionText;
+}
+
 void AItemStore::Interact_Implementation()
 {
     AStore_GameMode* GameMode = Cast<AStore_GameMode>(GetWorld()->GetAuthGameMode());

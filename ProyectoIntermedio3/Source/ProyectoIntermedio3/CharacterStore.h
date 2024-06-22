@@ -11,8 +11,7 @@ class UInputAction;
 struct FInputActionValue;
 class AStore_GameMode;
 
-DECLARE_DYNAMIC_DELEGATE_OneParam(FInteractDelegate, FString, text);
-
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FInteractDelegate, FString, Text, FString, Description);
 
 UCLASS()
 class PROYECTOINTERMEDIO3_API ACharacterStore : public ACharacter

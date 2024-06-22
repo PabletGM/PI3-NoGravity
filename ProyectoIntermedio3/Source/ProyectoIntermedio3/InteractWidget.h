@@ -13,7 +13,7 @@ class PROYECTOINTERMEDIO3_API UInteractWidget : public UUserWidget
 	
 public:
 	UFUNCTION(BlueprintCallable, Category = "Interaction")
-	void SetInteractText(FString Text);
+	void SetInteractText(FString Text, FString ItemDescription);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -21,4 +21,7 @@ protected:
 private:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* TextInteract = nullptr;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* TextDescription = nullptr;
 };

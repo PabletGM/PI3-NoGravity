@@ -165,7 +165,8 @@ void ACharacterStore::DetectInteractable()
 				bDetectItem = true;
 				DetectedActor = HitActor;
 				FString InteractionText = IInteractable::Execute_GetInteractionText(HitActor);
-				OnInteract.ExecuteIfBound(InteractionText);
+				FString DescriptionText = IInteractable::Execute_GetDescriptionText(HitActor);
+				OnInteract.ExecuteIfBound(InteractionText, DescriptionText);
 				return;
 			}
 		}
@@ -173,7 +174,7 @@ void ACharacterStore::DetectInteractable()
 
 	bDetectItem = false;
 	DetectedActor = nullptr;
-	OnInteract.ExecuteIfBound("");
+	OnInteract.ExecuteIfBound("", "");
 }
 
 void ACharacterStore::Tick(float DeltaTime)
