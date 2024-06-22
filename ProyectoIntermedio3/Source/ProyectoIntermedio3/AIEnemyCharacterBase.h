@@ -28,7 +28,6 @@ public:
 	// Sets default values for this character's properties
 	AAIEnemyCharacterBase();
 
-	UFUNCTION() void AttackToTarget();
 	UFUNCTION() void TakeDamage(float damageAmount);
 	UFUNCTION() void Death();
 	UFUNCTION() void PerformDeathNotifyAnim();

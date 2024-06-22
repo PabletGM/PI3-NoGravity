@@ -17,18 +17,6 @@ AAIEnemyCharacterBase::AAIEnemyCharacterBase()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void AAIEnemyCharacterBase::AttackToTarget()
-{
-	
-	//anim montage
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	if(AnimInstance && AttackMontage)
-	{
-		UE_LOGFMT(LogTemp, Log, "Attacking");
-		AnimInstance->Montage_Play(AttackMontage);
-	}
-}
-
 void AAIEnemyCharacterBase::TakeDamage(float damageAmount)
 {
 	CurrentHealth -= damageAmount;
