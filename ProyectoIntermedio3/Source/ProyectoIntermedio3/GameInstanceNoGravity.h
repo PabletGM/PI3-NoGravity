@@ -31,8 +31,4 @@ public:
 protected:
 	UPROPERTY()
 	int32 TotalPearls;
-
-	UPROPERTY(BlueprintReadOnly)
-	TArray<AItemStore*> ItemsPurchasedStore;
-
 };
