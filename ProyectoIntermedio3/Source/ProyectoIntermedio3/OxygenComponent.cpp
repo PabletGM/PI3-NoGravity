@@ -83,6 +83,18 @@ void UOxygenComponent::Death()
 		{
 			return;
 		}
+
+		if (!controller->MainWidget)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("MainWidget is not valid!"));
+			return;
+		}
+
+		if (!controller->MainWidget->GameOverWidget)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("GameOverWidget is not valid!"));
+			return;
+		}
 	
 		controller->MainWidget->ShowConcreteWidget(controller->MainWidget->GameOverWidget);
 	}

@@ -33,6 +33,9 @@ public:
 	UFUNCTION()
 	void MakeMusic(FString nameMusic);
 
+	UFUNCTION()
+	void MakeSoundEffect1(FString nameSound);
+
 protected:
 
 	void InitializeAudioManager();

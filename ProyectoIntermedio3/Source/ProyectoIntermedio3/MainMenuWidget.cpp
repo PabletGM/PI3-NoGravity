@@ -6,6 +6,8 @@
 #include "Components/VerticalBoxSlot.h"
 #include <Kismet/KismetSystemLibrary.h>
 #include <Kismet/GameplayStatics.h>
+
+#include "MainMenu_GameModeBase.h"
 #include "Fonts/SlateFontInfo.h"
 
 void UMainMenuWidget::NativeConstruct()
@@ -68,11 +70,32 @@ void UMainMenuWidget::ConfigureMargins()
 
 void UMainMenuWidget::PlayGame()
 {
+    //call MainMenu_GameMode and method sound
+    AGameModeBase* GameMode = UGameplayStatics::GetGameMode(this);
+    if(GameMode)
+    {
+        AMainMenu_GameModeBase* MainMenu_GameMode = Cast<AMainMenu_GameModeBase>(GameMode);
+        if(MainMenu_GameMode)
+        {
+            MainMenu_GameMode->MakeSoundEffect1("Selection_Changes");
+        }
+    }
+    
     UGameplayStatics::OpenLevel(this, FName("L_Store"));
 }
 
 void UMainMenuWidget::ExitGame()
 {
+    //call MainMenu_GameMode and method sound
+    AGameModeBase* GameMode = UGameplayStatics::GetGameMode(this);
+    if(GameMode)
+    {
+        AMainMenu_GameModeBase* MainMenu_GameMode = Cast<AMainMenu_GameModeBase>(GameMode);
+        if(MainMenu_GameMode)
+        {
+            MainMenu_GameMode->MakeSoundEffect1("Selection_Changes");
+        }
+    }
     UKismetSystemLibrary::QuitGame(this, nullptr, EQuitPreference::Quit, true);
 }
 

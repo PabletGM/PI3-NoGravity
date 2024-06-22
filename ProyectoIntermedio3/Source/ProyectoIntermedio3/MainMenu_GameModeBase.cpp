@@ -59,6 +59,28 @@ void AMainMenu_GameModeBase::MakeMusic(FString nameMusic)
 	}
 }
 
+void AMainMenu_GameModeBase::MakeSoundEffect1(FString nameSound)
+{
+	if (AudioManagerInstance)
+	{
+		// Example method call on AudioManagerInstance
+		// Replace PlaySound with your actual method name and parameters
+		USoundBase* Sound = AudioManagerInstance->FindSoundByName(nameSound);
+		if (Sound)
+		{
+			AudioManagerInstance->PlaySoundEffect1(Sound);
+		}
+		else
+		{
+			// UE_LOG(LogTemp, Warning, TEXT("Sound not found in AudioManager!"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AudioManager instance is null!"));
+	}
+}
+
 void AMainMenu_GameModeBase::InitializeAudioManager()
 {
 	if (BP_AudioManager)
