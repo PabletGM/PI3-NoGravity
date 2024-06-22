@@ -19,7 +19,8 @@ class PROYECTOINTERMEDIO3_API AAIEnemyControllerBase : public AAIController
 public:
 
 	virtual void BeginPlay() override;
-	
+
+	UFUNCTION(BlueprintCallable, Category = "AI") void CheckIsAlive();
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckTarget();
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckAIType();
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckTargetDistance();

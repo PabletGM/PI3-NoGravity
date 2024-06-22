@@ -27,8 +27,9 @@ void AAIEnemyCharacterBase::TakeDamage(float damageAmount)
 void AAIEnemyCharacterBase::Death()
 {
 	// TODO Do whatever it needs to do before die
+	IsAlive = false;
 	MakeSoundEffect("enemyDeathSound");
-	this->Destroy();
+	//this->Destroy();
 }
 
 // Called when the game starts or when spawned

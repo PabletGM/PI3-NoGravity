@@ -44,6 +44,7 @@ public:
 	void FindAudioManager();
 
 public:
+	UPROPERTY(EditAnywhere) bool IsAlive = true;
 	UPROPERTY(meta=(BItmask,BitmaskEnum="/Game/_NoGravity/Blueprints/AI/AI_Type.AI_Type"), EditAnywhere) int AIType = 0;
 	UPROPERTY(EditAnywhere) float MaxHealth = 0.0f;
 	UPROPERTY(EditAnywhere) float CurrentHealth = 0.0f;
