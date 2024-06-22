@@ -26,12 +26,12 @@ public:
 	void AddPearl(int32 value);
 
 	UFUNCTION()
-	int32 GetPearlCount() const { return totalPealrs; }
+	int32 GetPearlCount() const { return totalPearls; }
 
 	void UpdateWidgetPearl();
 
 private:
-	int32 totalPealrs = 0;
+	int32 totalPearls = 0;
 
 	UGameInstanceNoGravity* GameInstance = nullptr;
 };

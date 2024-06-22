@@ -32,14 +32,15 @@ void ARoomSpawner::BeginPlay()
 		IsFirstSpawnerActive = true;
 		SpawnedRoomsArray.Empty();
 		SpawnedEnemyArray.Empty();
+		SpawnedEnemyControllerArray.Empty();
 	}
 
 	if(IsEnemySpawner)
 	{
-		int randomSpawn = FMath::RandRange(0, 0);
+		int randomSpawn = FMath::RandRange(0, 3);
 		if (randomSpawn == 0)
 		{
-			int randomFish = FMath::RandRange(0, 0);
+			int randomFish = FMath::RandRange(0, 2);
 			if (randomFish == 2)
 				EnemySpawnerImplementation(BP_SharkEnemy);
 			else
@@ -241,6 +242,12 @@ void ARoomSpawner::FinalSpawnerImplementation(TSubclassOf<ADefaultRoom> RoomToSp
 	}
 	SpawnedEnemyArray.Empty();
 
+	for(AAIEnemyControllerBase* controller : SpawnedEnemyControllerArray)
+	{
+		world->DestroyActor(controller);
+	}
+	SpawnedEnemyControllerArray.Empty();
+
 	if(MyCharacter)
 	{
 		MyCharacter->SetActorLocation(PlayerSpawnLocation);
@@ -271,17 +278,24 @@ void ARoomSpawner::EnemySpawnerImplementation(TSubclassOf<ACharacter> Spawnable)
 
 	AAIEnemyCharacterBase* MyEnemy = world->SpawnActor<AAIEnemyCharacterBase>(Spawnable, SpawnLocation + ForwardSpawnOffset, SpawnRotation, SpawnParams);
 
+	AAIEnemyControllerBase* MyEnemyController = Cast<AAIEnemyControllerBase>(MyEnemy->Controller);
+	MyEnemyController->Initialize();
+
 	SpawnedEnemyArray.Add(MyEnemy);
 
-	/*AAIEnemyControllerBase* MyEnemyController = world->SpawnActor<AAIEnemyControllerBase>(BP_EnemyController, SpawnLocation, SpawnRotation, SpawnParams);
-	if (MyEnemyController)
-	{
-		MyEnemyController->Possess(MyEnemy);
-		if (BP_BehaviourTree)
-		{
-			MyEnemyController->RunBehaviorTree(BP_BehaviourTree);
-		}
-	}*/
+
+
+	//AAIEnemyControllerBase* MyEnemyController = world->SpawnActor<AAIEnemyControllerBase>(BP_EnemyController, SpawnLocation, SpawnRotation, SpawnParams);
+	//SpawnedEnemyControllerArray.Add(MyEnemyController);
+	//if (MyEnemyController)
+	//{
+	//	MyEnemyController->Possess(MyEnemy);
+	//	MyEnemyController->Initialize();
+	//	/*if (BP_BehaviourTree)
+	//	{
+	//		MyEnemyController->RunBehaviorTree(BP_BehaviourTree);
+	//	}*/
+	//}
 }
 
 //to try to spawn rooms

@@ -16,16 +16,21 @@ void AAIEnemyControllerBase::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Initialize();
+}
+
+void AAIEnemyControllerBase::Initialize()
+{
 	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
-	if(!AIPawn)
+	if (!AIPawn)
 		return;
 
-	if(AIPawn->AIBehaviorTree)
+	if (AIPawn->AIBehaviorTree)
 		RunBehaviorTree(AIPawn->AIBehaviorTree);
 
 	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
-	if(AIPawn->IsAlive)
+	if (AIPawn->IsAlive)
 		BlackboardComponent->SetValueAsBool("IsAlive", true);
 
 	NavSystem = Cast<UNavigationSystemV1>(GetWorld()->GetNavigationSystem());

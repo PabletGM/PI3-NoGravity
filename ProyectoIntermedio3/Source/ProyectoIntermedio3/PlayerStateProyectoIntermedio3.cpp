@@ -17,15 +17,15 @@ void APlayerStateProyectoIntermedio3::BeginPlay()
 
 void APlayerStateProyectoIntermedio3::AddPearl(int32 value)
 {
-	totalPealrs += value;
+	totalPearls += value;
+
+	GameInstance->SetTotalPearls(totalPearls);
 
     UpdateWidgetPearl();
-
-	GameInstance->SetTotalPearls(value); 
 }
 
 void APlayerStateProyectoIntermedio3::UpdateWidgetPearl()
 {
-    totalPealrs = GameInstance->GetTotalPearls();
-    OnPearlCountChanged.Broadcast(totalPealrs);
+    totalPearls = GameInstance->GetTotalPearls();
+    OnPearlCountChanged.Broadcast(totalPearls);
 }

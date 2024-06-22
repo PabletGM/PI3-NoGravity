@@ -20,6 +20,7 @@ public:
 
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable, Category = "AI") void Initialize();
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckIsAlive();
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckTarget();
 	UFUNCTION(BlueprintCallable, Category = "AI") void CheckAIType();

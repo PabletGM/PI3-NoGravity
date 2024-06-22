@@ -51,7 +51,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<ACharacter> BP_SharkEnemy = nullptr;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AAIController> BP_EnemyController = nullptr;
+
+	/*UPROPERTY(EditAnywhere)
+	UBehaviorTree* BP_EnemyBehaviourTree = nullptr;*/
+
 	inline static TArray<AAIEnemyCharacterBase*> SpawnedEnemyArray = {};
+
+	inline static TArray<AAIEnemyControllerBase*> SpawnedEnemyControllerArray = {};
 
 	inline static TArray<ADefaultRoom*> SpawnedRoomsArray = {};
 
