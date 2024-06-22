@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AIEnemyControllerBase.h"
 #include "Damageable.h"
 #include "GameFramework/Character.h"
 #include "AudioManager.h"
@@ -26,10 +27,10 @@ public:
 	// Sets default values for this character's properties
 	AAIEnemyCharacterBase();
 
+	UFUNCTION() void AttackToTarget();
 	UFUNCTION() void TakeDamage(float damageAmount);
 	UFUNCTION() void Death();
 	UFUNCTION() void PerformDeathNotifyAnim();
-	UFUNCTION() void DestroyItself();
 
 protected:
 	// Called when the game starts or when spawned
@@ -54,6 +55,7 @@ public:
 	void FindAudioManager();
 
 public:
+	UPROPERTY(EditAnywhere) UBehaviorTree* AIBehaviorTree = nullptr;
 	UPROPERTY(EditAnywhere) bool IsAlive = true;
 	UPROPERTY(meta=(BItmask,BitmaskEnum="/Game/_NoGravity/Blueprints/AI/AI_Type.AI_Type"), EditAnywhere) int AIType = 0;
 	UPROPERTY(EditAnywhere) float MaxHealth = 0.0f;

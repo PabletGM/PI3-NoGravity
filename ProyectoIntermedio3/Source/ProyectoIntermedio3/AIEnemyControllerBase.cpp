@@ -6,6 +6,7 @@
 #include "AIEnemyCharacterBase.h"
 #include "BrainComponent.h"
 #include "ProyectoIntermedio3Character.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
@@ -15,11 +16,14 @@ void AAIEnemyControllerBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
-
 	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
 	if(!AIPawn)
 		return;
+
+	if(AIPawn->AIBehaviorTree)
+		RunBehaviorTree(AIPawn->AIBehaviorTree);
+
+	UBlackboardComponent* BlackboardComponent = BrainComponent->GetBlackboardComponent();
 
 	if(AIPawn->IsAlive)
 		BlackboardComponent->SetValueAsBool("IsAlive", true);
@@ -127,7 +131,10 @@ void AAIEnemyControllerBase::AttackTarget()
 	// Apply Damage to the character
 	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
 	if(AIPawn)
+	{
+		AIPawn->AttackToTarget();
 		player->TakeDamageFromAI(AIPawn->Damage);
+	}
 }
 
 void AAIEnemyControllerBase::Death()
@@ -135,6 +142,7 @@ void AAIEnemyControllerBase::Death()
 	AAIEnemyCharacterBase* AIPawn = Cast<AAIEnemyCharacterBase>(GetPawn());
 	if(AIPawn)
 	{
+		BrainComponent->StopLogic("AI Dead");
 		AIPawn->Death();
 	}
 }

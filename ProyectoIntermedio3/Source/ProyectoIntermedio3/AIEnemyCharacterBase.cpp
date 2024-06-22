@@ -6,6 +6,7 @@
 #include "AB_EnemyDeepShark.h"
 #include "AB_EnemyPiranha.h"
 #include "ProyectoIntermedio3Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Logging/StructuredLog.h"
 
@@ -14,6 +15,17 @@ AAIEnemyCharacterBase::AAIEnemyCharacterBase()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+void AAIEnemyCharacterBase::AttackToTarget()
+{
+	UE_LOGFMT(LogTemp, Log, "Attacking");
+	//anim montage
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if(AnimInstance && AttackMontage)
+	{
+		AnimInstance->Montage_Play(AttackMontage);
+	}
 }
 
 void AAIEnemyCharacterBase::TakeDamage(float damageAmount)
@@ -48,15 +60,9 @@ void AAIEnemyCharacterBase::Death()
 
 void AAIEnemyCharacterBase::PerformDeathNotifyAnim()
 {
-	DestroyItself();
+	UE_LOGFMT(LogTemp, Log, "Destroy");
+	//this->Destroy();
 }
-
-void AAIEnemyCharacterBase::DestroyItself()
-{
-	UE_LOGFMT(LogTemp, Log, "Destroy");	
-	this->Destroy();
-}
-
 
 // Called when the game starts or when spawned
 void AAIEnemyCharacterBase::BeginPlay()
@@ -64,6 +70,7 @@ void AAIEnemyCharacterBase::BeginPlay()
 	Super::BeginPlay();
 
 	CurrentHealth = MaxHealth;
+	GetCharacterMovement()->MaxWalkSpeed = Speed;
 
 	GetWorldTimerManager().SetTimerForNextTick(this, &AAIEnemyCharacterBase::PostBeginPlay);
 }
