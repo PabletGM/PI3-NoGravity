@@ -19,11 +19,12 @@ AAIEnemyCharacterBase::AAIEnemyCharacterBase()
 
 void AAIEnemyCharacterBase::AttackToTarget()
 {
-	UE_LOGFMT(LogTemp, Log, "Attacking");
+	
 	//anim montage
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if(AnimInstance && AttackMontage)
 	{
+		UE_LOGFMT(LogTemp, Log, "Attacking");
 		AnimInstance->Montage_Play(AttackMontage);
 	}
 }
