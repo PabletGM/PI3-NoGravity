@@ -4,6 +4,10 @@
 #include "Store_PlayerController.h"
 #include "CharacterStore.h"
 #include "Components/VerticalBoxSlot.h"
+#include <Kismet/GameplayStatics.h>
+#include "ProyectoIntermedio3Character.h"
+#include "Proyecto3PlayerController.h"
+#include "Store_PlayerController.h"
 
 void UInventoryWidget::NativeConstruct()
 {
@@ -11,22 +15,33 @@ void UInventoryWidget::NativeConstruct()
 
     ConfigurationWidget();
 
+    FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld(), true);
+
 	auto* world = GetWorld();
 
 	if (!world)
 		return;
 
-	auto controller = Cast<AStore_PlayerController>(world->GetFirstPlayerController());
+    if (CurrentLevelName.Equals("L_Store", ESearchCase::IgnoreCase))
+    {
+        auto controller = Cast<AStore_PlayerController>(world->GetFirstPlayerController());
+        auto* player = Cast<ACharacterStore>(controller->GetPawn()); 
 
-	if (!controller)
-		return;
+        if (!controller || !player->InventoryComponent)
+            return;
 
-	auto* player = Cast<ACharacterStore>(controller->GetPawn());
+        player->InventoryComponent->OnInventoryUpdated.AddDynamic(this, &UInventoryWidget::OnInventoryUpdated);
+    }
+    else if (CurrentLevelName.Equals("L_MainLevel", ESearchCase::IgnoreCase))
+    {
+        auto controller = Cast<AProyecto3PlayerController>(world->GetFirstPlayerController());
+        auto* player = Cast<AProyectoIntermedio3Character>(controller->GetPawn());
 
-	if (!player || !player->InventoryComponent)
-		return;
+        if(!controller || !player->InventoryComponent)
+            return;
 
-    player->InventoryComponent->OnInventoryUpdated.AddDynamic(this, &UInventoryWidget::OnInventoryUpdated);
+        player->InventoryComponent->OnInventoryUpdated.AddDynamic(this, &UInventoryWidget::OnInventoryUpdated);
+    }
 }
 
 void UInventoryWidget::ConfigurationWidget()
@@ -54,7 +69,6 @@ void UInventoryWidget::OnInventoryUpdated(UTexture2D* ItemIcon)
     if (!ItemIcon)
 		return;
 
-    GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, FString::Printf(TEXT("ItemIcon: %s"), *ItemIcon->GetName()));
 
     for (int32 i = 0; i < 6; ++i)
     {

@@ -36,4 +36,5 @@ public:
 	AItemStore* GetItem(int32 Index) const;
 
 	int32 GetNumItemsPurchased() const { return ItemsPurchased.Num(); }
+
 };

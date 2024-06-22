@@ -14,10 +14,11 @@ class PROYECTOINTERMEDIO3_API APlayerStateProyectoIntermedio3 : public APlayerSt
 public:
 	APlayerStateProyectoIntermedio3();
 
+	virtual void BeginPlay() override;
+
+	//PEARLS
 	UPROPERTY(BlueprintAssignable)
 	FOnPearlCountChanged OnPearlCountChanged;
-
-	virtual void BeginPlay() override;
 
 	UFUNCTION()
 	void AddPearl(int32 value);

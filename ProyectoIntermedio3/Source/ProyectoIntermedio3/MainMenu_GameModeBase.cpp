@@ -1,7 +1,6 @@
 #include "MainMenu_GameModeBase.h"
-
-
 #include "GameInstanceNoGravity.h"
+#include <Kismet/GameplayStatics.h>
 
 AMainMenu_GameModeBase::AMainMenu_GameModeBase()
 	: Super()
@@ -20,9 +19,13 @@ void AMainMenu_GameModeBase::BeginPlay()
 
 	if(ItemDataAsset)
 	{
+		UGameInstanceNoGravity* GameInstance = Cast<UGameInstanceNoGravity>(UGameplayStatics::GetGameInstance(GetWorld()));
+		GameInstance->ItemDataAsset = ItemDataAsset;
+
 		for (int32 i = 0; i < ItemDataAsset->Items.Max(); ++i)
 		{
 			ItemDataAsset->Items[i].amount = 0;
+
 		}
 	}
 	else

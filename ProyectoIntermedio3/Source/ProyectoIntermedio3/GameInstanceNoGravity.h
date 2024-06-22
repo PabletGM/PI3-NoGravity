@@ -7,6 +7,7 @@
 #include "GameInstanceNoGravity.generated.h"
 
 class UInventoryComponent;
+class UItemDataAsset;
 
 UCLASS()
 class PROYECTOINTERMEDIO3_API UGameInstanceNoGravity : public UGameInstance
@@ -16,8 +17,10 @@ class PROYECTOINTERMEDIO3_API UGameInstanceNoGravity : public UGameInstance
 public:
 	UGameInstanceNoGravity();
 
-	void SaveInventoryIcons(UInventoryComponent* InventoryComponent);
 	void RestoreInventoryIcons(UInventoryComponent* InventoryComponent);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
+	UItemDataAsset* ItemDataAsset;
 
 	UFUNCTION()
 	void SetTotalPearls(int32 Value);
