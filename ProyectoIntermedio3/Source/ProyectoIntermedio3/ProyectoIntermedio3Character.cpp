@@ -76,6 +76,7 @@ void AProyectoIntermedio3Character::BeginPlay()
 			GetCharacterMovement()->MaxWalkSpeed = GameInstance->PlayerDataAsset->PlayerData.MaxWalkSpeed;
 			OxygenComponent->OxygenDecrement = GameInstance->PlayerDataAsset->PlayerData.OxygenDecrement;
 			ShieldComponent->CurrentShield = GameInstance->PlayerDataAsset->PlayerData.CurrentShield;
+			ShieldComponent->UpdateWidgetShield(ShieldComponent->CurrentShield);
 		}
 	}
 	else

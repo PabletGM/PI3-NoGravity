@@ -31,6 +31,8 @@ public:
 	UFUNCTION()
 	void RemoveShield(int32 Amount);
 
+	void UpdateWidgetShield(int32 value);
+
 protected:
 	virtual void BeginPlay() override;
 

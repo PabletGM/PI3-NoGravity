@@ -6,14 +6,14 @@
 UShieldComponent::UShieldComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-	OnShieldChanged.Broadcast(CurrentShield);
+
 }
 
 void UShieldComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentShield = 0;
+	OnShieldChanged.Broadcast(CurrentShield);
 }
 
 void UShieldComponent::SetFloaterVisibility(bool bVisibility)
@@ -34,7 +34,7 @@ void UShieldComponent::SetFloaterVisibility(bool bVisibility)
 void UShieldComponent::AddShield(int32 Amount)
 {
 	CurrentShield = FMath::Clamp(CurrentShield + Amount, 0, MaxShield);
-	OnShieldChanged.Broadcast(CurrentShield);
+	UpdateWidgetShield(CurrentShield);
 
 	//TODO
 	//call method that puts visible the staticMesh of Character that its call Floater
@@ -44,8 +44,13 @@ void UShieldComponent::AddShield(int32 Amount)
 void UShieldComponent::RemoveShield(int32 Amount)
 {
 	CurrentShield = FMath::Clamp(CurrentShield - Amount, 0, MaxShield);
-	OnShieldChanged.Broadcast(CurrentShield);
+	UpdateWidgetShield(CurrentShield);
 	SetFloaterVisibility(false);
+}
+
+void UShieldComponent::UpdateWidgetShield(int32 value)
+{
+	OnShieldChanged.Broadcast(value);
 }
 
 
