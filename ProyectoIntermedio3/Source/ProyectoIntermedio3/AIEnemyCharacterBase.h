@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIEnemyControllerBase.h"
 #include "Damageable.h"
+#include "Pearl.h"
 #include "GameFramework/Character.h"
 #include "AudioManager.h"
 
@@ -62,6 +63,8 @@ public:
 	UPROPERTY(EditAnywhere) float CurrentHealth = 0.0f;
 	UPROPERTY(EditAnywhere) int32 Damage = 10.0f;
 	UPROPERTY(EditAnywhere) float Speed = 100.0f;
+
+	UPROPERTY(EditAnywhere) TSubclassOf<APearl> BP_Pearl = nullptr;
 
 private:
 	

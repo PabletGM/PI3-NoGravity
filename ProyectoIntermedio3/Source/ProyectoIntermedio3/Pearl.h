@@ -15,6 +15,7 @@ public:
 
 	virtual void Collected(class AActor* Collector) override;
 
-private:
+	UPROPERTY(EditDefaultsOnly)
 	int32 pearlValue = 1;
+
 };

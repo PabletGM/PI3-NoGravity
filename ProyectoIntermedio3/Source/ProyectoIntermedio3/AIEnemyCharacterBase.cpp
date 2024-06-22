@@ -61,7 +61,20 @@ void AAIEnemyCharacterBase::Death()
 
 void AAIEnemyCharacterBase::PerformDeathNotifyAnim()
 {
-	UE_LOGFMT(LogTemp, Log, "Destroy");
+	UE_LOGFMT(LogTemp, Log, "Enemy Dies");
+	if(BP_Pearl)
+	{
+		UWorld* world = GetWorld();
+		if (!world)
+			return;
+
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = GetInstigator();
+
+		world->SpawnActor<APearl>(BP_Pearl, GetActorLocation(), GetActorRotation(), SpawnParams);
+	}
+
 	//this->Destroy();
 }
 
