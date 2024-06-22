@@ -4,6 +4,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "InventoryComponent.h"
 #include "Engine/Engine.h"
+#include "Components/TextRenderComponent.h"
 
 AItemStore::AItemStore()
 {
@@ -11,17 +12,16 @@ AItemStore::AItemStore()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
 	SetRootComponent(Mesh);
-}
 
-void AItemStore::InitializeItem()
-{
-    if (!ItemDataAsset || ItemIndex >= ItemDataAsset->Items.Num())
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Invalid Item Data Asset or Item Index"));
-        return;
-    }
+    TextRenderComponent = CreateDefaultSubobject<UTextRenderComponent>(TEXT("ItemPriceText"));
+    TextRenderComponent->SetupAttachment(RootComponent); 
+    TextRenderComponent->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
+    TextRenderComponent->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
+    TextRenderComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 250.0f));
+    TextRenderComponent->SetWorldSize(85.0f);
 
-    const FItemInfoStruct& ItemInfo = ItemDataAsset->Items[ItemIndex];
+    FString PriceText = FString::Printf(TEXT("%d$"), GetItemPrice());
+    TextRenderComponent->SetText(FText::FromString(PriceText));
 }
 
 int32 AItemStore::GetItemPrice() const
@@ -103,3 +103,10 @@ void AItemStore::BuyItem()
     Destroy();
 }
 
+void AItemStore::BeginPlay()
+{
+    Super::BeginPlay();
+
+    FString PriceText = FString::Printf(TEXT("$%d"), GetItemPrice());
+    TextRenderComponent->SetText(FText::FromString(PriceText));
+}

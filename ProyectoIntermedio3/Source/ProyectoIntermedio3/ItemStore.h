@@ -8,6 +8,7 @@
 #include "ItemStore.generated.h"
 
 class UStaticMeshComponent;
+class UTextRenderComponent;
 
 UCLASS()
 class PROYECTOINTERMEDIO3_API AItemStore : public AActor, public IInteractable
@@ -17,11 +18,11 @@ class PROYECTOINTERMEDIO3_API AItemStore : public AActor, public IInteractable
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* Mesh = nullptr;
 
+	UPROPERTY(EditDefaultsOnly)
+	UTextRenderComponent* TextRenderComponent = nullptr;
+
 public:	
 	AItemStore();
-
-	UFUNCTION(BlueprintCallable, Category = "Items")
-	virtual void InitializeItem();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
 	UItemDataAsset* ItemDataAsset;
@@ -37,8 +38,10 @@ public:
 	virtual void BuyItem();
 
 protected:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Items")
-	int32 ItemIndex = 0.0f;
+	int32 ItemIndex = 0;
 
 public:	
 	virtual void Interact_Implementation() override;

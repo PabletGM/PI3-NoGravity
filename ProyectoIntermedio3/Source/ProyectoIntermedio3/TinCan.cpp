@@ -4,6 +4,7 @@
 ATinCan::ATinCan()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
 }
 
 void ATinCan::BuyItem()
